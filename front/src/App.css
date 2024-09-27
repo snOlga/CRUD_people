@@ -1,0 +1,12 @@
+.App {
+  position: relative;
+}
+
+.Sprite {
+  position: absolute;
+  height: 200px;
+  width: 200px;
+}
+
+.SpriteImage {
+}
