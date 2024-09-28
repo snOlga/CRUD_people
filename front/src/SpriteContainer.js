@@ -52,10 +52,10 @@ function SpriteContainer({ zIndexFromMain, startX, startY }) {
         yStep = (yStep + PICTURE_SIDE_SIZE) < window.innerHeight ? yStep : 0 - yStep
 
         for (let i = 0; i < stepCount; i++) {
-            setPosition((prevPosition) => ({
-                x: prevPosition.x + xStep,
-                y: prevPosition.y + yStep,
-            }))
+            setPosition({
+                x: position.x + xStep,
+                y: position.y + yStep,
+            })
         }
     }
 
