@@ -5,13 +5,13 @@ function LeftMenuContainer() {
     <div className="LeftMenuContainer">
       <p>My little City</p>
 
-      <p>Create new citizenship?</p>
+      <p>Create new citizen?</p>
 
       <p>Name?</p>
       <input type="text" placeholder='Robert' />
 
       <p>Eyes color?</p>
-      <input type="color" />
+      <input type="color"/>
 
       <p>Hair color?</p>
       <input type="color" />
