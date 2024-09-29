@@ -1,7 +1,20 @@
 package back.server.citizens;
 
+import jakarta.persistence.Column;
+import jakarta.persistence.Entity;
+import jakarta.persistence.GeneratedValue;
+import jakarta.persistence.Id;
+
+@Entity
 public class Coordinates {
+    @Id
+    @GeneratedValue
+    private long id;
+
+    @Column
     private float x;
+
+    @Column
     private float y;
 
     public float getX() {
@@ -12,7 +25,10 @@ public class Coordinates {
         return y;
     }
 
-    private Coordinates() {
+    // should be private i think but hibernate thinks different
+    public Coordinates() {
+        x = 0;
+        y = 0;
     }
 
     public Coordinates(String xStr, String yStr) {
@@ -22,6 +38,15 @@ public class Coordinates {
 
     public Coordinates(float x, float y) {
         this.x = x;
+        this.y = y;
+    }
+
+    // shouldn't be here
+    public void setX(float x) {
+        this.x = x;
+    }
+    
+    public void setY(float y) {
         this.y = y;
     }
 }

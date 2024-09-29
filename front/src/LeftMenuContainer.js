@@ -3,7 +3,8 @@ import './styles/App.css';
 function LeftMenuContainer() {
   return (
     <div className="LeftMenuContainer">
-      <p>My little City</p>
+      <h1>My little City</h1>
+
 
       <p>Create new citizen?</p>
 
@@ -11,7 +12,7 @@ function LeftMenuContainer() {
       <input type="text" placeholder='Robert' />
 
       <p>Eyes color?</p>
-      <input type="color"/>
+      <input type="color" />
 
       <p>Hair color?</p>
       <input type="color" />
@@ -29,16 +30,16 @@ function LeftMenuContainer() {
       <div>
         <input type="radio" id="russiaRadio" name="nationality" checked />
         <label for="russiaRadio">Russia</label>
-        <br/>
+        <br />
         <input type="radio" id="franceRadio" name="nationality" />
         <label for="franceRadio">France</label>
-        <br/>
+        <br />
         <input type="radio" id="unitedKingdomRadio" name="nationality" />
         <label for="unitedKingdomRadio">United Kingdom</label>
-        <br/>
+        <br />
         <input type="radio" id="vaticanRadio" name="nationality" />
         <label for="vaticanRadio">Vatican</label>
-        <br/>
+        <br />
         <input type="radio" id="southKoreaRadio" name="nationality" />
         <label for="southKoreaRadio">South Korea</label>
       </div>
