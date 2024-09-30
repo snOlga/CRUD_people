@@ -6,7 +6,7 @@ import org.springframework.web.bind.annotation.*;
 
 import back.server.citizens.Citizen;
 import back.server.citizens.Country;
-import back.server.repository.DBmanipulating;
+import back.server.repository.CitizenRepository;
 import jakarta.servlet.http.HttpServletRequest;
 
 @RestController
@@ -15,11 +15,9 @@ public class MainController {
 
     @GetMapping("/api/dosmt")
     public void doSmt(HttpServletRequest request) {
-        DBmanipulating repo = new DBmanipulating();
-        repo.configure();
-        
+        CitizenRepository repo = new CitizenRepository();
         
         Citizen citizen = new Citizen("Mike", "black", "blond", (short)180, new Date(), (long)1, Country.RUSSIA);
-        repo.addCitizen(citizen);
+        repo.add(citizen);
     }
 }

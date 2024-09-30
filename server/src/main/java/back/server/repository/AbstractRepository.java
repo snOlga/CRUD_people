@@ -1,0 +1,40 @@
+package back.server.repository;
+
+import org.hibernate.Session;
+import org.hibernate.SessionFactory;
+import org.hibernate.Transaction;
+import org.hibernate.cfg.Configuration;
+
+public abstract class AbstractRepository implements IRepository {
+    private static SessionFactory sessionFactory;
+
+    private Session session;
+    private Transaction transaction;
+
+    public AbstractRepository() {
+        configure();
+    }
+
+    private void configure() {
+        sessionFactory = new Configuration().configure().buildSessionFactory();
+    }
+
+    public static SessionFactory getSessionFactory() {
+        return sessionFactory;
+    }
+
+    void startSession() {
+        session = getSessionFactory().openSession();
+        transaction = session.beginTransaction();
+    }
+
+    void closeSession() {
+        transaction.commit();
+        session.close();
+        transaction = null;
+    }
+
+    public Session currentSession() {
+        return session;
+    }
+}
