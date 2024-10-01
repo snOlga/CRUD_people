@@ -29,8 +29,23 @@
   position: absolute;
 }
 
-.tiny5-regular {
-  font-family: "Tiny5", sans-serif;
-  font-weight: 400;
-  font-style: normal;
+input[type="text"], [type="number"], [type="color"], [type="date"] {
+  border: solid;
+  border-color: black;
+  border-left: 0;
+  border-right: 0;
+  border-top: 0;
+  background-color: rgba(245, 245, 220, 0);
+  width: 50%;
+  margin-bottom: 10%;
 }
+
+p {
+  margin-bottom: 0;
+}
+
+input[type="color"] {
+  padding: 0;
+}
+
+.RadioInput {}

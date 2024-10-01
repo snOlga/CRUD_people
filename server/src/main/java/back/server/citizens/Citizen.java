@@ -2,27 +2,14 @@ package back.server.citizens;
 
 import java.util.Date;
 
+import back.server.EntityMetaData;
 import jakarta.persistence.*;
 
 @Entity
 @Table(name = "citizens")
-public class Citizen {
-
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long id;
-
+public class Citizen extends EntityMetaData {
     @Column(name = "name")
     private String name;
-
-    @Column(name = "creationDate")
-    private Date creationDate;
-
-    @Column(name = "eyeColor")
-    private String eyeColor;
-
-    @Column(name = "hairColor")
-    private String hairColor;
 
     @Column(name = "height")
     private short height;
@@ -37,12 +24,21 @@ public class Citizen {
     @Enumerated(EnumType.STRING)
     private Country nationality;
 
-    @ManyToOne(cascade = CascadeType.ALL)
-    @JoinColumn(name = "registrationCoordinates", referencedColumnName = "id")
-    private Coordinates registrationCoordinates;
+    @Embedded
+    @AttributeOverrides({ 
+        @AttributeOverride(name = "hexColor", column = @Column(name = "eyeColor")) 
+        }) 
+    private HEXColor eyeColor;
+
+    @Embedded
+    @AttributeOverrides({ 
+        @AttributeOverride(name = "hexColor", column = @Column(name = "hairColor")) 
+        }) 
+    private HEXColor hairColor;
 
     public Citizen() {
-        creationDate = new Date();
+        setCreationDate(new Date());
+        setRegistrationCoordinates(new Coordinates(0, 0));
     }
 
     public Citizen(String name,
@@ -51,32 +47,28 @@ public class Citizen {
             short height,
             Date birthday,
             long passportID,
-            Country nationality) {
-        creationDate = new Date();
-        registrationCoordinates = new Coordinates(0, 0);
-        this.name = name;
-        this.hairColor = hairColor;
-        this.eyeColor = eyeColor;
-        this.height = height;
-        this.birthday = birthday;
-        this.passportID = passportID;
-        this.nationality = nationality;
+            Country nationality) throws ColorFormatException {
+        setCreationDate(new Date());
+        setRegistrationCoordinates(new Coordinates(0, 0));
+        setName(name);
+        setHairColor(hairColor);
+        setEyeColor(eyeColor);
+        setHeight(height);
+        setBirthday(birthday);
+        setPassportID(passportID);
+        setNationality(nationality);
     }
 
     public void setName(String name) {
         this.name = name;
     }
 
-    public void setCreationDate(java.util.Date creationDate) {
-        this.creationDate = creationDate;
+    public void setEyeColor(String eyeColor) throws ColorFormatException {
+        this.eyeColor = new HEXColor(eyeColor);
     }
 
-    public void setEyeColor(String eyeColor) {
-        this.eyeColor = eyeColor;
-    }
-
-    public void setHairColor(String hairColor) {
-        this.hairColor = hairColor;
+    public void setHairColor(String hairColor) throws ColorFormatException {
+        this.hairColor = new HEXColor(hairColor);
     }
 
     public void setHeight(short height) {
@@ -91,24 +83,20 @@ public class Citizen {
         this.passportID = passportID;
     }
 
-    public Long getId() {
-        return id;
+    public void setNationality(Country nationality) {
+        this.nationality = nationality;
     }
 
     public String getName() {
         return name;
     }
 
-    public java.util.Date getCreationDate() {
-        return creationDate;
-    }
-
     public String getEyeColor() {
-        return eyeColor;
+        return eyeColor.toString();
     }
 
     public String getHairColor() {
-        return hairColor;
+        return hairColor.toString();
     }
 
     public java.util.Date getBirthday() {
@@ -117,5 +105,9 @@ public class Citizen {
 
     public Long getPassportID() {
         return passportID;
+    }
+
+    public Country getNationality() {
+        return nationality;
     }
 }

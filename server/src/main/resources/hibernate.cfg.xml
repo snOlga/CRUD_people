@@ -15,6 +15,7 @@
         <property name="show_sql">true</property>
         <property name="format_sql">true</property>
         <property name="use_sql_comments">true</property>
+        <!--<property name="hibernate.hbm2ddl.auto">create</property>-->
 
         <mapping class="back.server.citizens.Citizen"/>
         <mapping class="back.server.citizens.Coordinates"/>

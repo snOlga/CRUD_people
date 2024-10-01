@@ -9,26 +9,26 @@ function LeftMenuContainer() {
       <p>Create new citizen?</p>
 
       <p>Name?</p>
-      <input type="text" placeholder='Robert' />
+      <input type="text" placeholder='Robert' className='InputFields'/>
 
       <p>Eyes color?</p>
-      <input type="color" />
+      <input type="color" className='InputFields'/>
 
       <p>Hair color?</p>
-      <input type="color" />
+      <input type="color" className='InputFields'/>
 
       <p>Height?</p>
-      <input type="number" /> cm
+      <input type="number" className='InputFields'/>
 
       <p>Birth date?</p>
-      <input type="date" />
+      <input type="date" className='InputFields'/>
 
       <p>Passport ID?</p>
-      <input type="number" />
+      <input type="number" className='InputFields'/>
 
       <p>Nationality?</p>
       <div>
-        <input type="radio" id="russiaRadio" name="nationality" checked />
+        <input type="radio" id="russiaRadio" name="nationality" checked className='RadioInput'/>
         <label for="russiaRadio">Russia</label>
         <br />
         <input type="radio" id="franceRadio" name="nationality" />

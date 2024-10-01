@@ -2,7 +2,6 @@ package back.server;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertNotEquals;
-import static org.mockito.ArgumentMatchers.nullable;
 
 import java.util.Date;
 
@@ -10,11 +9,12 @@ import org.junit.jupiter.api.Test;
 import org.springframework.boot.test.context.SpringBootTest;
 
 import back.server.citizens.Citizen;
+import back.server.citizens.ColorFormatException;
 import back.server.citizens.Country;
 import back.server.repository.CitizenRepository;
 
 @SpringBootTest
-class BackApplicationTests {
+class RepositoryTests {
 
 	@Test
 	void readOneCitizenRepository() {
@@ -24,28 +24,28 @@ class BackApplicationTests {
 	}
 
 	@Test
-	void addCitizenRepository() {
+	void addCitizenRepository() throws ColorFormatException {
 		CitizenRepository repo = new CitizenRepository();
-		Citizen citizen = new Citizen("Margo", "Green", "Black", (short) 160, new Date(), 10l, Country.FRANCE);
+		Citizen citizen = new Citizen("Margo", "#000000", "#000000", (short) 160, new Date(), 10l, Country.FRANCE);
 		repo.add(citizen);
 		assertNotEquals(null, citizen.getId());
 	}
 
 	@Test
-	void deleteCitizenFromRepository() {
+	void deleteCitizenFromRepository() throws ColorFormatException {
 		CitizenRepository repo = new CitizenRepository();
-		Citizen citizen = new Citizen("Liza", "Green", "Black", (short) 160, new Date(), 10l, Country.FRANCE);
+		Citizen citizen = new Citizen("Liza", "#000000", "#000000", (short) 160, new Date(), 10l, Country.FRANCE);
 		repo.add(citizen);
 		repo.delete(citizen);
 		assertEquals(repo.find(citizen.getId()), null);
 	}
 
 	@Test
-	void updatedCitizenFromRepository() {
+	void updatedCitizenFromRepository() throws ColorFormatException {
 		CitizenRepository repo = new CitizenRepository();
-		Citizen citizen = new Citizen("Emma", "Green", "Black", (short) 160, new Date(), 10l, Country.FRANCE);
+		Citizen citizen = new Citizen("Emma", "#000000", "#000000", (short) 160, new Date(), 10l, Country.FRANCE);
 		repo.add(citizen);
-		citizen.setHairColor("Red");
+		citizen.setHairColor("#ff0000");
 		repo.update(citizen);
 		Citizen fromRepo = (Citizen) repo.find(citizen.getId());
 		assertEquals(fromRepo.getId(), citizen.getId());
