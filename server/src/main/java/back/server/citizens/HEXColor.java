@@ -20,7 +20,7 @@ public class HEXColor {
         Pattern pattern = Pattern.compile("^#([A-Fa-f0-9]{6}|[A-Fa-f0-9]{3})$");
         Matcher matcher = pattern.matcher(hexColor);
         if (!matcher.matches())
-            throw new ColorFormatException();
+            throw new ColorFormatException(hexColor);
         this.hexColor = hexColor;
     }
 
