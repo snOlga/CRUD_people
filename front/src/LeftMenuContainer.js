@@ -1,6 +1,7 @@
 import './styles/App.css';
+import CitizensTable from './CitizensTable';
 
-function LeftMenuContainer() {
+function LeftMenuContainer({ jsonData }) {
   return (
     <div className="LeftMenuContainer">
       <h1>My little City</h1>
@@ -9,26 +10,26 @@ function LeftMenuContainer() {
       <p>Create new citizen?</p>
 
       <p>Name?</p>
-      <input type="text" placeholder='Robert' className='InputFields'/>
+      <input type="text" placeholder='Robert' className='InputFields' />
 
       <p>Eyes color?</p>
-      <input type="color" className='InputFields'/>
+      <input type="color" className='InputFields' />
 
       <p>Hair color?</p>
-      <input type="color" className='InputFields'/>
+      <input type="color" className='InputFields' />
 
       <p>Height?</p>
-      <input type="number" className='InputFields'/>
+      <input type="number" className='InputFields' />
 
       <p>Birth date?</p>
-      <input type="date" className='InputFields'/>
+      <input type="date" className='InputFields' />
 
       <p>Passport ID?</p>
-      <input type="number" className='InputFields'/>
+      <input type="number" className='InputFields' />
 
-      <p>Nationality?</p>
-      <div>
-        <input type="radio" id="russiaRadio" name="nationality" checked className='RadioInput'/>
+      <div className='NationalityContainer'>
+        <p>Nationality?</p>
+        <input type="radio" id="russiaRadio" name="nationality" checked className='RadioInput' />
         <label for="russiaRadio">Russia</label>
         <br />
         <input type="radio" id="franceRadio" name="nationality" />
@@ -43,6 +44,8 @@ function LeftMenuContainer() {
         <input type="radio" id="southKoreaRadio" name="nationality" />
         <label for="southKoreaRadio">South Korea</label>
       </div>
+
+      <CitizensTable jsonData={jsonData}/>
     </div>
   );
 }

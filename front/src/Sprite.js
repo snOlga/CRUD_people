@@ -1,4 +1,3 @@
-import { useState } from 'react';
 import './styles/App.css';
 
 import sprite1 from './sprites/1.png';
@@ -19,10 +18,8 @@ import sprite15 from './sprites/15.png';
 import sprite16 from './sprites/16.png';
 import sprite17 from './sprites/17.png';
 
-const MAX_SPRITE = 17
 
 function Sprite({ SpriteNumber }) {
-
 
     let currentSprite = sprite1
 

@@ -2,13 +2,12 @@ import { useState, useEffect } from 'react'
 import './styles/App.css'
 
 import Sprite from './Sprite.js'
-import MAX_SPRITE from './Sprite.js'
 
 const ONE_STEP = 5
 const INTERVAL = 1000
 const PICTURE_SIDE_SIZE = 200
 
-function SpriteContainer({ zIndexFromMain, startX, startY }) {
+function SpriteContainer({ name, zIndexFromMain, startX, startY, spriteNumber }) {
     const [position, setPosition] = useState({
         x: (startX + PICTURE_SIDE_SIZE) < window.innerWidth ? startX : (window.innerWidth - PICTURE_SIDE_SIZE),
         y: (startY + PICTURE_SIDE_SIZE) < window.innerHeight ? startY : (window.innerHeight - PICTURE_SIDE_SIZE),
@@ -91,7 +90,8 @@ function SpriteContainer({ zIndexFromMain, startX, startY }) {
             onDragStart={handleDragStart}
             onDragEnd={handleDragEnd}
         >
-            <Sprite SpriteNumber={Math.floor(Math.random() * MAX_SPRITE)} />
+            {name}
+            <Sprite SpriteNumber={spriteNumber} />
         </div>
     )
 }

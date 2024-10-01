@@ -2,9 +2,6 @@ package back.server.repository;
 
 import java.util.List;
 
-import org.hibernate.Session;
-import org.hibernate.Transaction;
-
 import back.server.citizens.Citizen;
 
 public class CitizenRepository extends AbstractRepository {
@@ -29,7 +26,7 @@ public class CitizenRepository extends AbstractRepository {
     }
 
     @Override
-    public List readAll() {
+    public List getAll() {
         startSession();
         List citizens = currentSession().createQuery("FROM Citizen", Citizen.class).list();
         closeSession();
