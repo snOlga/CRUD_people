@@ -9,8 +9,9 @@ import org.junit.jupiter.api.Test;
 import org.springframework.boot.test.context.SpringBootTest;
 
 import back.server.citizens.Citizen;
-import back.server.citizens.ColorFormatException;
 import back.server.citizens.Country;
+import back.server.citizens.exceptions.ColorFormatException;
+import back.server.citizens.exceptions.UnrealHumanHeightException;
 import back.server.repository.CitizenRepository;
 
 @SpringBootTest
@@ -24,7 +25,7 @@ class RepositoryTests {
 	}
 
 	@Test
-	void addCitizenRepository() throws ColorFormatException {
+	void addCitizenRepository() throws ColorFormatException, UnrealHumanHeightException {
 		CitizenRepository repo = new CitizenRepository();
 		Citizen citizen = new Citizen("Margo", "#000000", "#000000", (short) 160, new Date(), 10l, Country.FRANCE);
 		repo.add(citizen);
@@ -32,7 +33,7 @@ class RepositoryTests {
 	}
 
 	@Test
-	void deleteCitizenFromRepository() throws ColorFormatException {
+	void deleteCitizenFromRepository() throws ColorFormatException, UnrealHumanHeightException {
 		CitizenRepository repo = new CitizenRepository();
 		Citizen citizen = new Citizen("Liza", "#000000", "#000000", (short) 160, new Date(), 10l, Country.FRANCE);
 		repo.add(citizen);
@@ -41,7 +42,7 @@ class RepositoryTests {
 	}
 
 	@Test
-	void updatedCitizenFromRepository() throws ColorFormatException {
+	void updatedCitizenFromRepository() throws ColorFormatException, UnrealHumanHeightException {
 		CitizenRepository repo = new CitizenRepository();
 		Citizen citizen = new Citizen("Emma", "#000000", "#000000", (short) 160, new Date(), 10l, Country.FRANCE);
 		repo.add(citizen);

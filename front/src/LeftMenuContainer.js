@@ -1,11 +1,19 @@
 import './styles/App.css';
 import CitizensTable from './CitizensTable';
+import { useState } from 'react'
 
 function LeftMenuContainer({ jsonData }) {
+  // const [name, setName] = useState('');
+  // const [eyeColor, setEyeColor] = useState('');
+  // const [hairColor, setHairColor] = useState('');
+  // const [height, setHeight] = useState('');
+  // const [birthday, setBirthday] = useState('');
+  // const [birthday, setBirthday] = useState('');
+  
   return (
     <div className="LeftMenuContainer">
       <h1>My little City</h1>
-
+      <br/>
 
       <p>Create new citizen?</p>
 
@@ -44,6 +52,8 @@ function LeftMenuContainer({ jsonData }) {
         <input type="radio" id="southKoreaRadio" name="nationality" />
         <label for="southKoreaRadio">South Korea</label>
       </div>
+
+      <button className=''>submit !</button>
 
       <CitizensTable jsonData={jsonData}/>
     </div>

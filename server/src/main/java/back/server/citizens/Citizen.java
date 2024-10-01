@@ -1,8 +1,11 @@
 package back.server.citizens;
 
 import java.util.Date;
+import java.util.Map;
 
 import back.server.EntityMetaData;
+import back.server.citizens.exceptions.ColorFormatException;
+import back.server.citizens.exceptions.UnrealHumanHeightException;
 import jakarta.persistence.*;
 
 @Entity
@@ -47,7 +50,7 @@ public class Citizen extends EntityMetaData {
             short height,
             Date birthday,
             long passportID,
-            Country nationality) throws ColorFormatException {
+            Country nationality) throws ColorFormatException, UnrealHumanHeightException {
         setCreationDate(new Date());
         setRegistrationCoordinates(new Coordinates(0, 0));
         setName(name);
@@ -57,6 +60,18 @@ public class Citizen extends EntityMetaData {
         setBirthday(birthday);
         setPassportID(passportID);
         setNationality(nationality);
+    }
+
+    public Citizen(Map<String, String> json) throws ColorFormatException, UnrealHumanHeightException, NumberFormatException{
+        setCreationDate(new Date());
+        setRegistrationCoordinates(new Coordinates(json.get("xCoord"), json.get("yCoord")));
+        setName(json.get("name"));
+        setHairColor(json.get("hairColor"));
+        setEyeColor(json.get("eyeColor"));
+        setHeight(Short.parseShort(json.get("height")));
+        setBirthday(new Date(json.get("birthday")));
+        setPassportID(Long.parseLong(json.get("passportID")));
+        setNationality(Country.valueOf(json.get("nationality")));
     }
 
     public void setName(String name) {
@@ -71,7 +86,9 @@ public class Citizen extends EntityMetaData {
         this.hairColor = new HEXColor(hairColor);
     }
 
-    public void setHeight(short height) {
+    public void setHeight(short height) throws UnrealHumanHeightException {
+        if (height > 250)
+            throw new UnrealHumanHeightException(height + "");
         this.height = height;
     }
 
@@ -97,6 +114,10 @@ public class Citizen extends EntityMetaData {
 
     public String getHairColor() {
         return hairColor.toString();
+    }
+
+    public short getHeight() {
+        return height;
     }
 
     public java.util.Date getBirthday() {

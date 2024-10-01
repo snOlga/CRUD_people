@@ -2,6 +2,7 @@ package back.server.citizens;
 
 import java.util.regex.*;
 
+import back.server.citizens.exceptions.ColorFormatException;
 import jakarta.persistence.Embeddable;
 
 @Embeddable

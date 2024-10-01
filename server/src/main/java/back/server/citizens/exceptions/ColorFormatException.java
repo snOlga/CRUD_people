@@ -1,4 +1,4 @@
-package back.server.citizens;
+package back.server.citizens.exceptions;
 
 public class ColorFormatException extends Exception{
     public ColorFormatException(String messege) {
