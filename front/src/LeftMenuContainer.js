@@ -3,49 +3,66 @@ import CitizensTable from './CitizensTable';
 import { useState } from 'react'
 
 function LeftMenuContainer({ jsonData }) {
-  const [name, setName] = useState('');
-  const [isMale, setMaleGender] = useState('');
-  const [eyeColor, setEyeColor] = useState('');
-  const [hairColor, setHairColor] = useState('');
-  const [height, setHeight] = useState('');
-  const [birthday, setBirthday] = useState('');
-  const [passportID, setPassportID] = useState('');
-  const [nationality, setNationality] = useState('');
-  const [xCoord, setX] = useState('');
-  const [yCoord, setY] = useState('');
+  const DEFAULT_COLOR = '#000000'
+  const ERROR_COLOR = '#FF0000'
+
+  const [name, setName] = useState('')
+  const [isMale, setMaleGender] = useState('')
+  const [eyeColor, setEyeColor] = useState(DEFAULT_COLOR)
+  const [hairColor, setHairColor] = useState(DEFAULT_COLOR)
+  const [height, setHeight] = useState('')
+  const [birthday, setBirthday] = useState('')
+  const [passportID, setPassportID] = useState('')
+  const [nationality, setNationality] = useState('')
+  const [xCoord, setX] = useState('')
+  const [yCoord, setY] = useState('')
+
+  const [mainErrorMessage, setMainErrorMessage] = useState('')
+  const [nameErrorBorder, setNameErrorBorder] = useState(DEFAULT_COLOR)
+  const [genderErrorColor, setGenderErrorColor] = useState(DEFAULT_COLOR)
+  const [heightErrorBorder, setHeightErrorBorder] = useState(DEFAULT_COLOR)
+  const [birthdayErrorBorder, setBirthdayErrorBorder] = useState(DEFAULT_COLOR)
+  const [passportIDErrprBorder, setPassportIDErrorBorder] = useState(DEFAULT_COLOR)
+  const [nationalityErrorColor, setNationalityErrorColor] = useState(DEFAULT_COLOR)
+
 
   const handleName = (e) => {
-    setName(e.target.value);
-  };
-
-  const handleEyeColor = (e) => {
-    setEyeColor(e.target.value);
-  };
-
-  const handleHairColor = (e) => {
-    setHairColor(e.target.value);
-  };
-
-  const handleHeight = (e) => {
-    setHeight(e.target.value);
-  };
-
-  const handleBirthday = (e) => {
-    setBirthday(e.target.value);
-  };
-
-  const handlePassportID = (e) => {
-    setPassportID(e.target.value);
-  };
-
-  const handleNationality = (value) => {
-    setNationality(value);
-  };
+    setName(e.target.value)
+    setNameErrorBorder(DEFAULT_COLOR)
+  }
 
   const handleGender = (value) => {
-    console.log(value)
-    setMaleGender(value);
-  };
+    setMaleGender(value)
+    setGenderErrorColor(DEFAULT_COLOR)
+  }
+
+  const handleEyeColor = (e) => {
+    setEyeColor(e.target.value)
+  }
+
+  const handleHairColor = (e) => {
+    setHairColor(e.target.value)
+  }
+
+  const handleHeight = (e) => {
+    setHeight(e.target.value)
+    setHeightErrorBorder(DEFAULT_COLOR)
+  }
+
+  const handleBirthday = (e) => {
+    setBirthday(e.target.value)
+    setBirthdayErrorBorder(DEFAULT_COLOR)
+  }
+
+  const handlePassportID = (e) => {
+    setPassportID(e.target.value)
+    setPassportIDErrorBorder(DEFAULT_COLOR)
+  }
+
+  const handleNationality = (value) => {
+    setNationality(value)
+    setNationalityErrorColor(DEFAULT_COLOR)
+  }
 
   navigator.geolocation.getCurrentPosition((position) => {
     let lat = position.coords.latitude
@@ -54,7 +71,29 @@ function LeftMenuContainer({ jsonData }) {
     setY(long)
   })
 
+  function isFilled() {
+    if (name == '')
+      setNameErrorBorder(ERROR_COLOR)
+    if (isMale == '')
+      setGenderErrorColor(ERROR_COLOR)
+    if (height == '')
+      setHeightErrorBorder(ERROR_COLOR)
+    if (birthday == '')
+      setBirthdayErrorBorder(ERROR_COLOR)
+    if (passportID == '')
+      setPassportIDErrorBorder(ERROR_COLOR)
+    if (nationality == '')
+      setNationalityErrorColor(ERROR_COLOR)
+
+    return name != '' && isMale != '' && height != '' && birthday != '' && passportID != '' && nationality != '' && xCoord != '' && yCoord != ''
+  }
+
   const handleSubmit = async (e) => {
+    if (!isFilled()) {
+      setMainErrorMessage("Some fields are empty!")
+      return
+    }
+
     e.preventDefault()
 
     fetch('http://localhost:8080/api/send_one', {
@@ -90,14 +129,17 @@ function LeftMenuContainer({ jsonData }) {
       <p>Create new citizen?</p>
 
       <p>Name?</p>
-      <input type="text" placeholder='Robert' className='InputFields' onChange={handleName} />
-
-      <p>Gender?</p>
-      <input type="radio" id="maleRadio" name="maleRadio" value="MALE" onClick={() => handleGender('1')} />
-      <label for="maleRadio">Male</label>
+      <input type="text" placeholder='Robert' className='InputFields' onChange={handleName} style={{ borderColor: nameErrorBorder }} />
       <br />
-      <input type="radio" id="femaleRadio" name="maleRadio" value="FEMALE" onClick={() => handleGender('0')} />
-      <label for="femaleRadio">Female</label>
+
+      <div>
+        <p style={{ color: genderErrorColor }}>Gender?</p>
+        <input type="radio" id="maleRadio" name="maleRadio" value="MALE" onClick={() => handleGender('1')} />
+        <label for="maleRadio">Male</label>
+        <br />
+        <input type="radio" id="femaleRadio" name="maleRadio" value="FEMALE" onClick={() => handleGender('0')} />
+        <label for="femaleRadio">Female</label>
+      </div>
 
       <p>Eyes color?</p>
       <input type="color" className='InputFields' onChange={handleEyeColor} />
@@ -106,17 +148,17 @@ function LeftMenuContainer({ jsonData }) {
       <input type="color" className='InputFields' onChange={handleHairColor} />
 
       <p>Height?</p>
-      <input type="number" className='InputFields' onChange={handleHeight} />
+      <input type="number" className='InputFields' onChange={handleHeight} style={{ borderColor: heightErrorBorder }} />
 
       <p>Birth date?</p>
-      <input type="date" className='InputFields' onChange={handleBirthday} />
+      <input type="date" className='InputFields' onChange={handleBirthday} style={{ borderColor: birthdayErrorBorder }} />
 
       <p>Passport ID?</p>
-      <input type="number" className='InputFields' onChange={handlePassportID} />
+      <input type="number" className='InputFields' onChange={handlePassportID} style={{ borderColor: passportIDErrprBorder }} />
 
       <div className='NationalityContainer'>
-        <p>Nationality?</p>
-        <input type="radio" id="russiaRadio" name="nationality" checked className='RadioInput' value="RUSSIA" onClick={() => handleNationality("RUSSIA")} />
+        <p style={{ color: nationalityErrorColor }}>Nationality?</p>
+        <input type="radio" id="russiaRadio" name="nationality" className='RadioInput' value="RUSSIA" onClick={() => handleNationality("RUSSIA")} />
         <label for="russiaRadio">Russia</label>
         <br />
         <input type="radio" id="franceRadio" name="nationality" value="FRANCE" onClick={() => handleNationality("FRANCE")} />
@@ -132,8 +174,10 @@ function LeftMenuContainer({ jsonData }) {
         <label for="southKoreaRadio">South Korea</label>
       </div>
 
-      <button className='' onClick={handleSubmit}>submit !</button>
-
+      <br />
+      <button className='submitButton' onClick={handleSubmit}>submit !</button>
+      <br />
+      <span>{mainErrorMessage}</span>
       <CitizensTable jsonData={jsonData} />
     </div>
   );
