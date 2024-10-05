@@ -38,7 +38,6 @@ public class MainController {
             System.out.println(name + " " + value);
         }
         System.out.println("-----------------------------------------------");
-        
         Map<String, String> response = new TreeMap<>();
         try {
             Citizen citizen = new Citizen(json);

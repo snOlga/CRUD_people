@@ -71,6 +71,15 @@ function LeftMenuContainer({ jsonData }) {
     setY(long)
   })
 
+  const nameSubstr = event => {
+    console.log(event.target.value.length)
+    let lastChar = event.target.value[event.target.value.length - 1]
+    if (event.target.value.length >= 1 && lastChar.toUpperCase() == lastChar.toLowerCase()) {
+      event.target.value = event.target.value.substr(0, event.target.value.length - 1)
+    }
+    event.target.value = event.target.value.substr(0, 20)
+  }
+
   function isFilled() {
     if (name == '')
       setNameErrorBorder(ERROR_COLOR)
@@ -96,6 +105,24 @@ function LeftMenuContainer({ jsonData }) {
 
     e.preventDefault()
 
+    if (!isPassportUnique()) {
+      setMainErrorMessage("Passport ID is not unique!")
+      return
+    }
+
+    sendCitizen()
+  }
+
+  function isPassportUnique() {
+    for (var i = 0; i < jsonData.length; i++) {
+      let citizen = jsonData[i];
+      if (citizen.passportID == passportID)
+        return false
+    }
+    return true
+  }
+
+  function sendCitizen() {
     fetch('http://localhost:8080/api/send_one', {
       method: 'POST',
       headers: {
@@ -118,7 +145,6 @@ function LeftMenuContainer({ jsonData }) {
       .then(response => {
         window.location.reload()
       })
-
   }
 
   return (
@@ -129,7 +155,7 @@ function LeftMenuContainer({ jsonData }) {
       <p>Create new citizen?</p>
 
       <p>Name?</p>
-      <input type="text" placeholder='Robert' className='InputFields' onChange={handleName} style={{ borderColor: nameErrorBorder }} />
+      <input type="text" placeholder='Robert' className='InputFields' onChange={handleName} style={{ borderColor: nameErrorBorder }} onInput={nameSubstr} />
       <br />
 
       <div>
