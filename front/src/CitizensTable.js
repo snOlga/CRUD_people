@@ -2,13 +2,13 @@ import React from 'react';
 import { useState } from 'react';
 
 function CitizensTable({ jsonData }) {
-
     const displayData = jsonData.map(
         (citizen) => {
             return (
                 <tr>
                     <td>{citizen.id}</td>
                     <td>{citizen.name}</td>
+                    <td>{citizen.gender}</td>
                     <td style={{ backgroundColor: citizen.eyeColor }}></td>
                     <td style={{ backgroundColor: citizen.hairColor }}></td>
                     <td>{citizen.height}</td>
@@ -26,6 +26,7 @@ function CitizensTable({ jsonData }) {
                 <tr>
                     <th>id</th>
                     <th>name</th>
+                    <th>is male</th>
                     <th>eye color</th>
                     <th>hair color</th>
                     <th>height</th>

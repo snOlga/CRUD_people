@@ -23,7 +23,6 @@ function App() {
     })
       .then(response => {
         let jsonResp = response.json();
-        console.log(jsonResp);
         jsonResp.then((data) => setTable(data));
       })
   }
@@ -31,7 +30,7 @@ function App() {
   return (
     <div className="App">
       <link rel="preconnect" href="https://fonts.googleapis.com" />
-      <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+      <link rel="preconnect" href="https://fonts.gstatic.com" crossOrigin />
       <link href="https://fonts.googleapis.com/css2?family=Tiny5&display=swap" rel="stylesheet" />
       <LeftMenuContainer jsonData={tableValue} />
       <SpriteField jsonData={tableValue} />

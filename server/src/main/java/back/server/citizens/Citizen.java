@@ -7,6 +7,7 @@ import back.server.EntityMetaData;
 import back.server.citizens.exceptions.ColorFormatException;
 import back.server.citizens.exceptions.UnrealHumanHeightException;
 import jakarta.persistence.*;
+import java.time.LocalDate;
 
 @Entity
 @Table(name = "citizens")
@@ -14,11 +15,14 @@ public class Citizen extends EntityMetaData {
     @Column(name = "name")
     private String name;
 
+    @Column(name = "gender") // 0 for female, other for male
+    private byte gender;
+
     @Column(name = "height")
     private short height;
 
     @Column(name = "birthday")
-    private Date birthday;
+    private LocalDate birthday;
 
     @Column(name = "passportID")
     private Long passportID;
@@ -28,15 +32,15 @@ public class Citizen extends EntityMetaData {
     private Country nationality;
 
     @Embedded
-    @AttributeOverrides({ 
-        @AttributeOverride(name = "hexColor", column = @Column(name = "eyeColor")) 
-        }) 
+    @AttributeOverrides({
+            @AttributeOverride(name = "hexColor", column = @Column(name = "eyeColor"))
+    })
     private HEXColor eyeColor;
 
     @Embedded
-    @AttributeOverrides({ 
-        @AttributeOverride(name = "hexColor", column = @Column(name = "hairColor")) 
-        }) 
+    @AttributeOverrides({
+            @AttributeOverride(name = "hexColor", column = @Column(name = "hairColor"))
+    })
     private HEXColor hairColor;
 
     public Citizen() {
@@ -45,15 +49,17 @@ public class Citizen extends EntityMetaData {
     }
 
     public Citizen(String name,
+            byte gender,
             String eyeColor,
             String hairColor,
             short height,
-            Date birthday,
+            LocalDate birthday,
             long passportID,
             Country nationality) throws ColorFormatException, UnrealHumanHeightException {
         setCreationDate(new Date());
         setRegistrationCoordinates(new Coordinates(0, 0));
         setName(name);
+        setGender(gender);
         setHairColor(hairColor);
         setEyeColor(eyeColor);
         setHeight(height);
@@ -62,20 +68,26 @@ public class Citizen extends EntityMetaData {
         setNationality(nationality);
     }
 
-    public Citizen(Map<String, String> json) throws ColorFormatException, UnrealHumanHeightException, NumberFormatException{
+    public Citizen(Map<String, String> json)
+            throws ColorFormatException, UnrealHumanHeightException, NumberFormatException {
         setCreationDate(new Date());
         setRegistrationCoordinates(new Coordinates(json.get("xCoord"), json.get("yCoord")));
         setName(json.get("name"));
+        setGender(Byte.parseByte(json.get("gender")));
         setHairColor(json.get("hairColor"));
         setEyeColor(json.get("eyeColor"));
         setHeight(Short.parseShort(json.get("height")));
-        setBirthday(new Date(json.get("birthday")));
+        setBirthday(LocalDate.parse(json.get("birthday")));
         setPassportID(Long.parseLong(json.get("passportID")));
         setNationality(Country.valueOf(json.get("nationality")));
     }
 
     public void setName(String name) {
         this.name = name;
+    }
+
+    public void setGender(byte gender) {
+        this.gender = gender;
     }
 
     public void setEyeColor(String eyeColor) throws ColorFormatException {
@@ -92,7 +104,7 @@ public class Citizen extends EntityMetaData {
         this.height = height;
     }
 
-    public void setBirthday(java.util.Date birthday) {
+    public void setBirthday(LocalDate birthday) {
         this.birthday = birthday;
     }
 
@@ -108,6 +120,10 @@ public class Citizen extends EntityMetaData {
         return name;
     }
 
+    public byte getGender() {
+        return gender;
+    }
+
     public String getEyeColor() {
         return eyeColor.toString();
     }
@@ -120,7 +136,7 @@ public class Citizen extends EntityMetaData {
         return height;
     }
 
-    public java.util.Date getBirthday() {
+    public LocalDate getBirthday() {
         return birthday;
     }
 

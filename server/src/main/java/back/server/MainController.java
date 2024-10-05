@@ -7,6 +7,8 @@ import java.util.ArrayList;
 
 import org.springframework.web.bind.annotation.*;
 
+import com.fasterxml.jackson.databind.util.TypeKey;
+
 import back.server.citizens.Citizen;
 import back.server.citizens.exceptions.ColorFormatException;
 import back.server.citizens.exceptions.UnrealHumanHeightException;
@@ -29,7 +31,14 @@ public class MainController {
     // isSuccessful : yes/no
     // message :
     @PostMapping("/api/send_one")
-    public Map<String, String> sendToDB (@RequestBody Map<String, String> json) {
+    public Map<String, String> sendToDB(@RequestBody Map<String, String> json) {
+        System.out.println("-----------------------------------------------");
+        for (String name : json.keySet()) {
+            String value = json.get(name);
+            System.out.println(name + " " + value);
+        }
+        System.out.println("-----------------------------------------------");
+        
         Map<String, String> response = new TreeMap<>();
         try {
             Citizen citizen = new Citizen(json);

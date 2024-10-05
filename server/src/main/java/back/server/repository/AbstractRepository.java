@@ -28,7 +28,7 @@ public abstract class AbstractRepository implements IRepository {
         transaction = session.beginTransaction();
     }
 
-    void closeSession() {
+    final void closeSession() {
         transaction.commit();
         session.close();
         transaction = null;

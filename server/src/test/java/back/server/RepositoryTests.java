@@ -13,6 +13,7 @@ import back.server.citizens.Country;
 import back.server.citizens.exceptions.ColorFormatException;
 import back.server.citizens.exceptions.UnrealHumanHeightException;
 import back.server.repository.CitizenRepository;
+import java.time.LocalDate;
 
 @SpringBootTest
 class RepositoryTests {
@@ -27,7 +28,10 @@ class RepositoryTests {
 	@Test
 	void addCitizenRepository() throws ColorFormatException, UnrealHumanHeightException {
 		CitizenRepository repo = new CitizenRepository();
-		Citizen citizen = new Citizen("Margo", "#000000", "#000000", (short) 160, new Date(), 10l, Country.FRANCE);
+		Citizen citizen = new Citizen("David", (byte) 1, "#000000", "#000000", (short) 160,
+				LocalDate.parse("2000-10-01"),
+				10l,
+				Country.FRANCE);
 		repo.add(citizen);
 		assertNotEquals(null, citizen.getId());
 	}
@@ -35,7 +39,10 @@ class RepositoryTests {
 	@Test
 	void deleteCitizenFromRepository() throws ColorFormatException, UnrealHumanHeightException {
 		CitizenRepository repo = new CitizenRepository();
-		Citizen citizen = new Citizen("Liza", "#000000", "#000000", (short) 160, new Date(), 10l, Country.FRANCE);
+		Citizen citizen = new Citizen("Liza", (byte) 0, "#000000", "#000000", (short) 160,
+				LocalDate.parse("2000-10-01"),
+				10l,
+				Country.FRANCE);
 		repo.add(citizen);
 		repo.delete(citizen);
 		assertEquals(repo.find(citizen.getId()), null);
@@ -44,7 +51,9 @@ class RepositoryTests {
 	@Test
 	void updatedCitizenFromRepository() throws ColorFormatException, UnrealHumanHeightException {
 		CitizenRepository repo = new CitizenRepository();
-		Citizen citizen = new Citizen("Emma", "#000000", "#000000", (short) 160, new Date(), 10l, Country.FRANCE);
+		Citizen citizen = new Citizen("Emma", (byte) 0, "#000000", "#000000", (short) 160,
+				LocalDate.parse("2000-10-01"),
+				10l, Country.FRANCE);
 		repo.add(citizen);
 		citizen.setHairColor("#ff0000");
 		repo.update(citizen);
