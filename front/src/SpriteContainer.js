@@ -7,7 +7,7 @@ const ONE_STEP = 5
 const INTERVAL = 1000
 const PICTURE_SIDE_SIZE = 200
 
-function SpriteContainer({ name, zIndexFromMain, startX, startY, spriteNumber, isMale, hairColor }) {
+function SpriteContainer({ name, zIndexFromMain, startX, startY, spriteNumber, isMale, hairColor, eyeColor }) {
     const [position, setPosition] = useState({
         x: (startX + PICTURE_SIDE_SIZE) < window.innerWidth ? startX : (window.innerWidth - PICTURE_SIDE_SIZE),
         y: (startY + PICTURE_SIDE_SIZE) < window.innerHeight ? startY : (window.innerHeight - PICTURE_SIDE_SIZE),
@@ -91,7 +91,7 @@ function SpriteContainer({ name, zIndexFromMain, startX, startY, spriteNumber, i
             onDragEnd={handleDragEnd}
         >
             {name}
-            <Sprite SpriteNumber={spriteNumber} isMale={isMale} hairColor={hairColor} />
+            <Sprite SpriteNumber={spriteNumber} isMale={isMale} hairColor={hairColor} eyeColor={eyeColor} />
         </div>
     )
 }

@@ -16,7 +16,8 @@ function SpriteField({ jsonData }) {
                     startY={Math.random() * window.innerHeight}
                     spriteNumber={((citizen.id) % MAX_SPRITE)}
                     isMale={citizen.gender}
-                    hairColor={citizen.hairColor} />
+                    hairColor={citizen.hairColor}
+                    eyeColor={citizen.eyeColor} />
             )
         }
     )
