@@ -5,7 +5,7 @@ const MAX_SPRITE = 8 //idk how import const from other file
 
 let currentZIndex = 0
 
-function SpriteField({ jsonData }) {
+function SpriteField({ jsonData, setShow, setNameEdit, setHeightEdit, setHairColorEdit, setPassportIDEdit, setIDEdit }) {
 
     const displayWithNames = jsonData.map(
         (citizen) => {
@@ -17,7 +17,16 @@ function SpriteField({ jsonData }) {
                     spriteNumber={((citizen.id) % MAX_SPRITE)}
                     isMale={citizen.gender}
                     hairColor={citizen.hairColor}
-                    eyeColor={citizen.eyeColor} />
+                    eyeColor={citizen.eyeColor}
+                    height={citizen.height}
+                    passportID={citizen.passportID}
+                    id={citizen.id}
+                    setShow={setShow}
+                    setNameEdit={setNameEdit}
+                    setHeightEdit={setHeightEdit}
+                    setHairColorEdit={setHairColorEdit}
+                    setPassportIDEdit={setPassportIDEdit}
+                    setIDEdit={setIDEdit} />
             )
         }
     )

@@ -7,7 +7,7 @@ const ONE_STEP = 5
 const INTERVAL = 1000
 const PICTURE_SIDE_SIZE = 200
 
-function SpriteContainer({ name, zIndexFromMain, startX, startY, spriteNumber, isMale, hairColor, eyeColor }) {
+function SpriteContainer({ name, zIndexFromMain, startX, startY, spriteNumber, isMale, hairColor, eyeColor, setShow, setNameEdit, setHeightEdit, setHairColorEdit, setPassportIDEdit, setIDEdit, height, passportID, id }) {
     const [position, setPosition] = useState({
         x: (startX + PICTURE_SIDE_SIZE) < window.innerWidth ? startX : (window.innerWidth - PICTURE_SIDE_SIZE),
         y: (startY + PICTURE_SIDE_SIZE) < window.innerHeight ? startY : (window.innerHeight - PICTURE_SIDE_SIZE),
@@ -76,6 +76,15 @@ function SpriteContainer({ name, zIndexFromMain, startX, startY, spriteNumber, i
         }
     }
 
+    function handleEdit() {
+        setShow(true)
+        setNameEdit(name)
+        setHeightEdit(height)
+        setHairColorEdit(hairColor)
+        setPassportIDEdit(passportID)
+        setIDEdit(id)
+    }
+
     return (
         <div
             className="Sprite"
@@ -90,7 +99,7 @@ function SpriteContainer({ name, zIndexFromMain, startX, startY, spriteNumber, i
             onDragStart={handleDragStart}
             onDragEnd={handleDragEnd}
         >
-            {name}
+            {name} <button onClick={handleEdit}>edit</button>
             <Sprite SpriteNumber={spriteNumber} isMale={isMale} hairColor={hairColor} eyeColor={eyeColor} />
         </div>
     )

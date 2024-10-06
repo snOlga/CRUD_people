@@ -104,12 +104,20 @@ public class Citizen extends EntityMetaData {
         this.height = height;
     }
 
+    public void setHeight(String heightStr) throws UnrealHumanHeightException {
+        this.setHeight(Short.parseShort(heightStr));
+    }
+
     public void setBirthday(LocalDate birthday) {
         this.birthday = birthday;
     }
 
     public void setPassportID(Long passportID) {
         this.passportID = passportID;
+    }
+
+    public void setPassportID(String passportIDStr) {
+        this.setPassportID(Long.parseLong(passportIDStr));
     }
 
     public void setNationality(Country nationality) {
@@ -146,5 +154,16 @@ public class Citizen extends EntityMetaData {
 
     public Country getNationality() {
         return nationality;
+    }
+
+    public void updateFormJson(Map<String, String> json) throws ColorFormatException, UnrealHumanHeightException {
+        if (!json.get("name").isEmpty())
+            setName(json.get("name"));
+        if (!json.get("hairColor").isEmpty())
+            setHairColor(json.get("hairColor"));
+        if (!json.get("height").isEmpty())
+            setHeight(json.get("height"));
+        if (!json.get("passportID").isEmpty())
+            setPassportID(json.get("passportID"));
     }
 }

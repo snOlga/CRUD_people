@@ -14,13 +14,29 @@
 
 .LeftMenuContainer {
   position: absolute;
-  min-height: 80vh;
+}
+
+.Form {
+  position: relative;
+  max-width: fit-content;
   min-width: 30vh;
   border: solid;
   border-color: black;
   border-width: 10px;
   margin: 2%;
-  padding: 1%;
+  padding: 4%;
+  background-color: bisque;
+}
+
+.Table {
+  position: relative;
+  max-width: fit-content;
+  min-width: 30vh;
+  border: solid;
+  border-color: black;
+  border-width: 10px;
+  margin: 2%;
+  padding: 4%;
   background-color: bisque;
 }
 
@@ -67,10 +83,35 @@ input[type='radio']:checked {
   margin-bottom: 3%;
 }
 
-.submitButton {
+button {
   border: solid;
   border-color: black;
-  border-width: 5px;
+  border-width: 3px;
   font-family: "Tiny5", sans-serif;
   background-color: white;
+  margin-right: 2%;
+}
+
+.tableInput {
+  border-color: #00000000 !important;
+  margin-right: 0 !important;
+  width: 50px !important;
+}
+
+.tableInput::placeholder {
+  color: black;
+}
+
+.Modal {
+  z-index: 10000;
+  position: absolute;
+  right: 0;
+  max-width: fit-content;
+  min-width: 30vh;
+  border: solid;
+  border-color: black;
+  border-width: 10px;
+  margin: 2%;
+  padding: 2%;
+  background-color: bisque;
 }
