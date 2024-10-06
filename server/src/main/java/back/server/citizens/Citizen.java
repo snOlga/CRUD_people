@@ -12,34 +12,43 @@ import java.time.LocalDate;
 @Entity
 @Table(name = "citizens")
 public class Citizen extends EntityMetaData {
-    @Column(name = "name")
+    public static final String NAME = "name";
+    public static final String GENDER = "gender";
+    public static final String HEIGHT = "height";
+    public static final String BIRTHDAY = "birthday";
+    public static final String PASSPORT_ID = "passportID";
+    public static final String NATIONALITY = "nationality";
+    public static final String EYE_COLOR = "eyeColor";
+    public static final String HAIR_COLOR = "hairColor";
+
+    @Column(name = NAME)
     private String name;
 
-    @Column(name = "gender") // 0 for female, other for male
+    @Column(name = GENDER) // 0 for female, other for male
     private byte gender;
 
-    @Column(name = "height")
+    @Column(name = HEIGHT)
     private short height;
 
-    @Column(name = "birthday")
+    @Column(name = BIRTHDAY)
     private LocalDate birthday;
 
-    @Column(name = "passportID")
+    @Column(name = PASSPORT_ID)
     private Long passportID;
 
-    @Column(name = "nationality")
+    @Column(name = NATIONALITY)
     @Enumerated(EnumType.STRING)
     private Country nationality;
 
     @Embedded
     @AttributeOverrides({
-            @AttributeOverride(name = "hexColor", column = @Column(name = "eyeColor"))
+            @AttributeOverride(name = "hexColor", column = @Column(name = EYE_COLOR))
     })
     private HEXColor eyeColor;
 
     @Embedded
     @AttributeOverrides({
-            @AttributeOverride(name = "hexColor", column = @Column(name = "hairColor"))
+            @AttributeOverride(name = "hexColor", column = @Column(name = HAIR_COLOR))
     })
     private HEXColor hairColor;
 
@@ -72,14 +81,14 @@ public class Citizen extends EntityMetaData {
             throws ColorFormatException, UnrealHumanHeightException, NumberFormatException {
         setCreationDate(new Date());
         setRegistrationCoordinates(new Coordinates(json.get("xCoord"), json.get("yCoord")));
-        setName(json.get("name"));
-        setGender(Byte.parseByte(json.get("gender")));
-        setHairColor(json.get("hairColor"));
-        setEyeColor(json.get("eyeColor"));
-        setHeight(Short.parseShort(json.get("height")));
-        setBirthday(LocalDate.parse(json.get("birthday")));
-        setPassportID(Long.parseLong(json.get("passportID")));
-        setNationality(Country.valueOf(json.get("nationality")));
+        setName(json.get(NAME));
+        setGender(Byte.parseByte(json.get(GENDER)));
+        setHairColor(json.get(HAIR_COLOR));
+        setEyeColor(json.get(EYE_COLOR));
+        setHeight(Short.parseShort(json.get(HEIGHT)));
+        setBirthday(LocalDate.parse(json.get(BIRTHDAY)));
+        setPassportID(Long.parseLong(json.get(PASSPORT_ID)));
+        setNationality(Country.valueOf(json.get(NATIONALITY)));
     }
 
     public void setName(String name) {
@@ -157,13 +166,13 @@ public class Citizen extends EntityMetaData {
     }
 
     public void updateFormJson(Map<String, String> json) throws ColorFormatException, UnrealHumanHeightException {
-        if (!json.get("name").isEmpty())
-            setName(json.get("name"));
-        if (!json.get("hairColor").isEmpty())
-            setHairColor(json.get("hairColor"));
-        if (!json.get("height").isEmpty())
-            setHeight(json.get("height"));
-        if (!json.get("passportID").isEmpty())
-            setPassportID(json.get("passportID"));
+        if (!json.get(NAME).isEmpty())
+            setName(json.get(NAME));
+        if (!json.get(HAIR_COLOR).isEmpty())
+            setHairColor(json.get(HAIR_COLOR));
+        if (!json.get(HEIGHT).isEmpty())
+            setHeight(json.get(HEIGHT));
+        if (!json.get(PASSPORT_ID).isEmpty())
+            setPassportID(json.get(PASSPORT_ID));
     }
 }
