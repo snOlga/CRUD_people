@@ -4,6 +4,9 @@ import ModalEditing from './ModalEditing.js';
 import './styles/App.css';
 import { useState, useEffect } from 'react';
 
+import SockJS from 'sockjs-client';
+import { Stomp } from '@stomp/stompjs';
+
 let currentZIndex = 0
 
 function App() {
@@ -16,8 +19,12 @@ function App() {
   const [passportIDForEditing, setPassportIDForEditing] = useState('')
   const [idForEditing, setIDForEditing] = useState('')
 
+  const BASE_URL = 'http://localhost:8080';
+  const SOCKET_URL = 'http://localhost:8080/ws-endpoint';
+
   useEffect(() => {
-    fetchServer()
+    fetchServer() 
+    connectWebSocket()
   }, [])
 
   function fetchServer() {
@@ -29,9 +36,26 @@ function App() {
       },
     })
       .then(response => {
-        let jsonResp = response.json();
-        jsonResp.then((data) => setTable(data));
+        console.log(response)
+        let jsonResp = response.json()
+        jsonResp.then((data) => 
+          setTable(data))
       })
+  }
+
+  function connectWebSocket() {
+    const socket = new SockJS(SOCKET_URL)
+    let stompClient = Stomp.over(socket)
+
+    stompClient.connect({}, function (frame) {
+      stompClient.subscribe('/topic/citizen', data => {
+        handleWebSocketMessage(data.body)
+      })
+    })
+  }
+
+  function handleWebSocketMessage(data) {
+    setTable(JSON.parse(data))
   }
 
   return (

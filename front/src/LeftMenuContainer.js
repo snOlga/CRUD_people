@@ -143,7 +143,7 @@ function LeftMenuContainer({ jsonData }) {
       }),
     })
       .then(response => {
-        window.location.reload()
+        //window.location.reload()
       })
   }
 

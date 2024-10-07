@@ -28,7 +28,7 @@ class RepositoryTests {
 	@Test
 	void addCitizenRepository() throws ColorFormatException, UnrealHumanHeightException {
 		CitizenRepository repo = new CitizenRepository();
-		Citizen citizen = new Citizen("David", (byte) 1, "#000000", "#000000", (short) 160,
+		Citizen citizen = new Citizen("Mark", (byte) 1, "#000000", "#000000", (short) 160,
 				LocalDate.parse("2000-10-01"),
 				10l,
 				Country.FRANCE);
@@ -39,7 +39,7 @@ class RepositoryTests {
 	@Test
 	void deleteCitizenFromRepository() throws ColorFormatException, UnrealHumanHeightException {
 		CitizenRepository repo = new CitizenRepository();
-		Citizen citizen = new Citizen("Liza", (byte) 0, "#000000", "#000000", (short) 160,
+		Citizen citizen = new Citizen("David", (byte) 0, "#000000", "#000000", (short) 160,
 				LocalDate.parse("2000-10-01"),
 				10l,
 				Country.FRANCE);

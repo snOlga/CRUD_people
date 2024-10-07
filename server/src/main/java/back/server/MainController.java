@@ -5,6 +5,8 @@ import java.util.Map;
 import java.util.TreeMap;
 import java.util.ArrayList;
 
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.messaging.simp.SimpMessagingTemplate;
 import org.springframework.web.bind.annotation.*;
 
 import back.server.citizens.Citizen;
@@ -18,6 +20,13 @@ import jakarta.servlet.http.HttpServletRequest;
 public class MainController {
 
     private CitizenRepository repoCitizen = new CitizenRepository();
+
+    private final SimpMessagingTemplate messagingTemplate;
+
+    @Autowired
+    public MainController(SimpMessagingTemplate messagingTemplate) {
+        this.messagingTemplate = messagingTemplate;
+    }
 
     @GetMapping("/api/get_all")
     public List<Citizen> getAll(HttpServletRequest request) throws ColorFormatException {
@@ -34,6 +43,7 @@ public class MainController {
         try {
             Citizen citizen = new Citizen(json);
             repoCitizen.add(citizen);
+            messagingTemplate.convertAndSend("/topic/citizen", this.getAll(null));
             setResponse(response, true, "");
         } catch (NumberFormatException | UnrealHumanHeightException e) {
             setResponse(response, false, "numbers have wrong format");
@@ -62,6 +72,7 @@ public class MainController {
         try {
             citizen.updateFormJson(json);
             repoCitizen.update(citizen);
+            messagingTemplate.convertAndSend("/topic/citizen", this.getAll(null));
             setResponse(response, true, "");
         } catch (NumberFormatException | UnrealHumanHeightException e) {
             setResponse(response, false, "numbers have wrong format");
