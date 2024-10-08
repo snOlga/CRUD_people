@@ -13,6 +13,8 @@ function ModalEditing({ setShow, id, nameOld, hairColorOld, heightOld, passportI
     const [mainErrorMessage, setMainErrorMessage] = useState('')
     const [passportIDErrorBorder, setPassportIDErrorBorder] = useState(DEFAULT_COLOR)
 
+    const [willDelete, setWillDelete] = useState(false)
+
 
     const handleName = (e) => {
         setName(e.target.value)
@@ -80,8 +82,34 @@ function ModalEditing({ setShow, id, nameOld, hairColorOld, heightOld, passportI
             }),
         })
             .then(response => {
-                window.location.reload()
+                //window.location.reload()
             })
+    }
+
+    const handleDeleting = (e) => {
+        e.preventDefault()
+        setWillDelete(true)
+    }
+
+    const deleteCitizen = (e) => {
+        e.preventDefault()
+        setWillDelete(false)
+        setShow(false)
+
+        fetch('http://localhost:8080/api/delete_one', {
+            method: 'POST',
+            headers: {
+                'Accept': 'application/json',
+                'Content-Type': 'application/json',
+            },
+            body: JSON.stringify({
+                id: id,
+            }),
+        })
+    }
+
+    const closeDeleting = (e) => {
+        setWillDelete(false)
     }
 
     return (
@@ -104,6 +132,11 @@ function ModalEditing({ setShow, id, nameOld, hairColorOld, heightOld, passportI
             <br />
             <button onClick={() => setShow(false)}>just close</button>
             <button onClick={handleEditing}>close and save</button>
+            <br/>
+            <button onClick={handleDeleting}>delete citizen</button>
+            {willDelete && <div>Are you sure? 
+                <br/>
+                <button onClick={deleteCitizen}>yes</button> <button onClick={closeDeleting}>no</button></div>}
         </div>
     )
 }

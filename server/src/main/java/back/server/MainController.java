@@ -6,6 +6,7 @@ import java.util.TreeMap;
 import java.util.ArrayList;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.messaging.MessagingException;
 import org.springframework.messaging.simp.SimpMessagingTemplate;
 import org.springframework.web.bind.annotation.*;
 
@@ -60,13 +61,6 @@ public class MainController {
 
     @PostMapping("/api/update_one")
     public Map<String, String> updateOne(@RequestBody Map<String, String> json) {
-        System.out.println("-----------------------------------------------");
-        for (String name : json.keySet()) {
-            String value = json.get(name);
-            System.out.println(name + " " + value);
-        }
-        System.out.println("-----------------------------------------------");
-
         Citizen citizen = (Citizen) repoCitizen.find(Long.parseLong(json.get("id")));
         Map<String, String> response = new TreeMap<>();
         try {
@@ -80,6 +74,13 @@ public class MainController {
             setResponse(response, false, "colors have wrong format");
         }
         return response;
+    }
+
+    @PostMapping("/api/delete_one")
+    public void deleteOne(@RequestBody Map<String, String> json) throws MessagingException, ColorFormatException {
+        Citizen citizen = (Citizen) repoCitizen.find(Long.parseLong(json.get("id")));
+        repoCitizen.delete(citizen);
+        messagingTemplate.convertAndSend("/topic/citizen", this.getAll(null));
     }
 
 }
