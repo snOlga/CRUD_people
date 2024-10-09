@@ -33,7 +33,6 @@ function ModalEditing({ setShow, id, nameOld, hairColorOld, heightOld, passportI
     }
 
     const nameSubstr = event => {
-        console.log(event.target.value.length)
         let lastChar = event.target.value[event.target.value.length - 1]
         if (event.target.value.length >= 1 && lastChar.toUpperCase() == lastChar.toLowerCase()) {
             event.target.value = event.target.value.substr(0, event.target.value.length - 1)
@@ -56,8 +55,6 @@ function ModalEditing({ setShow, id, nameOld, hairColorOld, heightOld, passportI
         for (var i = 0; i < jsonData.length; i++) {
             let citizen = jsonData[i];
             if (citizen.passportID == passportID && citizen.id != id) {
-                console.log(id)
-                console.log(citizen.id)
                 setPassportIDErrorBorder(ERROR_COLOR)
                 setMainErrorMessage("Passport ID is not unique!")
                 return false

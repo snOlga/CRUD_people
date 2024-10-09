@@ -36,6 +36,7 @@ function UnloggedPage() {
         })
             .then(response => {
                 console.log(response)
+                console.log(response.json())
                 let jsonResp = response.json()
                 jsonResp.then((data) =>
                     setTable(data))

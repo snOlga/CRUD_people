@@ -18,6 +18,7 @@ import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.GrantedAuthority;
+import org.springframework.security.core.authority.AuthorityUtils;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.core.userdetails.UserDetails;
@@ -31,31 +32,22 @@ public class UserController {
     private UserRepository repoUser = new UserRepository();
     private JwtProvider jwtProvider = new JwtProvider();
 
-    // @Autowired
-    // private UserRepository userRepository;
     @Autowired
     private PasswordEncoder passwordEncoder;
     @Autowired
     private AuthenticationManager authenticationManager;
-
-    // @Autowired
-    // public UserController(PasswordEncoder passwordEncoder, AuthenticationManager authenticationManager) {
-    //     this.passwordEncoder = passwordEncoder;
-    //     this.authenticationManager = authenticationManager;
-    // }
 
     @PostMapping("/sign_up")
     public Map<String, String> signUp(@RequestBody Map<String, String> json) {
         Map<String, String> response = new TreeMap<>();
 
         List<GrantedAuthority> authorities = new ArrayList<GrantedAuthority>();
-        authorities.add(new SimpleGrantedAuthority("ROLE_USER"));
+        authorities.add(new SimpleGrantedAuthority("USER")); // role
         UserDetails user = new User(json.get("nickname"), json.get("login"),
                 passwordEncoder.encode(json.get("password")));
         repoUser.add(user);
 
-        Authentication authentication = authenticationManager.authenticate(
-                new UsernamePasswordAuthenticationToken(json.get("login"), json.get("password")));
+        Authentication authentication = new UsernamePasswordAuthenticationToken(json.get("login"),null);
         SecurityContextHolder.getContext().setAuthentication(authentication);
         String token = jwtProvider.generateToken(authentication);
         setResponse(response, true, token);
@@ -68,7 +60,7 @@ public class UserController {
         Map<String, String> response = new TreeMap<>();
 
         Authentication authentication = authenticationManager.authenticate(
-                new UsernamePasswordAuthenticationToken(json.get("login"), json.get("password")));
+                new UsernamePasswordAuthenticationToken(json.get("login"), null));
         SecurityContextHolder.getContext().setAuthentication(authentication);
         String token = jwtProvider.generateToken(authentication);
         setResponse(response, true, token);
@@ -78,6 +70,6 @@ public class UserController {
 
     private void setResponse(Map<String, String> response, boolean isSuccessful, String message) {
         response.put("isSuccessful", isSuccessful + "");
-
+        response.put("token", message);
     }
 }

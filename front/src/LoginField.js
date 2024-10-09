@@ -63,9 +63,8 @@ function LoginField() {
                 y: y
             }),
         })
-            .then(response => {
-                console.log(response)
-            })
+            .then(response => response.json())
+            .then(data => console.log(data.token))
     }
 
     return (
@@ -75,14 +74,14 @@ function LoginField() {
 
                 {willLogIn &&
                     <div>
-                        <p>Nickname?</p>
+                        <p>Login?</p>
                         <input type="text" onChange={(e) => setLogin(e.target.value)} />
                         <br />
                         <p>Password?</p>
                         <input type="password" onChange={(e) => setPassword(e.target.value)} />
                         <br />
                         <p></p>
-                        <input type="hiden" onChange={(e) => setPassword(e.target.value)} />
+                        <input type="hidden" onChange={(e) => setPassword(e.target.value)} />
                         <br />
                         <button onClick={handleLogIn}>let's go!</button>
                     </div>}
@@ -92,7 +91,7 @@ function LoginField() {
                         <p>Nickname?</p>
                         <input type="text" onChange={(e) => setNickname(e.target.value)} />
                         <br />
-                        <p>login?</p>
+                        <p>Login?</p>
                         <input type="text" onChange={(e) => setLogin(e.target.value)} />
                         <br />
                         <p>Password?</p>

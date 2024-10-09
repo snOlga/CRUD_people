@@ -36,7 +36,6 @@ function LoggedPage() {
       },
     })
       .then(response => {
-        console.log(response)
         let jsonResp = response.json()
         jsonResp.then((data) => 
           setTable(data))

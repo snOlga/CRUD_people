@@ -72,7 +72,6 @@ function LeftMenuContainer({ jsonData }) {
   })
 
   const nameSubstr = event => {
-    console.log(event.target.value.length)
     let lastChar = event.target.value[event.target.value.length - 1]
     if (event.target.value.length >= 1 && lastChar.toUpperCase() == lastChar.toLowerCase()) {
       event.target.value = event.target.value.substr(0, event.target.value.length - 1)
@@ -130,6 +129,7 @@ function LeftMenuContainer({ jsonData }) {
         'Content-Type': 'application/json',
       },
       body: JSON.stringify({
+        //Authorization: `Bearer ` + 
         name: name,
         gender: isMale,
         eyeColor: eyeColor,
