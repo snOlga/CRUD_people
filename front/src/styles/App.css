@@ -43,7 +43,9 @@
 input[type="text"],
 [type="number"],
 [type="color"],
-[type="date"] {
+[type="date"],
+[type="password"],
+[type="hidden"] {
   font-family: "Tiny5", sans-serif;
   border: solid;
   border-color: black;
@@ -62,6 +64,10 @@ p {
 
 input[type="color"] {
   padding: 0;
+}
+
+input[type="hidden"] {
+  border-color: #00000000;
 }
 
 input[type='radio'] {

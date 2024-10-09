@@ -19,6 +19,7 @@
 
         <mapping class="back.server.citizens.Citizen"/>
         <mapping class="back.server.citizens.Coordinates"/>
+        <mapping class="back.server.users.User"/>
 
     </session-factory>
 </hibernate-configuration>

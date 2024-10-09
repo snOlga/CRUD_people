@@ -82,5 +82,4 @@ public class MainController {
         repoCitizen.delete(citizen);
         messagingTemplate.convertAndSend("/topic/citizen", this.getAll(null));
     }
-
 }

@@ -6,7 +6,18 @@ import java.util.Map;
 import back.server.EntityMetaData;
 import back.server.citizens.exceptions.ColorFormatException;
 import back.server.citizens.exceptions.UnrealHumanHeightException;
-import jakarta.persistence.*;
+import back.server.users.User;
+import jakarta.persistence.AttributeOverride;
+import jakarta.persistence.AttributeOverrides;
+import jakarta.persistence.CascadeType;
+import jakarta.persistence.Column;
+import jakarta.persistence.Embedded;
+import jakarta.persistence.Entity;
+import jakarta.persistence.EnumType;
+import jakarta.persistence.Enumerated;
+import jakarta.persistence.JoinColumn;
+import jakarta.persistence.ManyToOne;
+import jakarta.persistence.Table;
 import java.time.LocalDate;
 
 @Entity
@@ -20,6 +31,7 @@ public class Citizen extends EntityMetaData {
     public static final String NATIONALITY = "nationality";
     public static final String EYE_COLOR = "eyeColor";
     public static final String HAIR_COLOR = "hairColor";
+    public static final String OWNER = "owner";
 
     @Column(name = NAME)
     private String name;
@@ -51,6 +63,10 @@ public class Citizen extends EntityMetaData {
             @AttributeOverride(name = "hexColor", column = @Column(name = HAIR_COLOR))
     })
     private HEXColor hairColor;
+
+    @ManyToOne(cascade = CascadeType.ALL)
+    @JoinColumn(name = OWNER, referencedColumnName = "id")
+    private User owner;
 
     public Citizen() {
         setCreationDate(new Date());
@@ -133,6 +149,10 @@ public class Citizen extends EntityMetaData {
         this.nationality = nationality;
     }
 
+    public void setOwner(User owner) {
+        this.owner = owner;
+    }
+
     public String getName() {
         return name;
     }
@@ -163,6 +183,10 @@ public class Citizen extends EntityMetaData {
 
     public Country getNationality() {
         return nationality;
+    }
+
+    public User getOwner() {
+        return owner;
     }
 
     public void updateFormJson(Map<String, String> json) throws ColorFormatException, UnrealHumanHeightException {

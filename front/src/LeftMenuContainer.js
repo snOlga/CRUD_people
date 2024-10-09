@@ -208,7 +208,7 @@ function LeftMenuContainer({ jsonData }) {
       </div >
       <div className="Table">
         <CitizensTable jsonData={jsonData} />
-        </div>
+      </div>
     </div>
   );
 }
