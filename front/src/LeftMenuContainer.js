@@ -2,7 +2,7 @@ import './styles/App.css';
 import CitizensTable from './CitizensTable';
 import { useState } from 'react'
 
-function LeftMenuContainer({ jsonData }) {
+function LeftMenuContainer({ jsonData, token }) {
   const DEFAULT_COLOR = '#000000'
   const ERROR_COLOR = '#FF0000'
 
@@ -129,7 +129,7 @@ function LeftMenuContainer({ jsonData }) {
         'Content-Type': 'application/json',
       },
       body: JSON.stringify({
-        //Authorization: `Bearer ` + 
+        Authorization: `Bearer ` + token,
         name: name,
         gender: isMale,
         eyeColor: eyeColor,

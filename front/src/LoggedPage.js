@@ -9,7 +9,7 @@ import { Stomp } from '@stomp/stompjs';
 
 let currentZIndex = 0
 
-function LoggedPage() {
+function LoggedPage({ token }) {
 
   const [tableValue, setTable] = useState([])
   const [showModal, setShow] = useState(false)
@@ -23,7 +23,7 @@ function LoggedPage() {
   const SOCKET_URL = 'http://localhost:8080/ws-endpoint';
 
   useEffect(() => {
-    fetchServer() 
+    fetchServer()
     connectWebSocket()
   }, [])
 
@@ -37,7 +37,7 @@ function LoggedPage() {
     })
       .then(response => {
         let jsonResp = response.json()
-        jsonResp.then((data) => 
+        jsonResp.then((data) =>
           setTable(data))
       })
   }
@@ -62,7 +62,7 @@ function LoggedPage() {
       <link rel="preconnect" href="https://fonts.googleapis.com" />
       <link rel="preconnect" href="https://fonts.gstatic.com" crossOrigin />
       <link href="https://fonts.googleapis.com/css2?family=Tiny5&display=swap" rel="stylesheet" />
-      <LeftMenuContainer jsonData={tableValue} />
+      <LeftMenuContainer jsonData={tableValue} token={token} />
       <SpriteField jsonData={tableValue} setShow={setShow} setNameEdit={setNameForEditing} setHeightEdit={setHeightForEditing} setHairColorEdit={setHairColorForEditing} setPassportIDEdit={setPassportIDForEditing} setIDEdit={setIDForEditing} />
       {showModal && <ModalEditing setShow={setShow} jsonData={tableValue} nameOld={nameForEditing} hairColorOld={hairColorForEditing} heightOld={heightForEditing} passportIDOld={passportIDForEditing} id={idForEditing} />}
     </div>

@@ -1,7 +1,8 @@
 import './styles/App.css';
 import { useState } from 'react'
+import { Navigate, useNavigate } from 'react-router-dom';
 
-function LoginField() {
+function LoginField({ setToken }) {
     const [willLogIn, setWillLogIn] = useState(true)
     const [willSignUp, setWillSignUp] = useState(false)
 
@@ -11,6 +12,8 @@ function LoginField() {
 
     const [x, setX] = useState('')
     const [y, setY] = useState('')
+
+    const navigate = useNavigate()
 
     navigator.geolocation.getCurrentPosition((position) => {
         let lat = position.coords.latitude
@@ -64,7 +67,10 @@ function LoginField() {
             }),
         })
             .then(response => response.json())
-            .then(data => console.log(data.token))
+            .then(data => {
+                setToken(data.token)
+                navigate('/mycity')
+            })
     }
 
     return (

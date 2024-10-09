@@ -8,7 +8,7 @@ import { Stomp } from '@stomp/stompjs';
 
 let currentZIndex = 0
 
-function UnloggedPage() {
+function UnloggedPage({ setToken }) {
 
     const [tableValue, setTable] = useState([])
     const [showModal, setShow] = useState(false)
@@ -60,7 +60,7 @@ function UnloggedPage() {
 
     return (
         <div className="App">
-            <LoginField />
+            <LoginField setToken={setToken} />
             <SpriteField isLogged={false} jsonData={tableValue} setShow={setShow} setNameEdit={setNameForEditing} setHeightEdit={setHeightForEditing} setHairColorEdit={setHairColorForEditing} setPassportIDEdit={setPassportIDForEditing} setIDEdit={setIDForEditing} />
         </div>
     );

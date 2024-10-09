@@ -29,6 +29,8 @@ public class SecurityConfig {
                         .requestMatchers("/api/get_all").permitAll()
                         .requestMatchers("/auth/sign_up").permitAll()
                         .requestMatchers("/auth/log_in").permitAll()
+                        .requestMatchers("/ws-endpoint").permitAll()
+                        .requestMatchers("/topic/citizen").permitAll()
                         .requestMatchers("/", "/static/**", "/index.html", "/favicon.ico", "/manifest.json").permitAll()
                         .anyRequest().authenticated())
                 .addFilterBefore(new JwtTokenValidator(), BasicAuthenticationFilter.class)

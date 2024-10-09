@@ -27,21 +27,14 @@ public class JwtProvider {
         Date currentDate = new Date();
         Date expireDate = new Date(currentDate.getTime() + 86400000);
 
-        JwtBuilder a = Jwts.builder();
-        JwtBuilder b = a.setSubject(username);
-        JwtBuilder c = b.setIssuedAt(currentDate);
-        JwtBuilder d = c.setExpiration(expireDate);
-        JwtBuilder e = d.signWith(key);
-        String l = e.compact();
+        String token = Jwts.builder()
+                .setSubject(username)
+                .setIssuedAt(currentDate)
+                .setExpiration(expireDate)
+                .signWith(key)
+                .compact();
 
-        // String token = Jwts.builder()
-        //         .setSubject(username)
-        //         .setIssuedAt(currentDate)
-        //         .setExpiration(expireDate)
-        //         .signWith(key)
-        //         .compact();
-
-        return l;
+        return token;
     }
 
     public String getUsernameFromJWT(String token) {
