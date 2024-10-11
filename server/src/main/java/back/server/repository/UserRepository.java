@@ -28,7 +28,8 @@ public class UserRepository extends AbstractRepository {
 
     public Object find(String currentLogin) {
         startSession();
-        Query query = currentSession().createQuery("FROM User where item.login = :currentLogin");
+        Query query = currentSession().createQuery("FROM User where login = :currentLogin");
+        query.setParameter("currentLogin", currentLogin);
         User user = (User) query.getSingleResult();
         closeSession();
         return user;

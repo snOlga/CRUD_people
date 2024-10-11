@@ -47,8 +47,13 @@ function LoginField({ setToken }) {
                 y: y
             }),
         })
-            .then(response => {
-                console.log(response)
+            .then(response => response.json())
+            .then(data => {
+                setToken(data.token)
+                if (data.isSuccessful) {
+                    navigate('/mycity')
+                    axios.defaults.headers.common["Authorization"] = `Bearer ` + data.token
+                }
             })
     }
 

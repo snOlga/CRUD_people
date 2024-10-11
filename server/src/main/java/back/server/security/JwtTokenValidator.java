@@ -15,8 +15,6 @@ import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.web.filter.OncePerRequestFilter;
 
 import back.server.repository.UserRepository;
-import back.server.users.User;
-import io.jsonwebtoken.Claims;
 import java.util.List;
 
 public class JwtTokenValidator extends OncePerRequestFilter {
@@ -38,15 +36,10 @@ public class JwtTokenValidator extends OncePerRequestFilter {
             boolean isValid = jwtProvider.validateToken(jwt);
 
             if (isValid) {
-                // Claims claims = jwtProvider.getClaims(jwt);
                 String login = jwtProvider.getUsernameFromJWT(jwt);
 
                 String authorities = "USER";
                 List<GrantedAuthority> auth = AuthorityUtils.commaSeparatedStringToAuthorityList(authorities);
-
-                //User user = (User) repoUser.find(login);
-
-                //SecurityUser securityUser = new SecurityUser(user.getLogin(), user.getPassword(), authorities);
 
                 Authentication authentication = new UsernamePasswordAuthenticationToken(
                     login, null, auth);
