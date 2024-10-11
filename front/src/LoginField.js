@@ -1,5 +1,6 @@
 import './styles/App.css';
 import { useState } from 'react'
+import axios from 'axios'
 import { Navigate, useNavigate } from 'react-router-dom';
 
 function LoginField({ setToken }) {
@@ -70,6 +71,7 @@ function LoginField({ setToken }) {
             .then(data => {
                 setToken(data.token)
                 navigate('/mycity')
+                axios.defaults.headers.common["Authorization"] = `Bearer ` + data.token
             })
     }
 

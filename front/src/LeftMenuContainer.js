@@ -25,7 +25,6 @@ function LeftMenuContainer({ jsonData, token }) {
   const [passportIDErrorBorder, setPassportIDErrorBorder] = useState(DEFAULT_COLOR)
   const [nationalityErrorColor, setNationalityErrorColor] = useState(DEFAULT_COLOR)
 
-
   const handleName = (e) => {
     setName(e.target.value)
     setNameErrorBorder(DEFAULT_COLOR)
@@ -127,9 +126,9 @@ function LeftMenuContainer({ jsonData, token }) {
       headers: {
         'Accept': 'application/json',
         'Content-Type': 'application/json',
+        'Authorization': `Bearer ` + token
       },
       body: JSON.stringify({
-        Authorization: `Bearer ` + token,
         name: name,
         gender: isMale,
         eyeColor: eyeColor,

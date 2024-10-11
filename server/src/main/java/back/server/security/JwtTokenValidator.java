@@ -9,10 +9,19 @@ import java.io.IOException;
 
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.Authentication;
+import org.springframework.security.core.GrantedAuthority;
+import org.springframework.security.core.authority.AuthorityUtils;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.web.filter.OncePerRequestFilter;
 
+import back.server.repository.UserRepository;
+import back.server.users.User;
+import io.jsonwebtoken.Claims;
+import java.util.List;
+
 public class JwtTokenValidator extends OncePerRequestFilter {
+
+    UserRepository repoUser = new UserRepository();
 
     @Override
     protected void doFilterInternal(HttpServletRequest request, HttpServletResponse response, FilterChain filterChain)
@@ -22,13 +31,25 @@ public class JwtTokenValidator extends OncePerRequestFilter {
         if (jwt != null && jwt.startsWith("Bearer ")) {
             jwt = jwt.substring(7);
 
+            System.out.println("got token: " + jwt);
+
             JwtProvider jwtProvider = new JwtProvider();
 
             boolean isValid = jwtProvider.validateToken(jwt);
 
             if (isValid) {
+                // Claims claims = jwtProvider.getClaims(jwt);
+                String login = jwtProvider.getUsernameFromJWT(jwt);
+
+                String authorities = "USER";
+                List<GrantedAuthority> auth = AuthorityUtils.commaSeparatedStringToAuthorityList(authorities);
+
+                //User user = (User) repoUser.find(login);
+
+                //SecurityUser securityUser = new SecurityUser(user.getLogin(), user.getPassword(), authorities);
+
                 Authentication authentication = new UsernamePasswordAuthenticationToken(
-                        jwtProvider.getUsernameFromJWT(jwt), null);
+                    login, null, auth);
                 SecurityContextHolder.getContext().setAuthentication(authentication);
             }
         }

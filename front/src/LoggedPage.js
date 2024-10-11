@@ -3,6 +3,7 @@ import LeftMenuContainer from './LeftMenuContainer.js';
 import ModalEditing from './ModalEditing.js';
 import './styles/App.css';
 import { useState, useEffect } from 'react';
+import { Navigate, useNavigate } from 'react-router-dom';
 
 import SockJS from 'sockjs-client';
 import { Stomp } from '@stomp/stompjs';
@@ -18,9 +19,27 @@ function LoggedPage({ token }) {
   const [hairColorForEditing, setHairColorForEditing] = useState('')
   const [passportIDForEditing, setPassportIDForEditing] = useState('')
   const [idForEditing, setIDForEditing] = useState('')
+  const navigate = useNavigate()
 
   const BASE_URL = 'http://localhost:8080';
   const SOCKET_URL = 'http://localhost:8080/ws-endpoint';
+
+  window.addEventListener("beforeunload", (event) => {
+    fetch('http://localhost:8080/api/mycity', {
+      method: 'POST',
+      headers: {
+        'Accept': 'application/json',
+        'Content-Type': 'application/json',
+        'Authorization': `Bearer ` + token
+      },
+      body: JSON.stringify({
+      }).then(data => {
+        //setToken(data.token)
+        navigate('/mycity')
+        //axios.defaults.headers.common["Authorization"] = `Bearer ` + data.token
+      }),
+    })
+  });
 
   useEffect(() => {
     fetchServer()

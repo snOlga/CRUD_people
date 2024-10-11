@@ -20,20 +20,22 @@ import javax.crypto.SecretKey;
 
 public class JwtProvider {
 
-    private SecretKey key = Keys.hmacShaKeyFor("super_puper_secured_key!!!!!!!!!!!!!!!!".getBytes());
+    private SecretKey key = Keys.hmacShaKeyFor("super_puper_secret_key!!!!!!!!!!!!!!!!!!!!!".getBytes());
 
     public String generateToken(Authentication authentication) {
         String username = authentication.getName();
-        Date currentDate = new Date();
-        Date expireDate = new Date(currentDate.getTime() + 86400000);
+        Date currentDate = new Date(System.currentTimeMillis());
+        Date expireDate = new Date(System.currentTimeMillis() + 86400000);
 
         String token = Jwts.builder()
                 .setSubject(username)
                 .setIssuedAt(currentDate)
                 .setExpiration(expireDate)
+                .claim("authorities", "ROLE_USER")
                 .signWith(key)
                 .compact();
 
+        System.out.println("generated token: " + token);
         return token;
     }
 
@@ -56,5 +58,14 @@ public class JwtProvider {
         } catch (Exception ex) {
             return false;
         }
+    }
+
+    public Claims getClaims(String token) {
+        Claims claims = Jwts.parserBuilder()
+                .setSigningKey(key)
+                .build()
+                .parseClaimsJws(token)
+                .getBody();
+        return claims;
     }
 }

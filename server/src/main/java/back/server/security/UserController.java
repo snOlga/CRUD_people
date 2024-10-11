@@ -41,13 +41,15 @@ public class UserController {
     public Map<String, String> signUp(@RequestBody Map<String, String> json) {
         Map<String, String> response = new TreeMap<>();
 
-        List<GrantedAuthority> authorities = new ArrayList<GrantedAuthority>();
-        authorities.add(new SimpleGrantedAuthority("USER")); // role
+        // List<GrantedAuthority> authorities = new ArrayList<GrantedAuthority>();
+        // authorities.add(new SimpleGrantedAuthority("USER")); // role
         UserDetails user = new User(json.get("nickname"), json.get("login"),
                 passwordEncoder.encode(json.get("password")));
         repoUser.add(user);
 
-        Authentication authentication = new UsernamePasswordAuthenticationToken(json.get("login"),null);
+        SecurityUser securityUser = new SecurityUser(user.getUsername(),user.getPassword(),"USER");
+
+        Authentication authentication = new UsernamePasswordAuthenticationToken(securityUser, null, securityUser.getAuthorities());
         SecurityContextHolder.getContext().setAuthentication(authentication);
         String token = jwtProvider.generateToken(authentication);
         setResponse(response, true, token);
@@ -59,11 +61,11 @@ public class UserController {
     public Map<String, String> logIn(@RequestBody Map<String, String> json) {
         Map<String, String> response = new TreeMap<>();
 
-        Authentication authentication = authenticationManager.authenticate(
-                new UsernamePasswordAuthenticationToken(json.get("login"), null));
-        SecurityContextHolder.getContext().setAuthentication(authentication);
-        String token = jwtProvider.generateToken(authentication);
-        setResponse(response, true, token);
+        // Authentication authentication = authenticationManager.authenticate(
+        //         new UsernamePasswordAuthenticationToken(json.get("login"), null));
+        // SecurityContextHolder.getContext().setAuthentication(authentication);
+        // String token = jwtProvider.generateToken(authentication);
+        // setResponse(response, true, token);
 
         return response;
     }
