@@ -65,7 +65,7 @@ public class Citizen extends EntityMetaData {
     private HEXColor hairColor;
 
     @ManyToOne(cascade = CascadeType.ALL)
-    @JoinColumn(name = OWNER, referencedColumnName = "id")
+    @JoinColumn(name = OWNER, referencedColumnName = "nickname")
     private User owner;
 
     public Citizen() {

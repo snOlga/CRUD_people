@@ -49,8 +49,8 @@ function LoginField({ setToken }) {
         })
             .then(response => response.json())
             .then(data => {
-                setToken(data.token)
                 if (data.isSuccessful) {
+                    setToken(data.token)
                     navigate('/mycity')
                     axios.defaults.headers.common["Authorization"] = `Bearer ` + data.token
                 }

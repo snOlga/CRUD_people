@@ -1,7 +1,7 @@
 import './styles/App.css';
 import { useState } from 'react';
 
-function ModalEditing({ setShow, id, nameOld, hairColorOld, heightOld, passportIDOld, jsonData }) {
+function ModalEditing({ setShow, id, nameOld, hairColorOld, heightOld, passportIDOld, jsonData, token }) {
     const DEFAULT_COLOR = '#000000'
     const ERROR_COLOR = '#FF0000'
 
@@ -69,6 +69,7 @@ function ModalEditing({ setShow, id, nameOld, hairColorOld, heightOld, passportI
             headers: {
                 'Accept': 'application/json',
                 'Content-Type': 'application/json',
+                'Authorization': `Bearer ` + token
             },
             body: JSON.stringify({
                 id: id,
@@ -98,6 +99,7 @@ function ModalEditing({ setShow, id, nameOld, hairColorOld, heightOld, passportI
             headers: {
                 'Accept': 'application/json',
                 'Content-Type': 'application/json',
+                'Authorization': `Bearer ` + token
             },
             body: JSON.stringify({
                 id: id,

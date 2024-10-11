@@ -5,7 +5,7 @@ import org.hibernate.SessionFactory;
 import org.hibernate.Transaction;
 import org.hibernate.cfg.Configuration;
 
-public abstract class AbstractRepository implements IRepository {
+public abstract class AbstractRepository<T> implements IRepository {
     private static SessionFactory sessionFactory;
 
     private Session session;
@@ -36,5 +36,12 @@ public abstract class AbstractRepository implements IRepository {
 
     public Session currentSession() {
         return session;
+    }
+
+    public Object runQuery(IQuery query) {
+        startSession();
+        Object result = query.run();
+        closeSession();
+        return result;
     }
 }

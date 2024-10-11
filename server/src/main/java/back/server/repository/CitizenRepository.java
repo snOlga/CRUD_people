@@ -12,40 +12,34 @@ public class CitizenRepository extends AbstractRepository {
 
     @Override
     public void add(Object object) {
-        startSession();
-        currentSession().persist((Citizen) object);
-        closeSession();
+        runQuery(() -> {
+            currentSession().persist((Citizen) object);
+            return 0;
+        });
     }
 
     @Override
-    public Object find(long ID) {
-        startSession();
-        Citizen citizen = (Citizen) currentSession().get(Citizen.class, ID);
-        closeSession();
-        return citizen;
+    public Citizen find(long ID) {
+        return (Citizen) runQuery(() -> (Citizen) currentSession().get(Citizen.class, ID));
     }
 
     @Override
     public List getAll() {
-        startSession();
-        List citizens = currentSession().createQuery("FROM Citizen", Citizen.class).list();
-        closeSession();
-        return citizens;
+        return (List) runQuery(() -> currentSession().createQuery("FROM Citizen", Citizen.class).list());
     }
 
     @Override
     public void update(Object updatedObject) {
-        startSession();
-        currentSession().merge(updatedObject);
-        closeSession();
+        runQuery(() -> currentSession().merge(updatedObject));
     }
 
     @Override
     public void delete(Object object) {
-        startSession();
-        Citizen citizen = (Citizen) currentSession().get(Citizen.class, ((Citizen) object).getId());
-        currentSession().remove(citizen);
-        closeSession();
+        runQuery(() -> {
+            Citizen citizen = (Citizen) currentSession().get(Citizen.class, ((Citizen) object).getId());
+            currentSession().remove(citizen);
+            return 0;
+        });
     }
 
 }
