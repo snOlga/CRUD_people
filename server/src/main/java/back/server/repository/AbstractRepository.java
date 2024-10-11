@@ -5,7 +5,7 @@ import org.hibernate.SessionFactory;
 import org.hibernate.Transaction;
 import org.hibernate.cfg.Configuration;
 
-public abstract class AbstractRepository<T> implements IRepository {
+public abstract class AbstractRepository<T> implements IRepository<T> {
     private static SessionFactory sessionFactory;
 
     private Session session;

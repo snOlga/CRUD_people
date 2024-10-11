@@ -14,7 +14,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
-import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.crypto.password.PasswordEncoder;
 
 @RestController
@@ -31,7 +30,7 @@ public class UserController {
     public Map<String, String> signUp(@RequestBody Map<String, String> json) {
         Map<String, String> response = new TreeMap<>();
 
-        UserDetails user = new User(json.get("nickname"), json.get("login"),
+        User user = new User(json.get("nickname"), json.get("login"),
                 passwordEncoder.encode(json.get("password")));
         repoUser.add(user);
 
@@ -69,7 +68,7 @@ public class UserController {
 
     private boolean validateUser(String login, String password) {
 
-        User user = (User) repoUser.find(login);
+        User user = repoUser.find(login);
 
         if (user == null)
             return false;

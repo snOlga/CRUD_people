@@ -5,16 +5,16 @@ import java.util.List;
 import back.server.users.User;
 import jakarta.persistence.Query;
 
-public class UserRepository extends AbstractRepository {
+public class UserRepository extends AbstractRepository<User> {
 
     public UserRepository() {
         super();
     }
 
     @Override
-    public void add(Object object) {
+    public void add(User object) {
         runQuery(() -> {
-            currentSession().persist((User) object);
+            currentSession().persist(object);
             return 0;
         });
     }
@@ -38,14 +38,14 @@ public class UserRepository extends AbstractRepository {
     }
 
     @Override
-    public void update(Object updatedObject) {
+    public void update(User updatedObject) {
         runQuery(() -> currentSession().merge(updatedObject));
     }
 
     @Override
-    public void delete(Object object) {
+    public void delete(User object) {
         runQuery(() -> {
-            User user = (User) currentSession().get(User.class, ((User) object).getId());
+            User user = (User) currentSession().get(User.class, (object).getId());
             currentSession().remove(user);
             return 0;
         });
