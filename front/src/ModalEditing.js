@@ -72,6 +72,7 @@ function ModalEditing({ setShow, id, nameOld, hairColorOld, heightOld, passportI
                 'Authorization': `Bearer ` + token
             },
             body: JSON.stringify({
+                token: token,
                 id: id,
                 name: name,
                 hairColor: hairColor,
@@ -102,7 +103,8 @@ function ModalEditing({ setShow, id, nameOld, hairColorOld, heightOld, passportI
                 'Authorization': `Bearer ` + token
             },
             body: JSON.stringify({
-                id: id,
+                token: token,
+                id: id
             }),
         })
     }
@@ -131,10 +133,10 @@ function ModalEditing({ setShow, id, nameOld, hairColorOld, heightOld, passportI
             <br />
             <button onClick={() => setShow(false)}>just close</button>
             <button onClick={handleEditing}>close and save</button>
-            <br/>
+            <br />
             <button onClick={handleDeleting}>delete citizen</button>
-            {willDelete && <div>Are you sure? 
-                <br/>
+            {willDelete && <div>Are you sure?
+                <br />
                 <button onClick={deleteCitizen}>yes</button> <button onClick={closeDeleting}>no</button></div>}
         </div>
     )

@@ -14,6 +14,9 @@ import back.server.citizens.Citizen;
 import back.server.citizens.exceptions.ColorFormatException;
 import back.server.citizens.exceptions.UnrealHumanHeightException;
 import back.server.repository.CitizenRepository;
+import back.server.repository.UserRepository;
+import back.server.security.JwtProvider;
+import back.server.users.User;
 import jakarta.servlet.http.HttpServletRequest;
 
 @RestController
@@ -36,11 +39,9 @@ public class MainController {
         return responseList;
     }
 
-    // isSuccessful : yes/no
-    // message :
     @PostMapping("/api/send_one")
     public Map<String, String> sendToDB(@RequestBody Map<String, String> json) {
-        Map<String, String> response = new TreeMap<>();
+        Map<String, String> response = defaultResponse();
         try {
             Citizen citizen = new Citizen(json);
             repoCitizen.add(citizen);
@@ -50,6 +51,8 @@ public class MainController {
             setResponse(response, false, "numbers have wrong format");
         } catch (ColorFormatException e) {
             setResponse(response, false, "colors have wrong format");
+        } catch (Exception e) {
+            setResponse(response, false, "something was wrong");
         }
         return response;
     }
@@ -61,9 +64,12 @@ public class MainController {
 
     @PostMapping("/api/update_one")
     public Map<String, String> updateOne(@RequestBody Map<String, String> json) {
-        Citizen citizen = (Citizen) repoCitizen.find(Long.parseLong(json.get("id")));
-        Map<String, String> response = new TreeMap<>();
+        Map<String, String> response = defaultResponse();
         try {
+            Citizen citizen = (Citizen) repoCitizen.find(Long.parseLong(json.get("id")));
+            if (!userOwnCitizen(citizen, json.get("token")))
+                return response;
+
             citizen.updateFormJson(json);
             repoCitizen.update(citizen);
             messagingTemplate.convertAndSend("/topic/citizen", this.getAll(null));
@@ -72,14 +78,42 @@ public class MainController {
             setResponse(response, false, "numbers have wrong format");
         } catch (ColorFormatException e) {
             setResponse(response, false, "colors have wrong format");
+        } catch (Exception e) {
+            setResponse(response, false, "something was wrong");
         }
         return response;
     }
 
     @PostMapping("/api/delete_one")
-    public void deleteOne(@RequestBody Map<String, String> json) throws MessagingException, ColorFormatException {
-        Citizen citizen = (Citizen) repoCitizen.find(Long.parseLong(json.get("id")));
-        repoCitizen.delete(citizen);
-        messagingTemplate.convertAndSend("/topic/citizen", this.getAll(null));
+    public Map<String, String> deleteOne(@RequestBody Map<String, String> json)
+            throws MessagingException, ColorFormatException {
+        Map<String, String> response = defaultResponse();
+        try {
+            Citizen citizen = (Citizen) repoCitizen.find(Long.parseLong(json.get("id")));
+            if (!userOwnCitizen(citizen, json.get("token")))
+                return response;
+
+            repoCitizen.delete(citizen);
+            messagingTemplate.convertAndSend("/topic/citizen", this.getAll(null));
+            setResponse(response, true, "");
+        } catch (Exception e) {
+            setResponse(response, false, "something was wrong");
+        }
+        return response;
+    }
+
+    private Map<String, String> defaultResponse() {
+        Map<String, String> response = new TreeMap<>();
+        setResponse(response, false, "");
+        return response;
+    }
+
+    private boolean userOwnCitizen(Citizen citizen, String token) {
+        UserRepository repoUser = new UserRepository();
+        JwtProvider jwtProvider = new JwtProvider();
+        String login = jwtProvider.getUsernameFromJWT(token);
+        User user = repoUser.findByLogin(login);
+
+        return citizen.getOwnerNickname().equals(user.getNickname());
     }
 }
