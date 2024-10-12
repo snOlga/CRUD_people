@@ -76,13 +76,10 @@ public class UserController {
     }
 
     private boolean validateUser(String login, String password) {
-        List<User> users;
+        List<User> users = repoUser.findAll(login);
 
-        try {
-            users = repoUser.findAll(login);
-        } catch (Exception e) {
+        if(users.size() == 0)
             return false;
-        }
 
         for (User itUser : users) {
             if (!passwordEncoder.matches(password, itUser.getPassword()))

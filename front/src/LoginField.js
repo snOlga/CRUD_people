@@ -4,6 +4,9 @@ import axios from 'axios'
 import { Navigate, useNavigate } from 'react-router-dom';
 
 function LoginField({ setToken, setCurrentUser }) {
+    const DEFAULT_COLOR = '#000000'
+    const ERROR_COLOR = '#FF0000'
+
     const [willLogIn, setWillLogIn] = useState(true)
     const [willSignUp, setWillSignUp] = useState(false)
 
@@ -13,6 +16,9 @@ function LoginField({ setToken, setCurrentUser }) {
 
     const [x, setX] = useState('')
     const [y, setY] = useState('')
+
+    const [mainErrorMessage, setMainErrorMessage] = useState('')
+    const [errorBorder, setErrorBorder] = useState(DEFAULT_COLOR)
 
     const navigate = useNavigate()
 
@@ -26,11 +32,15 @@ function LoginField({ setToken, setCurrentUser }) {
     const onLogIn = (e) => {
         setWillLogIn(true)
         setWillSignUp(false)
+        setMainErrorMessage("")
+        setErrorBorder(DEFAULT_COLOR)
     }
 
     const onSignUp = (e) => {
         setWillLogIn(false)
         setWillSignUp(true)
+        setMainErrorMessage("")
+        setErrorBorder(DEFAULT_COLOR)
     }
 
     const handleLogIn = (e) => {
@@ -54,6 +64,10 @@ function LoginField({ setToken, setCurrentUser }) {
                     setCurrentUser(data.nickname)
                     navigate('/mycity')
                     axios.defaults.headers.common["Authorization"] = `Bearer ` + data.token
+                }
+                else {
+                    setMainErrorMessage("Incorrect credentials")
+                    setErrorBorder(ERROR_COLOR)
                 }
             })
     }
@@ -81,6 +95,9 @@ function LoginField({ setToken, setCurrentUser }) {
                     setCurrentUser(data.nickname)
                     navigate('/mycity')
                     axios.defaults.headers.common["Authorization"] = `Bearer ` + data.token
+                } else {
+                    setMainErrorMessage("User already exists")
+                    setErrorBorder(ERROR_COLOR)
                 }
             })
     }
@@ -93,13 +110,15 @@ function LoginField({ setToken, setCurrentUser }) {
                 {willLogIn &&
                     <div>
                         <p>Login?</p>
-                        <input type="text" onChange={(e) => setLogin(e.target.value)} />
+                        <input type="text" onChange={(e) => setLogin(e.target.value)} style={{ borderColor: errorBorder }} />
                         <br />
                         <p>Password?</p>
-                        <input type="password" onChange={(e) => setPassword(e.target.value)} />
+                        <input type="password" onChange={(e) => setPassword(e.target.value)} style={{ borderColor: errorBorder }} />
                         <br />
                         <p></p>
                         <input type="hidden" onChange={(e) => setPassword(e.target.value)} />
+                        <br />
+                        <span>{mainErrorMessage}</span>
                         <br />
                         <button onClick={handleLogIn}>let's go!</button>
                     </div>}
@@ -107,13 +126,15 @@ function LoginField({ setToken, setCurrentUser }) {
                 {willSignUp &&
                     <div>
                         <p>Nickname?</p>
-                        <input type="text" onChange={(e) => setNickname(e.target.value)} />
+                        <input type="text" onChange={(e) => setNickname(e.target.value)} style={{ borderColor: errorBorder }} />
                         <br />
                         <p>Login?</p>
-                        <input type="text" onChange={(e) => setLogin(e.target.value)} />
+                        <input type="text" onChange={(e) => setLogin(e.target.value)} style={{ borderColor: errorBorder }} />
                         <br />
                         <p>Password?</p>
                         <input type="password" onChange={(e) => setPassword(e.target.value)} />
+                        <br />
+                        <span>{mainErrorMessage}</span>
                         <br />
                         <button onClick={handleSignUp}>let's go!</button>
                     </div>}
