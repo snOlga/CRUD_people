@@ -129,6 +129,7 @@ function LeftMenuContainer({ jsonData, token }) {
         'Authorization': `Bearer ` + token
       },
       body: JSON.stringify({
+        token: token,
         name: name,
         gender: isMale,
         eyeColor: eyeColor,

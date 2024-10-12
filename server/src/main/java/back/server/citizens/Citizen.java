@@ -3,9 +3,13 @@ package back.server.citizens;
 import java.util.Date;
 import java.util.Map;
 
+import com.fasterxml.jackson.annotation.JsonGetter;
+
 import back.server.EntityMetaData;
 import back.server.citizens.exceptions.ColorFormatException;
 import back.server.citizens.exceptions.UnrealHumanHeightException;
+import back.server.repository.UserRepository;
+import back.server.security.JwtProvider;
 import back.server.users.User;
 import jakarta.persistence.AttributeOverride;
 import jakarta.persistence.AttributeOverrides;
@@ -17,6 +21,7 @@ import jakarta.persistence.EnumType;
 import jakarta.persistence.Enumerated;
 import jakarta.persistence.JoinColumn;
 import jakarta.persistence.ManyToOne;
+import jakarta.persistence.OneToMany;
 import jakarta.persistence.Table;
 import java.time.LocalDate;
 
@@ -64,8 +69,8 @@ public class Citizen extends EntityMetaData {
     })
     private HEXColor hairColor;
 
-    @ManyToOne(cascade = CascadeType.ALL)
-    @JoinColumn(name = OWNER, referencedColumnName = "nickname")
+    @ManyToOne
+    @JoinColumn(name = OWNER, referencedColumnName = "id")
     private User owner;
 
     public Citizen() {
@@ -105,6 +110,7 @@ public class Citizen extends EntityMetaData {
         setBirthday(LocalDate.parse(json.get(BIRTHDAY)));
         setPassportID(Long.parseLong(json.get(PASSPORT_ID)));
         setNationality(Country.valueOf(json.get(NATIONALITY)));
+        setOwner(json.get("token"));
     }
 
     public void setName(String name) {
@@ -153,6 +159,14 @@ public class Citizen extends EntityMetaData {
         this.owner = owner;
     }
 
+    public void setOwner(String token) {
+        UserRepository repoUser = new UserRepository();
+        JwtProvider jwtProvider = new JwtProvider();
+        String login = jwtProvider.getUsernameFromJWT(token);
+        User user = repoUser.findByLogin(login);
+        setOwner(user);
+    }
+
     public String getName() {
         return name;
     }
@@ -187,6 +201,11 @@ public class Citizen extends EntityMetaData {
 
     public User getOwner() {
         return owner;
+    }
+
+    @JsonGetter(OWNER)
+    public String getOwnerNickname() {
+        return owner.getNickname();
     }
 
     public void updateFormJson(Map<String, String> json) throws ColorFormatException, UnrealHumanHeightException {

@@ -3,7 +3,7 @@ import { useState } from 'react'
 import axios from 'axios'
 import { Navigate, useNavigate } from 'react-router-dom';
 
-function LoginField({ setToken }) {
+function LoginField({ setToken, setCurrentUser }) {
     const [willLogIn, setWillLogIn] = useState(true)
     const [willSignUp, setWillSignUp] = useState(false)
 
@@ -51,6 +51,7 @@ function LoginField({ setToken }) {
             .then(data => {
                 if (data.isSuccessful === "true") {
                     setToken(data.token)
+                    setCurrentUser(data.nickname)
                     navigate('/mycity')
                     axios.defaults.headers.common["Authorization"] = `Bearer ` + data.token
                 }
@@ -77,6 +78,7 @@ function LoginField({ setToken }) {
                 console.log(data.isSuccessful)
                 if (data.isSuccessful === "true") {
                     setToken(data.token)
+                    setCurrentUser(data.nickname)
                     navigate('/mycity')
                     axios.defaults.headers.common["Authorization"] = `Bearer ` + data.token
                 }

@@ -16,6 +16,7 @@ function CitizensTable({ jsonData }) {
                     <td>{citizen.nationality}</td>
                     <td>{citizen.passportID}</td>
                     <td>{new Date(citizen.birthday).toDateString()}</td>
+                    <td>{citizen.owner}</td>
                 </tr>
             )
         }
@@ -34,6 +35,7 @@ function CitizensTable({ jsonData }) {
                     <th>nationality</th>
                     <th>passport ID</th>
                     <th>birthday</th>
+                    <td>owner</td>
                 </tr>
             </thead>
             <tbody>

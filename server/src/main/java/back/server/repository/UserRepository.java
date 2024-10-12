@@ -24,10 +24,18 @@ public class UserRepository extends AbstractRepository<User> {
         return (User) runQuery(() -> (User) currentSession().get(User.class, ID));
     }
 
-    public User find(String currentLogin) {
+    public User findByLogin(String currentLogin) {
         return (User) runQuery(() -> {
             Query query = currentSession().createQuery("FROM User where login = :currentLogin");
             query.setParameter("currentLogin", currentLogin);
+            return (User) query.getSingleResult();
+        });
+    }
+
+    public User findByNickname(String currentNickname) {
+        return (User) runQuery(() -> {
+            Query query = currentSession().createQuery("FROM User where nickname = :currentNickname");
+            query.setParameter("currentNickname", currentNickname);
             return (User) query.getSingleResult();
         });
     }

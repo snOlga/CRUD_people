@@ -32,7 +32,6 @@ public class JwtTokenValidator extends OncePerRequestFilter {
             System.out.println("got token: " + jwt);
 
             JwtProvider jwtProvider = new JwtProvider();
-
             boolean isValid = jwtProvider.validateToken(jwt);
 
             if (isValid) {
