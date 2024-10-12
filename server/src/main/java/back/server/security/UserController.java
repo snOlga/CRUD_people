@@ -1,5 +1,6 @@
 package back.server.security;
 
+import java.util.List;
 import java.util.Map;
 import java.util.TreeMap;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -28,14 +29,17 @@ public class UserController {
 
     @PostMapping("/sign_up")
     public Map<String, String> signUp(@RequestBody Map<String, String> json) {
-        Map<String, String> response = new TreeMap<>();
+        Map<String, String> response = defaultResponse();
 
         User user = new User(json.get("nickname"), json.get("login"),
                 passwordEncoder.encode(json.get("password")));
+
+        if (userExists(user.getNickname()))
+            return response;
+
         repoUser.add(user);
 
         SecurityUser securityUser = new SecurityUser(user.getUsername(), user.getPassword(), "USER");
-
         Authentication authentication = new UsernamePasswordAuthenticationToken(securityUser, null,
                 securityUser.getAuthorities());
         SecurityContextHolder.getContext().setAuthentication(authentication);
@@ -47,17 +51,21 @@ public class UserController {
 
     @PostMapping("/log_in")
     public Map<String, String> logIn(@RequestBody Map<String, String> json) {
-        Map<String, String> response = new TreeMap<>();
+        Map<String, String> response = defaultResponse();
+        boolean isReal = validateUser(json.get("login"), json.get("password"));
 
-        setResponse(response, false, "");
-
-        if (validateUser(json.get("login"), json.get("login"))) {
+        if (validateUser(json.get("login"), json.get("password"))) {
             Authentication authentication = new UsernamePasswordAuthenticationToken(json.get("login"), null);
             SecurityContextHolder.getContext().setAuthentication(authentication);
             String token = jwtProvider.generateToken(authentication);
             setResponse(response, true, token);
         }
+        return response;
+    }
 
+    private Map<String, String> defaultResponse() {
+        Map<String, String> response = new TreeMap<>();
+        setResponse(response, false, "");
         return response;
     }
 
@@ -67,15 +75,28 @@ public class UserController {
     }
 
     private boolean validateUser(String login, String password) {
+        List<User> users;
 
-        User user = repoUser.find(login);
-
-        if (user == null)
+        try {
+            users = repoUser.findAll(login);
+        } catch (Exception e) {
             return false;
+        }
 
-        if (!user.getPassword().equals(passwordEncoder.encode(password)))
-            return false;
+        for (User itUser : users) {
+            if (!passwordEncoder.matches(password, itUser.getPassword()))
+                return false;
+        }
 
         return true;
+    }
+
+    private boolean userExists(String nickname) {
+        try {
+            repoUser.find(nickname);
+            return true;
+        } catch (Exception e) {
+            return false;
+        }
     }
 }

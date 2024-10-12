@@ -32,6 +32,15 @@ public class UserRepository extends AbstractRepository<User> {
         });
     }
 
+    public List findAll(String currentLogin)
+    {
+        return (List) runQuery(() -> {
+            Query query = currentSession().createQuery("FROM User where login = :currentLogin");
+            query.setParameter("currentLogin", currentLogin);
+            return (List) query.getResultList();
+        });
+    }
+
     @Override
     public List getAll() {
         return (List) runQuery(() -> currentSession().createQuery("FROM User", User.class).list());

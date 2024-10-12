@@ -49,7 +49,7 @@ function LoginField({ setToken }) {
         })
             .then(response => response.json())
             .then(data => {
-                if (data.isSuccessful) {
+                if (data.isSuccessful === "true") {
                     setToken(data.token)
                     navigate('/mycity')
                     axios.defaults.headers.common["Authorization"] = `Bearer ` + data.token
@@ -74,9 +74,12 @@ function LoginField({ setToken }) {
         })
             .then(response => response.json())
             .then(data => {
-                setToken(data.token)
-                navigate('/mycity')
-                axios.defaults.headers.common["Authorization"] = `Bearer ` + data.token
+                console.log(data.isSuccessful)
+                if (data.isSuccessful === "true") {
+                    setToken(data.token)
+                    navigate('/mycity')
+                    axios.defaults.headers.common["Authorization"] = `Bearer ` + data.token
+                }
             })
     }
 
