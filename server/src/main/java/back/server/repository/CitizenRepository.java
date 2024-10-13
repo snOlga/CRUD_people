@@ -3,6 +3,8 @@ package back.server.repository;
 import java.util.List;
 
 import back.server.citizens.Citizen;
+import back.server.users.User;
+import jakarta.persistence.Query;
 
 public class CitizenRepository extends AbstractRepository<Citizen> {
 
@@ -21,6 +23,14 @@ public class CitizenRepository extends AbstractRepository<Citizen> {
     @Override
     public Citizen find(long ID) {
         return (Citizen) runQuery(() -> (Citizen) currentSession().get(Citizen.class, ID));
+    }
+
+    public Citizen findByPassportID(String passportID) {
+        return (Citizen) runQuery(() -> {
+            Query query = currentSession().createQuery("FROM Citizen where login = :passportID");
+            query.setParameter("passportID", passportID);
+            return (Citizen) query.getSingleResult();
+        });
     }
 
     @Override

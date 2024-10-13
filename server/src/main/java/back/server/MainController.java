@@ -12,6 +12,7 @@ import org.springframework.web.bind.annotation.*;
 
 import back.server.citizens.Citizen;
 import back.server.citizens.exceptions.ColorFormatException;
+import back.server.citizens.exceptions.PassportIDUniqueException;
 import back.server.citizens.exceptions.UnrealHumanHeightException;
 import back.server.repository.CitizenRepository;
 import back.server.repository.UserRepository;
@@ -51,6 +52,8 @@ public class MainController {
             setResponse(response, false, "numbers have wrong format");
         } catch (ColorFormatException e) {
             setResponse(response, false, "colors have wrong format");
+        } catch (PassportIDUniqueException e) {
+            setResponse(response, false, "passport ID is not unique");
         } catch (Exception e) {
             setResponse(response, false, "something was wrong");
         }
@@ -78,6 +81,8 @@ public class MainController {
             setResponse(response, false, "numbers have wrong format");
         } catch (ColorFormatException e) {
             setResponse(response, false, "colors have wrong format");
+        } catch (PassportIDUniqueException e) {
+            setResponse(response, false, "passport ID is not unique");
         } catch (Exception e) {
             setResponse(response, false, "something was wrong");
         }

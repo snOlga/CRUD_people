@@ -7,7 +7,9 @@ import com.fasterxml.jackson.annotation.JsonGetter;
 
 import back.server.EntityMetaData;
 import back.server.citizens.exceptions.ColorFormatException;
+import back.server.citizens.exceptions.PassportIDUniqueException;
 import back.server.citizens.exceptions.UnrealHumanHeightException;
+import back.server.repository.CitizenRepository;
 import back.server.repository.UserRepository;
 import back.server.security.JwtProvider;
 import back.server.users.User;
@@ -85,7 +87,7 @@ public class Citizen extends EntityMetaData {
             short height,
             LocalDate birthday,
             long passportID,
-            Country nationality) throws ColorFormatException, UnrealHumanHeightException {
+            Country nationality) throws ColorFormatException, UnrealHumanHeightException, PassportIDUniqueException {
         setCreationDate(new Date());
         setRegistrationCoordinates(new Coordinates(0, 0));
         setName(name);
@@ -99,7 +101,7 @@ public class Citizen extends EntityMetaData {
     }
 
     public Citizen(Map<String, String> json)
-            throws ColorFormatException, UnrealHumanHeightException, NumberFormatException {
+            throws ColorFormatException, UnrealHumanHeightException, NumberFormatException, PassportIDUniqueException {
         setCreationDate(new Date());
         setRegistrationCoordinates(new Coordinates(json.get("xCoord"), json.get("yCoord")));
         setName(json.get(NAME));
@@ -143,11 +145,19 @@ public class Citizen extends EntityMetaData {
         this.birthday = birthday;
     }
 
-    public void setPassportID(Long passportID) {
-        this.passportID = passportID;
+    public void setPassportID(Long passportID) throws PassportIDUniqueException {
+        try {
+            CitizenRepository repo = new CitizenRepository();
+            repo.findByPassportID(passportID + "");
+        }
+        catch (Exception e){
+            this.passportID = passportID;
+            return;
+        }
+        throw new PassportIDUniqueException(passportID + "");
     }
 
-    public void setPassportID(String passportIDStr) {
+    public void setPassportID(String passportIDStr) throws NumberFormatException, PassportIDUniqueException {
         this.setPassportID(Long.parseLong(passportIDStr));
     }
 
@@ -208,7 +218,7 @@ public class Citizen extends EntityMetaData {
         return owner.getNickname();
     }
 
-    public void updateFormJson(Map<String, String> json) throws ColorFormatException, UnrealHumanHeightException {
+    public void updateFormJson(Map<String, String> json) throws ColorFormatException, UnrealHumanHeightException, NumberFormatException, PassportIDUniqueException {
         if (!json.get(NAME).isEmpty())
             setName(json.get(NAME));
         if (!json.get(HAIR_COLOR).isEmpty())

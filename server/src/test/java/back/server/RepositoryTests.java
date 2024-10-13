@@ -11,6 +11,7 @@ import org.springframework.boot.test.context.SpringBootTest;
 import back.server.citizens.Citizen;
 import back.server.citizens.Country;
 import back.server.citizens.exceptions.ColorFormatException;
+import back.server.citizens.exceptions.PassportIDUniqueException;
 import back.server.citizens.exceptions.UnrealHumanHeightException;
 import back.server.repository.CitizenRepository;
 import java.time.LocalDate;
@@ -26,18 +27,18 @@ class RepositoryTests {
 	}
 
 	@Test
-	void addCitizenRepository() throws ColorFormatException, UnrealHumanHeightException {
+	void addCitizenRepository() throws ColorFormatException, UnrealHumanHeightException, PassportIDUniqueException {
 		CitizenRepository repo = new CitizenRepository();
 		Citizen citizen = new Citizen("David", (byte) 1, "#000000", "#000000", (short) 160,
 				LocalDate.parse("2000-10-01"),
-				10l,
+				101l,
 				Country.FRANCE);
 		repo.add(citizen);
 		assertNotEquals(null, citizen.getId());
 	}
 
 	@Test
-	void deleteCitizenFromRepository() throws ColorFormatException, UnrealHumanHeightException {
+	void deleteCitizenFromRepository() throws ColorFormatException, UnrealHumanHeightException, PassportIDUniqueException {
 		CitizenRepository repo = new CitizenRepository();
 		Citizen citizen = new Citizen("David", (byte) 0, "#000000", "#000000", (short) 160,
 				LocalDate.parse("2000-10-01"),
@@ -49,7 +50,7 @@ class RepositoryTests {
 	}
 
 	@Test
-	void updatedCitizenFromRepository() throws ColorFormatException, UnrealHumanHeightException {
+	void updatedCitizenFromRepository() throws ColorFormatException, UnrealHumanHeightException, PassportIDUniqueException {
 		CitizenRepository repo = new CitizenRepository();
 		Citizen citizen = new Citizen("Emma", (byte) 0, "#000000", "#000000", (short) 160,
 				LocalDate.parse("2000-10-01"),
