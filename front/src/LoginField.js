@@ -102,6 +102,10 @@ function LoginField({ setToken, setCurrentUser }) {
             })
     }
 
+    const loginSubstr = event => {
+        event.target.value = event.target.value.substr(0, 20)
+      }
+
     return (
         <div className="LeftMenuContainer">
             <div className='Form'>
@@ -110,10 +114,10 @@ function LoginField({ setToken, setCurrentUser }) {
                 {willLogIn &&
                     <div>
                         <p>Login?</p>
-                        <input type="text" onChange={(e) => setLogin(e.target.value)} style={{ borderColor: errorBorder }} />
+                        <input type="text" onChange={(e) => setLogin(e.target.value)} style={{ borderColor: errorBorder }} onInput={loginSubstr} />
                         <br />
                         <p>Password?</p>
-                        <input type="password" onChange={(e) => setPassword(e.target.value)} style={{ borderColor: errorBorder }} />
+                        <input type="password" onChange={(e) => setPassword(e.target.value)} style={{ borderColor: errorBorder }} onInput={loginSubstr} />
                         <br />
                         <p></p>
                         <input type="hidden" onChange={(e) => setPassword(e.target.value)} />
@@ -126,13 +130,13 @@ function LoginField({ setToken, setCurrentUser }) {
                 {willSignUp &&
                     <div>
                         <p>Nickname?</p>
-                        <input type="text" onChange={(e) => setNickname(e.target.value)} style={{ borderColor: errorBorder }} />
+                        <input type="text" onChange={(e) => setNickname(e.target.value)} style={{ borderColor: errorBorder }} onInput={loginSubstr} />
                         <br />
                         <p>Login?</p>
-                        <input type="text" onChange={(e) => setLogin(e.target.value)} style={{ borderColor: errorBorder }} />
+                        <input type="text" onChange={(e) => setLogin(e.target.value)} style={{ borderColor: errorBorder }} onInput={loginSubstr} />
                         <br />
                         <p>Password?</p>
-                        <input type="password" onChange={(e) => setPassword(e.target.value)} />
+                        <input type="password" onChange={(e) => setPassword(e.target.value)} onInput={loginSubstr} />
                         <br />
                         <span>{mainErrorMessage}</span>
                         <br />

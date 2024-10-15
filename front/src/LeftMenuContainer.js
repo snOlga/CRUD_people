@@ -78,6 +78,20 @@ function LeftMenuContainer({ jsonData, token }) {
     event.target.value = event.target.value.substr(0, 20)
   }
 
+  const heightSubstr = event => {
+    if (event.target.value < 1 || event.target.value > 250) {
+      event.target.value = event.target.value.substr(0, event.target.value.length - 1)
+    }
+    event.target.value = event.target.value.substr(0, 3)
+  }
+
+  const passportSubstr = event => {
+    if (event.target.value < 1) {
+      event.target.value = event.target.value.substr(0, event.target.value.length - 1)
+    }
+    event.target.value = event.target.value.substr(0, 10)
+  }
+
   function isFilled() {
     if (name == '')
       setNameErrorBorder(ERROR_COLOR)
@@ -175,13 +189,13 @@ function LeftMenuContainer({ jsonData, token }) {
         <input type="color" className='InputFields' onChange={handleHairColor} />
 
         <p>Height?</p>
-        <input type="number" className='InputFields' onChange={handleHeight} style={{ borderColor: heightErrorBorder }} />
+        <input type="number" className='InputFields' onChange={handleHeight} style={{ borderColor: heightErrorBorder }} onInput={heightSubstr}/>
 
         <p>Birth date?</p>
         <input type="date" className='InputFields' onChange={handleBirthday} style={{ borderColor: birthdayErrorBorder }} />
 
         <p>Passport ID?</p>
-        <input type="number" className='InputFields' onChange={handlePassportID} style={{ borderColor: passportIDErrorBorder }} />
+        <input type="number" className='InputFields' onChange={handlePassportID} style={{ borderColor: passportIDErrorBorder }} onInput={passportSubstr} />
 
         <div className='NationalityContainer'>
           <p style={{ color: nationalityErrorColor }}>Nationality?</p>
