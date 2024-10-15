@@ -27,7 +27,7 @@ class RepositoryTests {
 	}
 
 	@Test
-	void addCitizenRepository() throws ColorFormatException, UnrealHumanHeightException, PassportIDUniqueException {
+	void addCitizenRepository() throws ColorFormatException, UnrealHumanHeightException, PassportIDUniqueException, SQLinjectionException {
 		CitizenRepository repo = new CitizenRepository();
 		Citizen citizen = new Citizen("David", (byte) 1, "#000000", "#000000", (short) 160,
 				LocalDate.parse("2000-10-01"),
@@ -38,7 +38,7 @@ class RepositoryTests {
 	}
 
 	@Test
-	void deleteCitizenFromRepository() throws ColorFormatException, UnrealHumanHeightException, PassportIDUniqueException {
+	void deleteCitizenFromRepository() throws ColorFormatException, UnrealHumanHeightException, PassportIDUniqueException, SQLinjectionException {
 		CitizenRepository repo = new CitizenRepository();
 		Citizen citizen = new Citizen("David", (byte) 0, "#000000", "#000000", (short) 160,
 				LocalDate.parse("2000-10-01"),
@@ -50,7 +50,7 @@ class RepositoryTests {
 	}
 
 	@Test
-	void updatedCitizenFromRepository() throws ColorFormatException, UnrealHumanHeightException, PassportIDUniqueException {
+	void updatedCitizenFromRepository() throws ColorFormatException, UnrealHumanHeightException, PassportIDUniqueException, SQLinjectionException {
 		CitizenRepository repo = new CitizenRepository();
 		Citizen citizen = new Citizen("Emma", (byte) 0, "#000000", "#000000", (short) 160,
 				LocalDate.parse("2000-10-01"),

@@ -6,6 +6,7 @@ import java.util.Map;
 import com.fasterxml.jackson.annotation.JsonGetter;
 
 import back.server.EntityMetaData;
+import back.server.SQLinjectionException;
 import back.server.citizens.exceptions.ColorFormatException;
 import back.server.citizens.exceptions.PassportIDUniqueException;
 import back.server.citizens.exceptions.UnrealHumanHeightException;
@@ -15,7 +16,6 @@ import back.server.security.JwtProvider;
 import back.server.users.User;
 import jakarta.persistence.AttributeOverride;
 import jakarta.persistence.AttributeOverrides;
-import jakarta.persistence.CascadeType;
 import jakarta.persistence.Column;
 import jakarta.persistence.Embedded;
 import jakarta.persistence.Entity;
@@ -23,7 +23,6 @@ import jakarta.persistence.EnumType;
 import jakarta.persistence.Enumerated;
 import jakarta.persistence.JoinColumn;
 import jakarta.persistence.ManyToOne;
-import jakarta.persistence.OneToMany;
 import jakarta.persistence.Table;
 import java.time.LocalDate;
 
@@ -87,7 +86,7 @@ public class Citizen extends EntityMetaData {
             short height,
             LocalDate birthday,
             long passportID,
-            Country nationality) throws ColorFormatException, UnrealHumanHeightException, PassportIDUniqueException {
+            Country nationality) throws ColorFormatException, UnrealHumanHeightException, PassportIDUniqueException, SQLinjectionException {
         setCreationDate(new Date());
         setRegistrationCoordinates(new Coordinates(0, 0));
         setName(name);
@@ -101,7 +100,7 @@ public class Citizen extends EntityMetaData {
     }
 
     public Citizen(Map<String, String> json)
-            throws ColorFormatException, UnrealHumanHeightException, NumberFormatException, PassportIDUniqueException {
+            throws ColorFormatException, UnrealHumanHeightException, NumberFormatException, PassportIDUniqueException, SQLinjectionException {
         setCreationDate(new Date());
         setRegistrationCoordinates(new Coordinates(json.get("xCoord"), json.get("yCoord")));
         setName(json.get(NAME));
@@ -115,8 +114,8 @@ public class Citizen extends EntityMetaData {
         setOwner(json.get("token"));
     }
 
-    public void setName(String name) {
-        this.name = name;
+    public void setName(String name) throws SQLinjectionException {
+        this.name = validateStringValue(name);
     }
 
     public void setGender(byte gender) {
@@ -218,7 +217,7 @@ public class Citizen extends EntityMetaData {
         return owner.getNickname();
     }
 
-    public void updateFormJson(Map<String, String> json) throws ColorFormatException, UnrealHumanHeightException, NumberFormatException, PassportIDUniqueException {
+    public void updateFormJson(Map<String, String> json) throws ColorFormatException, UnrealHumanHeightException, NumberFormatException, PassportIDUniqueException, SQLinjectionException {
         if (!json.get(NAME).isEmpty())
             setName(json.get(NAME));
         if (!json.get(HAIR_COLOR).isEmpty())
@@ -227,5 +226,14 @@ public class Citizen extends EntityMetaData {
             setHeight(json.get(HEIGHT));
         if (!json.get(PASSPORT_ID).isEmpty())
             setPassportID(json.get(PASSPORT_ID));
+    }
+
+    private String validateStringValue (String line) throws SQLinjectionException {
+        if (!line.contains("drop")) {
+            return line;
+        }
+        else {
+            throw new SQLinjectionException();
+        }
     }
 }

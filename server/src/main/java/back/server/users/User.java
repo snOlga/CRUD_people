@@ -1,6 +1,7 @@
 package back.server.users;
 
 import back.server.EntityMetaData;
+import back.server.SQLinjectionException;
 import back.server.citizens.Coordinates;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
@@ -36,16 +37,16 @@ public class User extends EntityMetaData implements UserDetails {
         this.password = password;
     }
 
-    public void setNickname(String nickname) {
-        this.nickname = nickname;
+    public void setNickname(String nickname) throws SQLinjectionException {
+        this.nickname = validateStringValue(nickname);
     }
 
-    public void setLogin(String login) {
-        this.login = login;
+    public void setLogin(String login) throws SQLinjectionException {
+        this.login = validateStringValue(login);
     }
 
-    public void setPassword(String password) {
-        this.password = password;
+    public void setPassword(String password) throws SQLinjectionException {
+        this.password = validateStringValue(password);
     }
 
     public String getNickname() {
@@ -71,5 +72,14 @@ public class User extends EntityMetaData implements UserDetails {
     @Override
     public String getUsername() {
         return login;
+    }
+
+    private String validateStringValue (String line) throws SQLinjectionException {
+        if (!line.contains("drop")) {
+            return line;
+        }
+        else {
+            throw new SQLinjectionException();
+        }
     }
 }
