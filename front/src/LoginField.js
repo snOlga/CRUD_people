@@ -3,7 +3,7 @@ import { useState } from 'react'
 import axios from 'axios'
 import { Navigate, useNavigate } from 'react-router-dom';
 
-function LoginField({ setToken, setCurrentUser }) {
+function LoginField({ setToken, setCurrentUser, setAdmin }) {
     const DEFAULT_COLOR = '#000000'
     const ERROR_COLOR = '#FF0000'
 
@@ -62,6 +62,7 @@ function LoginField({ setToken, setCurrentUser }) {
                 if (data.isSuccessful === "true") {
                     setToken(data.token)
                     setCurrentUser(data.nickname)
+                    setAdmin(true)
                     navigate('/mycity')
                     axios.defaults.headers.common["Authorization"] = `Bearer ` + data.token
                 }

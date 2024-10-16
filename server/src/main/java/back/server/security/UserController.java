@@ -44,7 +44,7 @@ public class UserController {
                 securityUser.getAuthorities());
         SecurityContextHolder.getContext().setAuthentication(authentication);
         String token = jwtProvider.generateToken(authentication);
-        setResponse(response, true, token, user.getNickname());
+        setResponse(response, true, token, user.getNickname(), "user");
 
         return response;
     }
@@ -58,27 +58,31 @@ public class UserController {
             SecurityContextHolder.getContext().setAuthentication(authentication);
             String token = jwtProvider.generateToken(authentication);
             String currentUserNickname = repoUser.findByLogin(json.get("login")).getNickname();
-            setResponse(response, true, token, currentUserNickname);
+            setResponse(response, true, token, currentUserNickname, "user");
+            if (jwtProvider.isAdmin(token))
+                setResponse(response, true, token, currentUserNickname, "admin");
         }
         return response;
     }
 
     private Map<String, String> defaultResponse() {
         Map<String, String> response = new TreeMap<>();
-        setResponse(response, false, "", "");
+        setResponse(response, false, "", "", "user");
         return response;
     }
 
-    private void setResponse(Map<String, String> response, boolean isSuccessful, String message, String nickname) {
+    private void setResponse(Map<String, String> response, boolean isSuccessful, String token, String nickname,
+            String role) {
         response.put("isSuccessful", isSuccessful + "");
-        response.put("token", message);
+        response.put("token", token);
         response.put("nickname", nickname);
+        response.put("role", role);
     }
 
     private boolean validateUser(String login, String password) {
         List<User> users = repoUser.findAll(login);
 
-        if(users.size() == 0)
+        if (users.size() == 0)
             return false;
 
         for (User itUser : users) {

@@ -10,7 +10,7 @@ import { Stomp } from '@stomp/stompjs';
 
 let currentZIndex = 0
 
-function LoggedPage({ token, currentUser }) {
+function LoggedPage({ token, currentUser, isAdmin }) {
 
   const [tableValue, setTable] = useState([])
   const [showModal, setShow] = useState(false)
@@ -81,7 +81,7 @@ function LoggedPage({ token, currentUser }) {
       <link rel="preconnect" href="https://fonts.gstatic.com" crossOrigin />
       <link href="https://fonts.googleapis.com/css2?family=Tiny5&display=swap" rel="stylesheet" />
       <LeftMenuContainer jsonData={tableValue} token={token} />
-      <SpriteField currentUser={currentUser} isLogged={true} jsonData={tableValue} setShow={setShow} setNameEdit={setNameForEditing} setHeightEdit={setHeightForEditing} setHairColorEdit={setHairColorForEditing} setPassportIDEdit={setPassportIDForEditing} setIDEdit={setIDForEditing} />
+      <SpriteField isAdmin={isAdmin} currentUser={currentUser} isLogged={true} jsonData={tableValue} setShow={setShow} setNameEdit={setNameForEditing} setHeightEdit={setHeightForEditing} setHairColorEdit={setHairColorForEditing} setPassportIDEdit={setPassportIDForEditing} setIDEdit={setIDForEditing} />
       {showModal && <ModalEditing token={token} setShow={setShow} jsonData={tableValue} nameOld={nameForEditing} hairColorOld={hairColorForEditing} heightOld={heightForEditing} passportIDOld={passportIDForEditing} id={idForEditing} />}
     </div>
   );

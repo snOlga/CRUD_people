@@ -21,6 +21,7 @@ import javax.crypto.SecretKey;
 public class JwtProvider {
 
     private SecretKey key = Keys.hmacShaKeyFor("super_puper_secret_key!!!!!!!!!!!!!!!!!!!!!".getBytes());
+    private String adminLogin = "admin";
 
     public String generateToken(Authentication authentication) {
         String username = authentication.getName();
@@ -67,5 +68,13 @@ public class JwtProvider {
                 .parseClaimsJws(token)
                 .getBody();
         return claims;
+    }
+
+    public boolean isAdmin (String token) {
+        return this.getUsernameFromJWT(token).equals(adminLogin); // or just super secured admin login
+    }
+
+    public String getAdminLogin() {
+        return adminLogin;
     }
 }

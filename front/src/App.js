@@ -8,6 +8,7 @@ function App() {
 
   const [token, setToken] = useState('')
   const [currentUser, setCurrentUser] = useState('')
+  const [isAdmin, setAdmin] = useState(false)
 
   return (
     <div className="App">
@@ -16,8 +17,8 @@ function App() {
       <link href="https://fonts.googleapis.com/css2?family=Tiny5&display=swap" rel="stylesheet" />
       <Router>
         <Routes>
-          <Route path="/" element={<UnloggedPage setToken={setToken} setCurrentUser={setCurrentUser}/>} />
-          <Route path="/mycity" element={<LoggedPage token={token} currentUser={currentUser}/>} />
+          <Route path="/" element={<UnloggedPage setToken={setToken} setCurrentUser={setCurrentUser} setAdmin={setAdmin}/>} />
+          <Route path="/mycity" element={<LoggedPage token={token} currentUser={currentUser} isAdmin={isAdmin}/>} />
         </Routes>
       </Router>
     </div>

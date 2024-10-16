@@ -25,6 +25,7 @@ import jakarta.servlet.http.HttpServletRequest;
 public class MainController {
 
     private CitizenRepository repoCitizen = new CitizenRepository();
+    private JwtProvider jwtProvider = new JwtProvider();
 
     private final SimpMessagingTemplate messagingTemplate;
 
@@ -70,7 +71,7 @@ public class MainController {
         Map<String, String> response = defaultResponse();
         try {
             Citizen citizen = (Citizen) repoCitizen.find(Long.parseLong(json.get("id")));
-            if (!userOwnCitizen(citizen, json.get("token")))
+            if (!userOwnCitizen(citizen, json.get("token")) && !jwtProvider.isAdmin(json.get("token")))
                 return response;
 
             citizen.updateFormJson(json);
@@ -95,7 +96,7 @@ public class MainController {
         Map<String, String> response = defaultResponse();
         try {
             Citizen citizen = (Citizen) repoCitizen.find(Long.parseLong(json.get("id")));
-            if (!userOwnCitizen(citizen, json.get("token")))
+            if (!userOwnCitizen(citizen, json.get("token")) && !jwtProvider.isAdmin(json.get("token")))
                 return response;
 
             repoCitizen.delete(citizen);
@@ -115,7 +116,6 @@ public class MainController {
 
     private boolean userOwnCitizen(Citizen citizen, String token) {
         UserRepository repoUser = new UserRepository();
-        JwtProvider jwtProvider = new JwtProvider();
         String login = jwtProvider.getUsernameFromJWT(token);
         User user = repoUser.findByLogin(login);
 
