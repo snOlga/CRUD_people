@@ -10,7 +10,7 @@ import { Stomp } from '@stomp/stompjs';
 
 let currentZIndex = 0
 
-function LoggedPage({ token, currentUser, isAdmin }) {
+function LoggedPage({ token, currentUser, isAdmin, setToken }) {
 
   const [tableValue, setTable] = useState([])
   const [showModal, setShow] = useState(false)
@@ -80,7 +80,7 @@ function LoggedPage({ token, currentUser, isAdmin }) {
       <link rel="preconnect" href="https://fonts.googleapis.com" />
       <link rel="preconnect" href="https://fonts.gstatic.com" crossOrigin />
       <link href="https://fonts.googleapis.com/css2?family=Tiny5&display=swap" rel="stylesheet" />
-      <LeftMenuContainer jsonData={tableValue} token={token} />
+      <LeftMenuContainer jsonData={tableValue} token={token} setToken={setToken} />
       <SpriteField isAdmin={isAdmin} currentUser={currentUser} isLogged={true} jsonData={tableValue} setShow={setShow} setNameEdit={setNameForEditing} setHeightEdit={setHeightForEditing} setHairColorEdit={setHairColorForEditing} setPassportIDEdit={setPassportIDForEditing} setIDEdit={setIDForEditing} />
       {showModal && <ModalEditing token={token} setShow={setShow} jsonData={tableValue} nameOld={nameForEditing} hairColorOld={hairColorForEditing} heightOld={heightForEditing} passportIDOld={passportIDForEditing} id={idForEditing} />}
     </div>

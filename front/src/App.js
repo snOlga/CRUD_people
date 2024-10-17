@@ -17,8 +17,8 @@ function App() {
       <link href="https://fonts.googleapis.com/css2?family=Tiny5&display=swap" rel="stylesheet" />
       <Router>
         <Routes>
-          <Route path="/" element={<UnloggedPage setToken={setToken} setCurrentUser={setCurrentUser} setAdmin={setAdmin}/>} />
-          <Route path="/mycity" element={<LoggedPage token={token} currentUser={currentUser} isAdmin={isAdmin}/>} />
+          <Route path="/" element={<UnloggedPage setToken={setToken} setCurrentUser={setCurrentUser} setAdmin={setAdmin} />} />
+          <Route path="/mycity" element={<LoggedPage token={token} currentUser={currentUser} isAdmin={isAdmin} setToken={setToken} />} />
         </Routes>
       </Router>
     </div>

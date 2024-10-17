@@ -1,8 +1,9 @@
 import './styles/App.css';
 import CitizensTable from './CitizensTable';
 import { useState } from 'react'
+import { Navigate, useNavigate } from 'react-router-dom';
 
-function LeftMenuContainer({ jsonData, token }) {
+function LeftMenuContainer({ jsonData, token, setToken }) {
   const DEFAULT_COLOR = '#000000'
   const ERROR_COLOR = '#FF0000'
 
@@ -24,6 +25,8 @@ function LeftMenuContainer({ jsonData, token }) {
   const [birthdayErrorBorder, setBirthdayErrorBorder] = useState(DEFAULT_COLOR)
   const [passportIDErrorBorder, setPassportIDErrorBorder] = useState(DEFAULT_COLOR)
   const [nationalityErrorColor, setNationalityErrorColor] = useState(DEFAULT_COLOR)
+
+  const navigate = useNavigate()
 
   const handleName = (e) => {
     setName(e.target.value)
@@ -125,6 +128,11 @@ function LeftMenuContainer({ jsonData, token }) {
     sendCitizen()
   }
 
+  const handleLogOut = e => {
+    setToken('')
+    navigate('/')
+  }
+
   function isPassportUnique() {
     for (var i = 0; i < jsonData.length; i++) {
       let citizen = jsonData[i];
@@ -219,6 +227,8 @@ function LeftMenuContainer({ jsonData, token }) {
         <button onClick={handleSubmit}>submit !</button>
         <br />
         <span>{mainErrorMessage}</span>
+        <br/>
+        <button onClick={handleLogOut}>log out</button>
       </div >
       <div className="Table">
         <CitizensTable jsonData={jsonData} />
