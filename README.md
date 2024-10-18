@@ -7,3 +7,5 @@ lab1 информационные системы
 [java tests](./server/src/test/java/back/server/)
 
 [front](./front/)
+
+![demo](demo.png)
