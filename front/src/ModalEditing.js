@@ -64,7 +64,7 @@ function ModalEditing({ setShow, id, nameOld, hairColorOld, heightOld, passportI
     }
 
     function sendCitizen() {
-        fetch('http://localhost:8080/api/update_one', {
+        fetch('http://localhost:17617/api/update_one', {
             method: 'POST',
             headers: {
                 'Accept': 'application/json',
@@ -95,7 +95,7 @@ function ModalEditing({ setShow, id, nameOld, hairColorOld, heightOld, passportI
         setWillDelete(false)
         setShow(false)
 
-        fetch('http://localhost:8080/api/delete_one', {
+        fetch('http://localhost:17617/api/delete_one', {
             method: 'POST',
             headers: {
                 'Accept': 'application/json',

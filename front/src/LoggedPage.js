@@ -21,11 +21,11 @@ function LoggedPage({ token, currentUser, isAdmin, setToken }) {
   const [idForEditing, setIDForEditing] = useState('')
   const navigate = useNavigate()
 
-  const BASE_URL = 'http://localhost:8080';
-  const SOCKET_URL = 'http://localhost:8080/ws-endpoint';
+  const BASE_URL = 'http://localhost:17617';
+  const SOCKET_URL = 'http://localhost:17617/ws-endpoint';
 
   window.addEventListener("beforeunload", (event) => {
-    fetch('http://localhost:8080/api/mycity', {
+    fetch('http://localhost:17617/api/mycity', {
       method: 'POST',
       headers: {
         'Accept': 'application/json',
@@ -45,7 +45,7 @@ function LoggedPage({ token, currentUser, isAdmin, setToken }) {
   }, [])
 
   function fetchServer() {
-    fetch('http://localhost:8080/api/get_all', {
+    fetch('http://localhost:17617/api/get_all', {
       method: 'GET',
       headers: {
         'Accept': 'application/json',

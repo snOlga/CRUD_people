@@ -44,7 +44,7 @@ function LoginField({ setToken, setCurrentUser, setAdmin }) {
     }
 
     const handleLogIn = (e) => {
-        fetch('http://localhost:8080/auth/log_in', {
+        fetch('http://localhost:17617/auth/log_in', {
             method: 'POST',
             headers: {
                 'Accept': 'application/json',
@@ -62,7 +62,8 @@ function LoginField({ setToken, setCurrentUser, setAdmin }) {
                 if (data.isSuccessful === "true") {
                     setToken(data.token)
                     setCurrentUser(data.nickname)
-                    setAdmin(true)
+                    if(data.role === "admin")
+                        setAdmin(true)
                     navigate('/mycity')
                     axios.defaults.headers.common["Authorization"] = `Bearer ` + data.token
                 }
@@ -74,7 +75,7 @@ function LoginField({ setToken, setCurrentUser, setAdmin }) {
     }
 
     const handleSignUp = (e) => {
-        fetch('http://localhost:8080/auth/sign_up', {
+        fetch('http://localhost:17617/auth/sign_up', {
             method: 'POST',
             headers: {
                 'Accept': 'application/json',

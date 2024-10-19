@@ -143,7 +143,7 @@ function LeftMenuContainer({ jsonData, token, setToken }) {
   }
 
   function sendCitizen() {
-    fetch('http://localhost:8080/api/send_one', {
+    fetch('http://localhost:17617/api/send_one', {
       method: 'POST',
       headers: {
         'Accept': 'application/json',

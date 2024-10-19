@@ -18,8 +18,8 @@ function UnloggedPage({ setToken, setCurrentUser, setAdmin }) {
     const [passportIDForEditing, setPassportIDForEditing] = useState('')
     const [idForEditing, setIDForEditing] = useState('')
 
-    const BASE_URL = 'http://localhost:8080';
-    const SOCKET_URL = 'http://localhost:8080/ws-endpoint';
+    const BASE_URL = 'http://localhost:17617';
+    const SOCKET_URL = 'http://localhost:17617/ws-endpoint';
 
     useEffect(() => {
         fetchServer()
@@ -27,7 +27,7 @@ function UnloggedPage({ setToken, setCurrentUser, setAdmin }) {
     }, [])
 
     function fetchServer() {
-        fetch('http://localhost:8080/api/get_all', {
+        fetch('http://localhost:17617/api/get_all', {
             method: 'GET',
             headers: {
                 'Accept': 'application/json',

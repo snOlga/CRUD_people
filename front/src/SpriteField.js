@@ -9,7 +9,6 @@ function SpriteField({ isAdmin, currentUser, isLogged, jsonData, setShow, setNam
 
     const displayWithNames = jsonData.map(
         (citizen) => {
-            console.log(currentUser === citizen.owner)
             return (
                 <SpriteContainer name={citizen.name}
                     zIndexFromMain={currentZIndex++}
