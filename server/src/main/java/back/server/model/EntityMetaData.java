@@ -1,6 +1,5 @@
-package back.server;
+package back.server.model;
 
-import back.server.citizens.Coordinates;
 import jakarta.persistence.*;
 import java.util.Date;
 

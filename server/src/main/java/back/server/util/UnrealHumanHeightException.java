@@ -1,4 +1,4 @@
-package back.server.citizens.exceptions;
+package back.server.util;
 
 public class UnrealHumanHeightException extends Exception {
     public UnrealHumanHeightException(String message) {

@@ -6,7 +6,7 @@ import { useState } from 'react'
 
 function App() {
 
-  const [token, setToken] = useState('')
+  const [token, setToken] = useState('') //TODO: local storage
   const [currentUser, setCurrentUser] = useState('')
   const [isAdmin, setAdmin] = useState(false)
 
@@ -22,7 +22,7 @@ function App() {
         </Routes>
       </Router>
     </div>
-  );
+  )
 }
 
 export default App;

@@ -1,4 +1,4 @@
-package back.server;
+package back.server.config;
 
 import org.springframework.web.socket.config.annotation.EnableWebSocketMessageBroker;
 import org.springframework.web.socket.config.annotation.StompEndpointRegistry;

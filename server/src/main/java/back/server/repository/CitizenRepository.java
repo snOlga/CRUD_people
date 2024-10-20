@@ -2,8 +2,7 @@ package back.server.repository;
 
 import java.util.List;
 
-import back.server.citizens.Citizen;
-import back.server.users.User;
+import back.server.model.Citizen;
 import jakarta.persistence.Query;
 
 public class CitizenRepository extends AbstractRepository<Citizen> {

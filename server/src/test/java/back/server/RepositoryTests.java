@@ -8,12 +8,14 @@ import java.util.Date;
 import org.junit.jupiter.api.Test;
 import org.springframework.boot.test.context.SpringBootTest;
 
-import back.server.citizens.Citizen;
-import back.server.citizens.Country;
-import back.server.citizens.exceptions.ColorFormatException;
-import back.server.citizens.exceptions.PassportIDUniqueException;
-import back.server.citizens.exceptions.UnrealHumanHeightException;
+import back.server.enums.Country;
+import back.server.model.Citizen;
 import back.server.repository.CitizenRepository;
+import back.server.util.ColorFormatException;
+import back.server.util.PassportIDUniqueException;
+import back.server.util.SQLinjectionException;
+import back.server.util.UnrealHumanHeightException;
+
 import java.time.LocalDate;
 
 @SpringBootTest

@@ -1,4 +1,4 @@
-package back.server.citizens.exceptions;
+package back.server.util;
 
 public class PassportIDUniqueException extends Exception {
     public PassportIDUniqueException(String message) {

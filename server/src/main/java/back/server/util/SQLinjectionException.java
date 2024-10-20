@@ -1,4 +1,4 @@
-package back.server;
+package back.server.util;
 
 public class SQLinjectionException extends Exception{
     public SQLinjectionException() {

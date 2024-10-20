@@ -15,6 +15,7 @@ import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.web.filter.OncePerRequestFilter;
 
 import back.server.repository.UserRepository;
+
 import java.util.List;
 
 public class JwtTokenValidator extends OncePerRequestFilter {

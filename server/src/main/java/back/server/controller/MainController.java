@@ -1,4 +1,4 @@
-package back.server;
+package back.server.controller;
 
 import java.util.List;
 import java.util.Map;
@@ -10,14 +10,14 @@ import org.springframework.messaging.MessagingException;
 import org.springframework.messaging.simp.SimpMessagingTemplate;
 import org.springframework.web.bind.annotation.*;
 
-import back.server.citizens.Citizen;
-import back.server.citizens.exceptions.ColorFormatException;
-import back.server.citizens.exceptions.PassportIDUniqueException;
-import back.server.citizens.exceptions.UnrealHumanHeightException;
+import back.server.model.Citizen;
+import back.server.model.User;
 import back.server.repository.CitizenRepository;
 import back.server.repository.UserRepository;
 import back.server.security.JwtProvider;
-import back.server.users.User;
+import back.server.util.ColorFormatException;
+import back.server.util.PassportIDUniqueException;
+import back.server.util.UnrealHumanHeightException;
 import jakarta.servlet.http.HttpServletRequest;
 
 @RestController

@@ -1,4 +1,4 @@
-package back.server.citizens;
+package back.server.model;
 
 import jakarta.persistence.*;
 

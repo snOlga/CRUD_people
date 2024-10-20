@@ -1,4 +1,4 @@
-package back.server.security;
+package back.server.controller;
 
 import java.util.List;
 import java.util.Map;
@@ -7,8 +7,10 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import back.server.model.User;
 import back.server.repository.UserRepository;
-import back.server.users.User;
+import back.server.security.JwtProvider;
+import back.server.security.SecurityUser;
 
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.beans.factory.annotation.Autowired;

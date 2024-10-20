@@ -2,7 +2,7 @@ package back.server;
 
 import org.springframework.boot.test.context.SpringBootTest;
 
-import back.server.citizens.HEXColor;
+import back.server.model.HEXColor;
 
 import org.junit.jupiter.api.Test;
 

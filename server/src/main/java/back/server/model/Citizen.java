@@ -1,19 +1,18 @@
-package back.server.citizens;
+package back.server.model;
 
 import java.util.Date;
 import java.util.Map;
 
 import com.fasterxml.jackson.annotation.JsonGetter;
 
-import back.server.EntityMetaData;
-import back.server.SQLinjectionException;
-import back.server.citizens.exceptions.ColorFormatException;
-import back.server.citizens.exceptions.PassportIDUniqueException;
-import back.server.citizens.exceptions.UnrealHumanHeightException;
+import back.server.enums.Country;
 import back.server.repository.CitizenRepository;
 import back.server.repository.UserRepository;
 import back.server.security.JwtProvider;
-import back.server.users.User;
+import back.server.util.ColorFormatException;
+import back.server.util.PassportIDUniqueException;
+import back.server.util.SQLinjectionException;
+import back.server.util.UnrealHumanHeightException;
 import jakarta.persistence.AttributeOverride;
 import jakarta.persistence.AttributeOverrides;
 import jakarta.persistence.Column;

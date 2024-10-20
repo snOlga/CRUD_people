@@ -2,7 +2,7 @@ package back.server.repository;
 
 import java.util.List;
 
-import back.server.users.User;
+import back.server.model.User;
 import jakarta.persistence.Query;
 
 public class UserRepository extends AbstractRepository<User> {

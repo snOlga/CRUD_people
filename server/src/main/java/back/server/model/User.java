@@ -1,8 +1,5 @@
-package back.server.users;
+package back.server.model;
 
-import back.server.EntityMetaData;
-import back.server.SQLinjectionException;
-import back.server.citizens.Coordinates;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.Table;
@@ -13,6 +10,8 @@ import java.util.Date;
 
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
+
+import back.server.util.SQLinjectionException;
 
 @Entity
 @Table(name = "citizen_users")

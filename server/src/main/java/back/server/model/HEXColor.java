@@ -1,8 +1,8 @@
-package back.server.citizens;
+package back.server.model;
 
 import java.util.regex.*;
 
-import back.server.citizens.exceptions.ColorFormatException;
+import back.server.util.ColorFormatException;
 import jakarta.persistence.Embeddable;
 
 @Embeddable

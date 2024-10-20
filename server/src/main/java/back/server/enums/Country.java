@@ -1,4 +1,4 @@
-package back.server.citizens;
+package back.server.enums;
 
 public enum Country {
     RUSSIA("RUSSIA"),
