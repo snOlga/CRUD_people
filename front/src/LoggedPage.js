@@ -10,7 +10,7 @@ import { Stomp } from '@stomp/stompjs';
 
 let currentZIndex = 0
 
-function LoggedPage({ cookies, token, currentUser, isAdmin, setToken }) {
+function LoggedPage({ token, currentUser, isAdmin, setToken }) {
 
   const [tableValue, setTable] = useState([])
   const [showModal, setShow] = useState(false)

@@ -4,13 +4,19 @@ import './styles/App.css';
 import { BrowserRouter as Router, Route, Routes } from 'react-router-dom';
 import { useEffect, useState } from 'react'
 import { useCookies } from 'react-cookie'
+import Cookies from 'js-cookie'
 
 function App() {
 
   const [token, setToken] = useState('') //TODO: local storage
   const [currentUser, setCurrentUser] = useState('')
   const [isAdmin, setAdmin] = useState(false)
-  const [cookies, setCookie] = useCookies(['token'])
+  const [cookies, setCookie] = useCookies(['Token', 'IsAdmin', 'CurrentUser'])
+
+  useEffect(() => {
+    setAdmin(Cookies.get('IsAdmin'))
+    setCurrentUser(Cookies.get('CurrentUser'))
+  }, [])
 
   return (
     <div className="App">

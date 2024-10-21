@@ -62,9 +62,16 @@ function LoginField({ setCookie, setToken, setCurrentUser, setAdmin }) {
                 if (data.isSuccessful === "true") {
                     setToken(data.token)
                     setCurrentUser(data.nickname)
-                    setCookie('Token', data.token, { path: '/' })
-                    if(data.role === "admin")
+
+                    let expires = new Date()
+                    expires.setTime(expires.getTime() + 86400000)
+
+                    setCookie('CurrentUser', data.nickname, { path: '/', expires })
+                    setCookie('Token', data.token, { path: '/', expires })
+                    if (data.role === "admin") {
                         setAdmin(true)
+                        setCookie('IsAdmin', true, { path: '/', expires })
+                    }
                     navigate('/mycity')
                 }
                 else {
@@ -95,7 +102,12 @@ function LoginField({ setCookie, setToken, setCurrentUser, setAdmin }) {
                 if (data.isSuccessful === "true") {
                     setToken(data.token)
                     setCurrentUser(data.nickname)
-                    setCookie('Token', data.token, { path: '/' })
+
+                    let expires = new Date()
+                    expires.setTime(expires.getTime() + 86400000)
+
+                    setCookie('CurrentUser', data.nickname, { path: '/', expires })
+                    setCookie('Token', data.token, { path: '/', expires })
                     navigate('/mycity')
                 } else {
                     setMainErrorMessage("User already exists")
@@ -106,7 +118,7 @@ function LoginField({ setCookie, setToken, setCurrentUser, setAdmin }) {
 
     const loginSubstr = event => {
         event.target.value = event.target.value.substr(0, 20)
-      }
+    }
 
     return (
         <div className="LeftMenuContainer">
