@@ -3,7 +3,7 @@ import { useState } from 'react'
 import axios from 'axios'
 import { Navigate, useNavigate } from 'react-router-dom';
 
-function LoginField({ setToken, setCurrentUser, setAdmin }) {
+function LoginField({ setCookie, setToken, setCurrentUser, setAdmin }) {
     const DEFAULT_COLOR = '#000000'
     const ERROR_COLOR = '#FF0000'
 
@@ -62,10 +62,10 @@ function LoginField({ setToken, setCurrentUser, setAdmin }) {
                 if (data.isSuccessful === "true") {
                     setToken(data.token)
                     setCurrentUser(data.nickname)
+                    setCookie('Token', data.token, { path: '/' })
                     if(data.role === "admin")
                         setAdmin(true)
                     navigate('/mycity')
-                    axios.defaults.headers.common["Authorization"] = `Bearer ` + data.token
                 }
                 else {
                     setMainErrorMessage("Incorrect credentials")
@@ -95,8 +95,8 @@ function LoginField({ setToken, setCurrentUser, setAdmin }) {
                 if (data.isSuccessful === "true") {
                     setToken(data.token)
                     setCurrentUser(data.nickname)
+                    setCookie('Token', data.token, { path: '/' })
                     navigate('/mycity')
-                    axios.defaults.headers.common["Authorization"] = `Bearer ` + data.token
                 } else {
                     setMainErrorMessage("User already exists")
                     setErrorBorder(ERROR_COLOR)

@@ -10,7 +10,7 @@ import { Stomp } from '@stomp/stompjs';
 
 let currentZIndex = 0
 
-function LoggedPage({ token, currentUser, isAdmin, setToken }) {
+function LoggedPage({ cookies, token, currentUser, isAdmin, setToken }) {
 
   const [tableValue, setTable] = useState([])
   const [showModal, setShow] = useState(false)
@@ -24,21 +24,6 @@ function LoggedPage({ token, currentUser, isAdmin, setToken }) {
   const BASE_URL = 'http://localhost:17617';
   const SOCKET_URL = 'http://localhost:17617/ws-endpoint';
 
-  window.addEventListener("beforeunload", (event) => {
-    fetch('http://localhost:17617/api/mycity', {
-      method: 'POST',
-      headers: {
-        'Accept': 'application/json',
-        'Content-Type': 'application/json',
-        'Authorization': `Bearer ` + token
-      },
-      body: JSON.stringify({
-      }).then(data => {
-        navigate('/mycity')
-      }),
-    })
-  });
-
   useEffect(() => {
     fetchServer()
     connectWebSocket()
@@ -50,7 +35,6 @@ function LoggedPage({ token, currentUser, isAdmin, setToken }) {
       headers: {
         'Accept': 'application/json',
         'Content-Type': 'application/json',
-        'Authorization': `Bearer ` + token
       },
     })
       .then(response => {

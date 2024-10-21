@@ -1,5 +1,6 @@
 import './styles/App.css';
 import { useState } from 'react';
+import Cookies from 'js-cookie';
 
 function ModalEditing({ setShow, id, nameOld, hairColorOld, heightOld, passportIDOld, jsonData, token }) {
     const DEFAULT_COLOR = '#000000'
@@ -69,10 +70,9 @@ function ModalEditing({ setShow, id, nameOld, hairColorOld, heightOld, passportI
             headers: {
                 'Accept': 'application/json',
                 'Content-Type': 'application/json',
-                'Authorization': `Bearer ` + token
             },
             body: JSON.stringify({
-                token: token,
+                token: Cookies.get('Token'),
                 id: id,
                 name: name,
                 hairColor: hairColor,
@@ -100,10 +100,9 @@ function ModalEditing({ setShow, id, nameOld, hairColorOld, heightOld, passportI
             headers: {
                 'Accept': 'application/json',
                 'Content-Type': 'application/json',
-                'Authorization': `Bearer ` + token
             },
             body: JSON.stringify({
-                token: token,
+                token: Cookies.get('Token'),
                 id: id
             }),
         })

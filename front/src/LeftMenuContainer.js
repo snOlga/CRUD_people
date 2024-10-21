@@ -2,6 +2,7 @@ import './styles/App.css';
 import CitizensTable from './CitizensTable';
 import { useState } from 'react'
 import { Navigate, useNavigate } from 'react-router-dom';
+import Cookies from 'js-cookie';
 
 function LeftMenuContainer({ jsonData, token, setToken }) {
   const DEFAULT_COLOR = '#000000'
@@ -148,10 +149,9 @@ function LeftMenuContainer({ jsonData, token, setToken }) {
       headers: {
         'Accept': 'application/json',
         'Content-Type': 'application/json',
-        'Authorization': `Bearer ` + token
       },
       body: JSON.stringify({
-        token: token,
+        token: Cookies.get('Token'),
         name: name,
         gender: isMale,
         eyeColor: eyeColor,

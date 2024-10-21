@@ -2,6 +2,7 @@ package back.server.security;
 
 import jakarta.servlet.FilterChain;
 import jakarta.servlet.ServletException;
+import jakarta.servlet.http.Cookie;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 
@@ -25,11 +26,14 @@ public class JwtTokenValidator extends OncePerRequestFilter {
     @Override
     protected void doFilterInternal(HttpServletRequest request, HttpServletResponse response, FilterChain filterChain)
             throws IOException, ServletException {
-        String jwt = request.getHeader("Authorization");
+        String jwt = null;
+        try {
+            jwt = getTokenCookie(request.getCookies());
+        } catch (Exception e) {
+            filterChain.doFilter(request, response);
+        }
 
-        if (jwt != null && jwt.startsWith("Bearer ")) {
-            jwt = jwt.substring(7);
-
+        if (jwt != null) {
             System.out.println("got token: " + jwt);
 
             JwtProvider jwtProvider = new JwtProvider();
@@ -42,11 +46,19 @@ public class JwtTokenValidator extends OncePerRequestFilter {
                 List<GrantedAuthority> auth = AuthorityUtils.commaSeparatedStringToAuthorityList(authorities);
 
                 Authentication authentication = new UsernamePasswordAuthenticationToken(
-                    login, null, auth);
+                        login, null, auth);
                 SecurityContextHolder.getContext().setAuthentication(authentication);
             }
         }
 
         filterChain.doFilter(request, response);
+    }
+
+    private String getTokenCookie(Cookie[] cookies) {
+        for (Cookie cookie : cookies) {
+            if (cookie.getName().equals("Token"))
+                return cookie.getValue();
+        }
+        return null;
     }
 }

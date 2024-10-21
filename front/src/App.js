@@ -2,13 +2,15 @@ import LoggedPage from './LoggedPage.js';
 import UnloggedPage from './UnloggedPage.js';
 import './styles/App.css';
 import { BrowserRouter as Router, Route, Routes } from 'react-router-dom';
-import { useState } from 'react'
+import { useEffect, useState } from 'react'
+import { useCookies } from 'react-cookie'
 
 function App() {
 
   const [token, setToken] = useState('') //TODO: local storage
   const [currentUser, setCurrentUser] = useState('')
   const [isAdmin, setAdmin] = useState(false)
+  const [cookies, setCookie] = useCookies(['token'])
 
   return (
     <div className="App">
@@ -17,8 +19,8 @@ function App() {
       <link href="https://fonts.googleapis.com/css2?family=Tiny5&display=swap" rel="stylesheet" />
       <Router>
         <Routes>
-          <Route path="/" element={<UnloggedPage setToken={setToken} setCurrentUser={setCurrentUser} setAdmin={setAdmin} />} />
-          <Route path="/mycity" element={<LoggedPage token={token} currentUser={currentUser} isAdmin={isAdmin} setToken={setToken} />} />
+          <Route path="/" element={<UnloggedPage setCookie={setCookie} setToken={setToken} setCurrentUser={setCurrentUser} setAdmin={setAdmin} />} />
+          <Route path="/mycity" element={<LoggedPage cookies={cookies} token={token} currentUser={currentUser} isAdmin={isAdmin} setToken={setToken} />} />
         </Routes>
       </Router>
     </div>
