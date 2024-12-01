@@ -4,6 +4,7 @@ import java.util.List;
 import java.util.Map;
 import java.util.TreeMap;
 import java.util.ArrayList;
+import java.util.LinkedHashMap;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.messaging.MessagingException;
@@ -17,6 +18,7 @@ import back.server.repository.UserRepository;
 import back.server.security.JwtProvider;
 import back.server.util.ColorFormatException;
 import back.server.util.PassportIDUniqueException;
+import back.server.util.SQLinjectionException;
 import back.server.util.UnrealHumanHeightException;
 import jakarta.servlet.http.HttpServletRequest;
 
@@ -61,9 +63,24 @@ public class MainController {
         return response;
     }
 
-    private void setResponse(Map<String, String> response, boolean isSuccessful, String message) {
-        response.put("isSuccessful", isSuccessful + "");
-        response.put("message", message);
+    @PostMapping("/api/send_mass")
+    public Map<String, String> sendMassToDB(@RequestBody List<LinkedHashMap<String,String>> jsonArray) {
+        Map<String, String> response = defaultResponse();
+        try {
+            Citizen[] citizens = convertJsonToCitizenArray(jsonArray);
+            repoCitizen.add(citizens);
+            messagingTemplate.convertAndSend("/topic/citizen", this.getAll(null));
+            setResponse(response, true, "");
+        } catch (NumberFormatException | UnrealHumanHeightException e) {
+            setResponse(response, false, "numbers have wrong format");
+        } catch (ColorFormatException e) {
+            setResponse(response, false, "colors have wrong format");
+        } catch (PassportIDUniqueException e) {
+            setResponse(response, false, "passport ID is not unique");
+        } catch (Exception e) {
+            setResponse(response, false, "something was wrong");
+        }
+        return response;
     }
 
     @PostMapping("/api/update_one")
@@ -108,6 +125,11 @@ public class MainController {
         return response;
     }
 
+    private void setResponse(Map<String, String> response, boolean isSuccessful, String message) {
+        response.put("isSuccessful", isSuccessful + "");
+        response.put("message", message);
+    }
+
     private Map<String, String> defaultResponse() {
         Map<String, String> response = new TreeMap<>();
         setResponse(response, false, "");
@@ -120,5 +142,13 @@ public class MainController {
         User user = repoUser.findByLogin(login);
 
         return citizen.getOwnerNickname().equals(user.getNickname());
+    }
+
+    private Citizen[] convertJsonToCitizenArray(List<LinkedHashMap<String,String>> json) throws NumberFormatException, ColorFormatException, UnrealHumanHeightException, PassportIDUniqueException, SQLinjectionException {
+        Citizen[] citizens = new Citizen[json.size()];
+        for (int i = 0; i < json.size(); i++) {
+            citizens[i] = new Citizen(json.get(i));
+        }
+        return citizens;
     }
 }

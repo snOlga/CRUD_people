@@ -168,12 +168,55 @@ function LeftMenuContainer({ jsonData, token, setToken }) {
         //window.location.reload()
       })
   }
+  const [fileData, setFileData] = useState("")
+
+  function handleImport() {
+    console.log(JSON.stringify(JSON.parse(fileData)))
+    console.log(JSON.stringify({
+      token: Cookies.get('Token'),
+      name: name,
+      gender: isMale,
+      eyeColor: eyeColor,
+      hairColor: hairColor,
+      height: height,
+      birthday: birthday,
+      passportID: passportID,
+      nationality: nationality,
+      xCoord: xCoord,
+      yCoord: yCoord
+    }))
+    fetch('http://localhost:17617/api/send_mass', {
+      method: 'POST',
+      headers: {
+        'Accept': 'application/json',
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify(JSON.parse(fileData)),
+    })
+      .then(response => {
+        //window.location.reload()
+      })
+  }
+
+  function handleFileChange(e) {
+    const selectedFile = e.target.files[0]
+    const reader = new FileReader()
+    reader.onload = (event) => {
+      setFileData(event.target.result)
+    }
+    reader.readAsText(selectedFile)
+  }
 
   return (
     <div className="LeftMenuContainer">
       <div className='Form'>
         <h1>My little City</h1>
         <br />
+
+        <p>Import them?</p>
+        <input type="file" id="input" multiple onChange={handleFileChange} />
+        <br />
+        <button onClick={handleImport}>import !</button>
 
         <p>Create new citizen?</p>
 
@@ -197,7 +240,7 @@ function LeftMenuContainer({ jsonData, token, setToken }) {
         <input type="color" className='InputFields' onChange={handleHairColor} />
 
         <p>Height?</p>
-        <input type="number" className='InputFields' onChange={handleHeight} style={{ borderColor: heightErrorBorder }} onInput={heightSubstr}/>
+        <input type="number" className='InputFields' onChange={handleHeight} style={{ borderColor: heightErrorBorder }} onInput={heightSubstr} />
 
         <p>Birth date?</p>
         <input type="date" className='InputFields' onChange={handleBirthday} style={{ borderColor: birthdayErrorBorder }} />
@@ -227,7 +270,7 @@ function LeftMenuContainer({ jsonData, token, setToken }) {
         <button onClick={handleSubmit}>submit !</button>
         <br />
         <span>{mainErrorMessage}</span>
-        <br/>
+        <br />
         <button onClick={handleLogOut}>log out</button>
       </div >
       <div className="Table">

@@ -98,7 +98,6 @@ function LoginField({ setCookie, setToken, setCurrentUser, setAdmin }) {
         })
             .then(response => response.json())
             .then(data => {
-                console.log(data.isSuccessful)
                 if (data.isSuccessful === "true") {
                     setToken(data.token)
                     setCurrentUser(data.nickname)

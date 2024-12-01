@@ -19,6 +19,15 @@ public class CitizenRepository extends AbstractRepository<Citizen> {
         });
     }
 
+    public void add(Citizen[] object) {
+        runQuery(() -> {
+            for (Citizen citizen : object) {
+                currentSession().persist(citizen);
+            }
+            return 0;
+        });
+    }
+
     @Override
     public Citizen find(long ID) {
         return (Citizen) runQuery(() -> (Citizen) currentSession().get(Citizen.class, ID));

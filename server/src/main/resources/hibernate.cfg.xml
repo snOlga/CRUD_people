@@ -7,8 +7,8 @@
     <session-factory>
         <property name="hibernate.connection.driver_class">org.postgresql.Driver</property>
         <property name="hibernate.connection.url">jdbc:postgresql://localhost:8081/studs</property>
-        <property name="hibernate.connection.username">login</property>
-        <property name="hibernate.connection.password">password</property>
+        <property name="hibernate.connection.username">s368764</property>
+        <property name="hibernate.connection.password">OeC9LaFi3hH1YevG</property>
 
 
         <property name="hibernate.dialect">org.hibernate.dialect.PostgreSQLDialect</property>

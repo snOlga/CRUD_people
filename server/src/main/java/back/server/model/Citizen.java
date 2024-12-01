@@ -50,7 +50,7 @@ public class Citizen extends EntityMetaData {
     @Column(name = BIRTHDAY)
     private LocalDate birthday;
 
-    @Column(name = PASSPORT_ID)
+    @Column(name = PASSPORT_ID, unique = true)
     private Long passportID;
 
     @Column(name = NATIONALITY)

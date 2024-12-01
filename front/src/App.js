@@ -8,7 +8,7 @@ import Cookies from 'js-cookie'
 
 function App() {
 
-  const [token, setToken] = useState('') //TODO: local storage
+  const [token, setToken] = useState('')
   const [currentUser, setCurrentUser] = useState('')
   const [isAdmin, setAdmin] = useState(false)
   const [cookies, setCookie] = useCookies(['Token', 'IsAdmin', 'CurrentUser'])

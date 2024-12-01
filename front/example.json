@@ -1,0 +1,41 @@
+[
+    {
+        "token":"eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiIxIiwiaWF0IjoxNzMzMDY4NDYyLCJleHAiOjE3MzMxNTQ4NjIsImF1dGhvcml0aWVzIjoiUk9MRV9VU0VSIn0.c-CHbkB6Zva1IwCROInluj2TsxIkp4hblvMaX4YqgHQ",
+        "name": "Anton",
+        "gender": "1",
+        "eyeColor": "#000000",
+        "hairColor": "#000000",
+        "height": "130",
+        "birthday": "2024-10-01",
+        "passportID": "11",
+        "nationality": "RUSSIA",
+        "xCoord": 59.8661895,
+        "yCoord": 30.3950851
+    },
+    {
+        "token":"eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiIxIiwiaWF0IjoxNzMzMDY4NDYyLCJleHAiOjE3MzMxNTQ4NjIsImF1dGhvcml0aWVzIjoiUk9MRV9VU0VSIn0.c-CHbkB6Zva1IwCROInluj2TsxIkp4hblvMaX4YqgHQ",
+        "name": "Sasha",
+        "gender": "1",
+        "eyeColor": "#000000",
+        "hairColor": "#000000",
+        "height": "130",
+        "birthday": "2024-10-01",
+        "passportID": "22",
+        "nationality": "RUSSIA",
+        "xCoord": 59.8661895,
+        "yCoord": 30.3950851
+    },
+    {
+        "token":"eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiIxIiwiaWF0IjoxNzMzMDY4NDYyLCJleHAiOjE3MzMxNTQ4NjIsImF1dGhvcml0aWVzIjoiUk9MRV9VU0VSIn0.c-CHbkB6Zva1IwCROInluj2TsxIkp4hblvMaX4YqgHQ",
+        "name": "Kasha",
+        "gender": "1",
+        "eyeColor": "#000000",
+        "hairColor": "#000000",
+        "height": "130",
+        "birthday": "2024-10-01",
+        "passportID": "123450",
+        "nationality": "RUSSIA",
+        "xCoord": 59.8661895,
+        "yCoord": 30.3950851
+    }
+]
