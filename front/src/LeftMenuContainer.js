@@ -1,8 +1,11 @@
 import './styles/App.css';
 import CitizensTable from './CitizensTable';
-import { useState } from 'react'
+import ImportHistory from './ImportHistory';
+import { useEffect, useState } from 'react'
 import { Navigate, useNavigate } from 'react-router-dom';
 import Cookies from 'js-cookie';
+import SockJS from 'sockjs-client';
+import { Stomp } from '@stomp/stompjs';
 
 function LeftMenuContainer({ jsonData, token, setToken }) {
   const DEFAULT_COLOR = '#000000'
@@ -169,22 +172,9 @@ function LeftMenuContainer({ jsonData, token, setToken }) {
       })
   }
   const [fileData, setFileData] = useState("")
+  const [filename, setFilename] = useState("")
 
   function handleImport() {
-    console.log(JSON.stringify(JSON.parse(fileData)))
-    console.log(JSON.stringify({
-      token: Cookies.get('Token'),
-      name: name,
-      gender: isMale,
-      eyeColor: eyeColor,
-      hairColor: hairColor,
-      height: height,
-      birthday: birthday,
-      passportID: passportID,
-      nationality: nationality,
-      xCoord: xCoord,
-      yCoord: yCoord
-    }))
     fetch('http://localhost:17617/api/send_mass', {
       method: 'POST',
       headers: {
@@ -194,18 +184,60 @@ function LeftMenuContainer({ jsonData, token, setToken }) {
       body: JSON.stringify(JSON.parse(fileData)),
     })
       .then(response => {
-        //window.location.reload()
+        let jsonResp = response.json()
+        jsonResp.then((data) => {
+          console.log(data.isSuccessful)
+          fetch('http://localhost:17617/history/set_one_history_node', {
+            method: 'POST',
+            headers: {
+              'Accept': 'application/json',
+              'Content-Type': 'application/json',
+            },
+            body: JSON.stringify({
+              filename: filename,
+              isSuccessful: data.isSuccessful
+            }),
+          })
+            .then(response => {
+              //window.location.reload()
+            })
+        })
       })
   }
 
   function handleFileChange(e) {
     const selectedFile = e.target.files[0]
+    setFilename(e.target.files[0].name)
     const reader = new FileReader()
     reader.onload = (event) => {
       setFileData(event.target.result)
     }
     reader.readAsText(selectedFile)
   }
+
+  const [isImportHistory, showImportHistory] = useState(false)
+  const [history, setHistory] = useState([])
+
+  const SOCKET_URL = 'http://localhost:17617/ws-endpoint';
+
+    useEffect(() => {
+        connectWebSocket()
+    }, [])
+
+    function connectWebSocket() {
+        const socket = new SockJS(SOCKET_URL)
+        let stompClient = Stomp.over(socket)
+
+        stompClient.connect({}, function (frame) {
+            stompClient.subscribe('/topic/import_history', data => {
+                handleWebSocketMessage(data.body)
+            })
+        })
+    }
+
+    function handleWebSocketMessage(data) {
+        setHistory(JSON.parse(data))
+    }
 
   return (
     <div className="LeftMenuContainer">
@@ -217,6 +249,11 @@ function LeftMenuContainer({ jsonData, token, setToken }) {
         <input type="file" id="input" multiple onChange={handleFileChange} />
         <br />
         <button onClick={handleImport}>import !</button>
+        <br />
+        <button onClick={(e) => showImportHistory(!isImportHistory)}>show import history</button>
+        {
+          isImportHistory && <ImportHistory history={history} />
+        }
 
         <p>Create new citizen?</p>
 

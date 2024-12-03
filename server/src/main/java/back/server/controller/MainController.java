@@ -16,6 +16,7 @@ import back.server.model.User;
 import back.server.repository.CitizenRepository;
 import back.server.repository.UserRepository;
 import back.server.security.JwtProvider;
+import back.server.util.AmountCitizenException;
 import back.server.util.ColorFormatException;
 import back.server.util.PassportIDUniqueException;
 import back.server.util.SQLinjectionException;
@@ -50,8 +51,8 @@ public class MainController {
         Map<String, String> response = defaultResponse();
         try {
             Citizen citizen = new Citizen(json);
-            if(nationalityValidator.validateOneCitizen(citizen))
-                repoCitizen.add(citizen);
+            nationalityValidator.validateOneCitizen(citizen);
+            repoCitizen.add(citizen);
             messagingTemplate.convertAndSend("/topic/citizen", this.getAll(null));
             setResponse(response, true, "");
         } catch (NumberFormatException | UnrealHumanHeightException e) {
@@ -60,6 +61,8 @@ public class MainController {
             setResponse(response, false, "colors have wrong format");
         } catch (PassportIDUniqueException e) {
             setResponse(response, false, "passport ID is not unique");
+        } catch (AmountCitizenException e) {
+            setResponse(response, false, "AmountCitizenException");
         } catch (Exception e) {
             setResponse(response, false, "something was wrong");
         }
@@ -71,8 +74,8 @@ public class MainController {
         Map<String, String> response = defaultResponse();
         try {
             Citizen[] citizens = convertJsonToCitizenArray(jsonArray);
-            if(nationalityValidator.validateArrayOfCitizens(citizens))
-                repoCitizen.add(citizens);
+            nationalityValidator.validateArrayOfCitizens(citizens);
+            repoCitizen.add(citizens);
             messagingTemplate.convertAndSend("/topic/citizen", this.getAll(null));
             setResponse(response, true, "");
         } catch (NumberFormatException | UnrealHumanHeightException e) {
@@ -81,6 +84,8 @@ public class MainController {
             setResponse(response, false, "colors have wrong format");
         } catch (PassportIDUniqueException e) {
             setResponse(response, false, "passport ID is not unique");
+        } catch (AmountCitizenException e) {
+            setResponse(response, false, "AmountCitizenException");
         } catch (Exception e) {
             setResponse(response, false, "something was wrong");
         }
@@ -94,10 +99,9 @@ public class MainController {
             Citizen citizen = (Citizen) repoCitizen.find(Long.parseLong(json.get("id")));
             if (!userOwnCitizen(citizen, json.get("token")) && !jwtProvider.isAdmin(json.get("token")))
                 return response;
-
             citizen.updateFormJson(json);
-            if(nationalityValidator.validateOneCitizen(citizen))
-                repoCitizen.update(citizen);
+            nationalityValidator.validateOneCitizen(citizen);
+            repoCitizen.update(citizen);
             messagingTemplate.convertAndSend("/topic/citizen", this.getAll(null));
             setResponse(response, true, "");
         } catch (NumberFormatException | UnrealHumanHeightException e) {
@@ -106,6 +110,8 @@ public class MainController {
             setResponse(response, false, "colors have wrong format");
         } catch (PassportIDUniqueException e) {
             setResponse(response, false, "passport ID is not unique");
+        } catch (AmountCitizenException e) {
+            setResponse(response, false, "AmountCitizenException");
         } catch (Exception e) {
             setResponse(response, false, "something was wrong");
         }

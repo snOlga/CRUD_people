@@ -8,6 +8,7 @@ import org.springframework.transaction.annotation.Transactional;
 
 import back.server.model.Citizen;
 import back.server.repository.CitizenRepository;
+import back.server.util.AmountCitizenException;
 
 
 public class NationalityAmountValidator {
@@ -16,17 +17,18 @@ public class NationalityAmountValidator {
     private CitizenRepository repoCitizen = new CitizenRepository();
 
     @Transactional(isolation = Isolation.READ_UNCOMMITTED)
-    public boolean validateOneCitizen(Citizen currentCitizen) {
+    public void validateOneCitizen(Citizen currentCitizen) throws AmountCitizenException {
         List<Citizen> citizens = repoCitizen.getAll();
         int counter = 0;
         for (Citizen citizen : citizens) {
             counter += citizen.getNationality() == currentCitizen.getNationality() ? 1 : 0;
         }
-        return counter < MAX_NATIONALITY_MEMBERS;
+        if (counter >= MAX_NATIONALITY_MEMBERS && counter != 0)
+            throw new AmountCitizenException("nationality");
     }
 
     @Transactional(isolation = Isolation.READ_UNCOMMITTED)
-    public boolean validateArrayOfCitizens(Citizen[] currentCitizens) {
+    public void validateArrayOfCitizens(Citizen[] currentCitizens) throws AmountCitizenException {
         List<Citizen> citizens = repoCitizen.getAll();
         int counter = 0;
         for (Citizen currentCitizen : currentCitizens) {
@@ -40,7 +42,8 @@ public class NationalityAmountValidator {
             currentCounter--;
             counter = currentCounter > counter ? currentCounter : counter;
         }
-        return counter < MAX_NATIONALITY_MEMBERS;
+        if (counter >= MAX_NATIONALITY_MEMBERS && counter != 0)
+            throw new AmountCitizenException("nationality");
     }
 
 }

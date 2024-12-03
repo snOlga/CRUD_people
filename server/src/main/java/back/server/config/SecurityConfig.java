@@ -26,6 +26,7 @@ public class SecurityConfig {
         return http
                 .authorizeHttpRequests((authorize) -> authorize
                         .requestMatchers("/api/get_all").permitAll()
+                        .requestMatchers("/history/set_one_history_node").permitAll()
                         .requestMatchers("/auth/sign_up").permitAll()
                         .requestMatchers("/auth/log_in").permitAll()
                         .requestMatchers("/ws-endpoint").permitAll()
