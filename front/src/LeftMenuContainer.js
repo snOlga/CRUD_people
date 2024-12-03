@@ -195,7 +195,8 @@ function LeftMenuContainer({ jsonData, token, setToken }) {
             },
             body: JSON.stringify({
               filename: filename,
-              isSuccessful: data.isSuccessful
+              isSuccessful: data.isSuccessful,
+              owner: getCookie("CurrentUser")
             }),
           })
             .then(response => {
@@ -220,24 +221,40 @@ function LeftMenuContainer({ jsonData, token, setToken }) {
 
   const SOCKET_URL = 'http://localhost:17617/ws-endpoint';
 
-    useEffect(() => {
-        connectWebSocket()
-    }, [])
+  useEffect(() => {
+    connectWebSocket()
+  }, [])
 
-    function connectWebSocket() {
-        const socket = new SockJS(SOCKET_URL)
-        let stompClient = Stomp.over(socket)
+  function connectWebSocket() {
+    const socket = new SockJS(SOCKET_URL)
+    let stompClient = Stomp.over(socket)
 
-        stompClient.connect({}, function (frame) {
-            stompClient.subscribe('/topic/import_history', data => {
-                handleWebSocketMessage(data.body)
-            })
-        })
+    stompClient.connect({}, function (frame) {
+      stompClient.subscribe('/topic/import_history', data => {
+        handleWebSocketMessage(data.body)
+      })
+    })
+  }
+
+  function handleWebSocketMessage(data) {
+    setHistory(JSON.parse(data))
+  }
+
+  function getCookie(cname) {
+    let name = cname + "=";
+    let decodedCookie = decodeURIComponent(document.cookie);
+    let ca = decodedCookie.split(';');
+    for (let i = 0; i < ca.length; i++) {
+      let c = ca[i];
+      while (c.charAt(0) == ' ') {
+        c = c.substring(1);
+      }
+      if (c.indexOf(name) == 0) {
+        return c.substring(name.length, c.length);
+      }
     }
-
-    function handleWebSocketMessage(data) {
-        setHistory(JSON.parse(data))
-    }
+    return "";
+  }
 
   return (
     <div className="LeftMenuContainer">

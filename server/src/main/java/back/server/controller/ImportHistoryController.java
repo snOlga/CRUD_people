@@ -11,13 +11,16 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
 
 import back.server.model.ImportNode;
+import back.server.model.User;
 import back.server.repository.ImportHistoryRepository;
+import back.server.repository.UserRepository;
 
 @RestController
 @CrossOrigin(origins = "*")
 public class ImportHistoryController {
 
     private ImportHistoryRepository repoImportHistory = new ImportHistoryRepository();
+    private UserRepository repoUsers = new UserRepository();
 
     private final SimpMessagingTemplate messagingTemplate;
 
@@ -30,7 +33,9 @@ public class ImportHistoryController {
     public void sendToDB(@RequestBody Map<String, String> json) {
         String fileName = json.get("filename");
         String isSuccessful = json.get("isSuccessful");
-        repoImportHistory.add(new ImportNode(fileName, isSuccessful));
+        String owner = json.get("owner");
+        User user = repoUsers.findByNickname(owner);
+        repoImportHistory.add(new ImportNode(fileName, isSuccessful, user));
         messagingTemplate.convertAndSend("/topic/import_history", repoImportHistory.getAll());
     }
 }
