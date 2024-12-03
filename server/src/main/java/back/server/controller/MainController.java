@@ -20,6 +20,7 @@ import back.server.util.ColorFormatException;
 import back.server.util.PassportIDUniqueException;
 import back.server.util.SQLinjectionException;
 import back.server.util.UnrealHumanHeightException;
+import back.server.validator.NationalityAmountValidator;
 import jakarta.servlet.http.HttpServletRequest;
 
 @RestController
@@ -28,6 +29,7 @@ public class MainController {
 
     private CitizenRepository repoCitizen = new CitizenRepository();
     private JwtProvider jwtProvider = new JwtProvider();
+    private NationalityAmountValidator nationalityValidator = new NationalityAmountValidator();
 
     private final SimpMessagingTemplate messagingTemplate;
 
@@ -48,7 +50,8 @@ public class MainController {
         Map<String, String> response = defaultResponse();
         try {
             Citizen citizen = new Citizen(json);
-            repoCitizen.add(citizen);
+            if(nationalityValidator.validateOneCitizen(citizen))
+                repoCitizen.add(citizen);
             messagingTemplate.convertAndSend("/topic/citizen", this.getAll(null));
             setResponse(response, true, "");
         } catch (NumberFormatException | UnrealHumanHeightException e) {
@@ -68,7 +71,8 @@ public class MainController {
         Map<String, String> response = defaultResponse();
         try {
             Citizen[] citizens = convertJsonToCitizenArray(jsonArray);
-            repoCitizen.add(citizens);
+            if(nationalityValidator.validateArrayOfCitizens(citizens))
+                repoCitizen.add(citizens);
             messagingTemplate.convertAndSend("/topic/citizen", this.getAll(null));
             setResponse(response, true, "");
         } catch (NumberFormatException | UnrealHumanHeightException e) {
@@ -92,7 +96,8 @@ public class MainController {
                 return response;
 
             citizen.updateFormJson(json);
-            repoCitizen.update(citizen);
+            if(nationalityValidator.validateOneCitizen(citizen))
+                repoCitizen.update(citizen);
             messagingTemplate.convertAndSend("/topic/citizen", this.getAll(null));
             setResponse(response, true, "");
         } catch (NumberFormatException | UnrealHumanHeightException e) {

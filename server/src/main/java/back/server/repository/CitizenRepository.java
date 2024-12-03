@@ -35,6 +35,7 @@ public class CitizenRepository extends AbstractRepository<Citizen> {
 
     public Citizen findByPassportID(String passportID) {
         return (Citizen) runQuery(() -> {
+            @SuppressWarnings("deprecation")
             Query query = currentSession().createQuery("FROM Citizen where login = :passportID");
             query.setParameter("passportID", passportID);
             return (Citizen) query.getSingleResult();
