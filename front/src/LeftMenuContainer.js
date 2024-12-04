@@ -222,8 +222,24 @@ function LeftMenuContainer({ jsonData, token, setToken }) {
   const SOCKET_URL = 'http://localhost:17617/ws-endpoint';
 
   useEffect(() => {
+    fetchHistory()
     connectWebSocket()
   }, [])
+
+  function fetchHistory() {
+    fetch('http://localhost:17617/history/get_history', {
+      method: 'GET',
+      headers: {
+        'Accept': 'application/json',
+        'Content-Type': 'application/json',
+      }
+    })
+      .then(response => {
+        let jsonResp = response.json()
+        jsonResp.then((data) =>
+          setHistory(data))
+      })
+  }
 
   function connectWebSocket() {
     const socket = new SockJS(SOCKET_URL)

@@ -43,7 +43,7 @@ public class CitizenRepository extends AbstractRepository<Citizen> {
     }
 
     @Override
-    public List getAll() {
+    public List<Citizen> getAll() {
         return (List) runQuery(() -> currentSession().createQuery("FROM Citizen", Citizen.class).list());
     }
 

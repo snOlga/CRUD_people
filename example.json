@@ -1,6 +1,6 @@
 [
     {
-        "token":"eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiIxIiwiaWF0IjoxNzMzMjQzMzAyLCJleHAiOjE3MzMzMjk3MDIsImF1dGhvcml0aWVzIjoiUk9MRV9VU0VSIn0.xfZlo6jWGA338_1OYneCWTXmzWSBXz4wS898MqAJqu4",
+        "token":"eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiIxIiwiaWF0IjoxNzMzMzAyMzk1LCJleHAiOjE3MzMzODg3OTUsImF1dGhvcml0aWVzIjoiUk9MRV9VU0VSIn0._0QRLQ2IGh7GwL1w5ZC85vR3j9Tj0o78aOTuej3Bejc",
         "name": "Anton",
         "gender": "1",
         "eyeColor": "#000000",
@@ -13,7 +13,7 @@
         "yCoord": 30.3950851
     },
     {
-        "token":"eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiIxIiwiaWF0IjoxNzMzMjQzMzAyLCJleHAiOjE3MzMzMjk3MDIsImF1dGhvcml0aWVzIjoiUk9MRV9VU0VSIn0.xfZlo6jWGA338_1OYneCWTXmzWSBXz4wS898MqAJqu4",
+        "token":"eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiIxIiwiaWF0IjoxNzMzMzAyMzk1LCJleHAiOjE3MzMzODg3OTUsImF1dGhvcml0aWVzIjoiUk9MRV9VU0VSIn0._0QRLQ2IGh7GwL1w5ZC85vR3j9Tj0o78aOTuej3Bejc",
         "name": "Sasha",
         "gender": "1",
         "eyeColor": "#000000",
@@ -26,7 +26,7 @@
         "yCoord": 30.3950851
     },
     {
-        "token":"eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiIxIiwiaWF0IjoxNzMzMjQzMzAyLCJleHAiOjE3MzMzMjk3MDIsImF1dGhvcml0aWVzIjoiUk9MRV9VU0VSIn0.xfZlo6jWGA338_1OYneCWTXmzWSBXz4wS898MqAJqu4",
+        "token":"eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiIxIiwiaWF0IjoxNzMzMzAyMzk1LCJleHAiOjE3MzMzODg3OTUsImF1dGhvcml0aWVzIjoiUk9MRV9VU0VSIn0._0QRLQ2IGh7GwL1w5ZC85vR3j9Tj0o78aOTuej3Bejc",
         "name": "Kasha",
         "gender": "1",
         "eyeColor": "#000000",

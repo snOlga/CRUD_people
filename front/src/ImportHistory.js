@@ -25,7 +25,7 @@ function ImportHistory({ history }) {
                     if (getCookie("CurrentUser") == node.owner.nickname) {
                         return (
                             <div>
-                                {node.fileName} - {node.isSuccessful == true ? 'imported' : 'failed'}
+                                {node.fileName} - {node.isSuccessful}
                                 <br />
                             </div>
                         )
