@@ -2,6 +2,7 @@ package back.server;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertNotEquals;
+import static org.junit.jupiter.api.Assertions.fail;
 
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -63,5 +64,23 @@ class RepositoryTests {
 		Citizen fromRepo = (Citizen) repo.findById(citizen.getId()).get();
 		assertEquals(fromRepo.getId(), citizen.getId());
 		assertEquals(fromRepo.getHairColor(), citizen.getHairColor());
+	}
+
+	@Test
+	void addTwoNotUniquePassports()
+			throws ColorFormatException, UnrealHumanHeightException, PassportIDUniqueException, SQLinjectionException {
+		try {
+			Citizen citizen1 = new Citizen("Emma", (byte) 0, "#000000", "#000000", (short) 160,
+					LocalDate.parse("2000-10-01"),
+					99L, Country.FRANCE);
+			Citizen citizen2 = new Citizen("Stella", (byte) 0, "#000000", "#000000", (short) 160,
+					LocalDate.parse("2000-10-01"),
+					99L, Country.FRANCE);
+			repo.save(citizen1);
+			repo.save(citizen2);
+			fail();
+		} catch (Exception e) {
+			// nothing
+		}
 	}
 }

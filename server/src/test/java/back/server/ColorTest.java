@@ -4,6 +4,8 @@ import org.springframework.boot.test.context.SpringBootTest;
 
 import back.server.model.HEXColor;
 
+import static org.junit.jupiter.api.Assertions.fail;
+
 import org.junit.jupiter.api.Test;
 
 @SpringBootTest
@@ -14,7 +16,7 @@ public class ColorTest {
         HEXColor color = new HEXColor();
         try {
             color.setHexColor("black");
-            failTest();
+            fail();
         } catch (Exception e) {
             //nothing
         }
@@ -26,7 +28,7 @@ public class ColorTest {
         try {
             color.setHexColor("#ffffff");
         } catch (Exception e) {
-            failTest();
+            fail();
         }
     }
 }
