@@ -3,7 +3,6 @@ package back.server.controller;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
-import java.util.TreeMap;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.messaging.simp.SimpMessagingTemplate;
@@ -13,11 +12,10 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
 
-import back.server.model.Citizen;
 import back.server.model.ImportNode;
 import back.server.model.User;
 import back.server.repository.ImportHistoryRepository;
-import back.server.repository.UserRepository;
+import back.server.service.UserService;
 import back.server.util.ColorFormatException;
 import jakarta.servlet.http.HttpServletRequest;
 
@@ -25,19 +23,20 @@ import jakarta.servlet.http.HttpServletRequest;
 @CrossOrigin(origins = "*")
 public class ImportHistoryController {
 
-    private ImportHistoryRepository repoImportHistory = new ImportHistoryRepository();
-    private UserRepository repoUsers = new UserRepository();
-
-    private final SimpMessagingTemplate messagingTemplate;
-
     @Autowired
-    public ImportHistoryController(SimpMessagingTemplate messagingTemplate) {
+    private UserService userService;
+
+    private ImportHistoryRepository repoImportHistory;
+    private SimpMessagingTemplate messagingTemplate;
+
+    public ImportHistoryController(SimpMessagingTemplate messagingTemplate, ImportHistoryRepository repoImportHistory) {
         this.messagingTemplate = messagingTemplate;
+        this.repoImportHistory = repoImportHistory;
     }
 
     @GetMapping("/history/get_history")
-    public List<Citizen> getAll(HttpServletRequest request) throws ColorFormatException {
-        ArrayList<Citizen> responseList = (ArrayList<Citizen>) repoImportHistory.getAll();
+    public List<ImportNode> getAll(HttpServletRequest request) throws ColorFormatException {
+        ArrayList<ImportNode> responseList = (ArrayList<ImportNode>) repoImportHistory.findAll();
 
         return responseList;
     }
@@ -47,8 +46,8 @@ public class ImportHistoryController {
         String fileName = json.get("filename");
         String isSuccessful = json.get("isSuccessful");
         String owner = json.get("owner");
-        User user = repoUsers.findByNickname(owner);
-        repoImportHistory.add(new ImportNode(fileName, isSuccessful, user));
-        messagingTemplate.convertAndSend("/topic/import_history", repoImportHistory.getAll());
+        User user = userService.findByNickname(owner);
+        repoImportHistory.save(new ImportNode(fileName, isSuccessful, user));
+        messagingTemplate.convertAndSend("/topic/import_history", repoImportHistory.findAll());
     }
 }

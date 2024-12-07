@@ -3,7 +3,6 @@ package back.server.controller;
 import java.util.List;
 import java.util.Map;
 import java.util.TreeMap;
-import java.util.ArrayList;
 import java.util.LinkedHashMap;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -12,38 +11,26 @@ import org.springframework.messaging.simp.SimpMessagingTemplate;
 import org.springframework.web.bind.annotation.*;
 
 import back.server.model.Citizen;
-import back.server.model.User;
-import back.server.repository.CitizenRepository;
-import back.server.repository.UserRepository;
-import back.server.security.JwtProvider;
+import back.server.service.CitizenService;
 import back.server.util.AmountCitizenException;
 import back.server.util.ColorFormatException;
 import back.server.util.PassportIDUniqueException;
 import back.server.util.SQLinjectionException;
 import back.server.util.UnrealHumanHeightException;
-import back.server.validator.NationalityAmountValidator;
 import jakarta.servlet.http.HttpServletRequest;
 
 @RestController
 @CrossOrigin(origins = "*")
 public class MainController {
-
-    private CitizenRepository repoCitizen = new CitizenRepository();
-    private JwtProvider jwtProvider = new JwtProvider();
-    private NationalityAmountValidator nationalityValidator = new NationalityAmountValidator();
-
-    private final SimpMessagingTemplate messagingTemplate;
-
+    
     @Autowired
-    public MainController(SimpMessagingTemplate messagingTemplate) {
-        this.messagingTemplate = messagingTemplate;
-    }
+    private CitizenService citizenService;
+    @Autowired
+    private SimpMessagingTemplate messagingTemplate;
 
     @GetMapping("/api/get_all")
     public List<Citizen> getAll(HttpServletRequest request) throws ColorFormatException {
-        ArrayList<Citizen> responseList = (ArrayList<Citizen>) repoCitizen.getAll();
-
-        return responseList;
+        return citizenService.findAll();
     }
 
     @PostMapping("/api/send_one")
@@ -51,8 +38,7 @@ public class MainController {
         Map<String, String> response = defaultResponse();
         try {
             Citizen citizen = new Citizen(json);
-            nationalityValidator.validateOneCitizen(citizen);
-            repoCitizen.add(citizen);
+            citizenService.save(citizen);
             messagingTemplate.convertAndSend("/topic/citizen", this.getAll(null));
             setResponse(response, true, "");
         } catch (NumberFormatException | UnrealHumanHeightException e) {
@@ -74,8 +60,7 @@ public class MainController {
         Map<String, String> response = defaultResponse();
         try {
             Citizen[] citizens = convertJsonToCitizenArray(jsonArray);
-            nationalityValidator.validateArrayOfCitizens(citizens);
-            repoCitizen.add(citizens);
+            citizenService.saveAll(citizens);
             messagingTemplate.convertAndSend("/topic/citizen", this.getAll(null));
             setResponse(response, true, "");
         } catch (NumberFormatException | UnrealHumanHeightException e) {
@@ -96,12 +81,7 @@ public class MainController {
     public Map<String, String> updateOne(@RequestBody Map<String, String> json) {
         Map<String, String> response = defaultResponse();
         try {
-            Citizen citizen = (Citizen) repoCitizen.find(Long.parseLong(json.get("id")));
-            if (!userOwnCitizen(citizen, json.get("token")) && !jwtProvider.isAdmin(json.get("token")))
-                return response;
-            citizen.updateFormJson(json);
-            nationalityValidator.validateOneCitizen(citizen);
-            repoCitizen.update(citizen);
+            citizenService.updateFromJson(json);
             messagingTemplate.convertAndSend("/topic/citizen", this.getAll(null));
             setResponse(response, true, "");
         } catch (NumberFormatException | UnrealHumanHeightException e) {
@@ -123,11 +103,7 @@ public class MainController {
             throws MessagingException, ColorFormatException {
         Map<String, String> response = defaultResponse();
         try {
-            Citizen citizen = (Citizen) repoCitizen.find(Long.parseLong(json.get("id")));
-            if (!userOwnCitizen(citizen, json.get("token")) && !jwtProvider.isAdmin(json.get("token")))
-                return response;
-
-            repoCitizen.delete(citizen);
+            citizenService.deleteFromJson(json);
             messagingTemplate.convertAndSend("/topic/citizen", this.getAll(null));
             setResponse(response, true, "");
         } catch (Exception e) {
@@ -145,14 +121,6 @@ public class MainController {
         Map<String, String> response = new TreeMap<>();
         setResponse(response, false, "");
         return response;
-    }
-
-    private boolean userOwnCitizen(Citizen citizen, String token) {
-        UserRepository repoUser = new UserRepository();
-        String login = jwtProvider.getUsernameFromJWT(token);
-        User user = repoUser.findByLogin(login);
-
-        return citizen.getOwnerNickname().equals(user.getNickname());
     }
 
     private Citizen[] convertJsonToCitizenArray(List<LinkedHashMap<String,String>> json) throws NumberFormatException, ColorFormatException, UnrealHumanHeightException, PassportIDUniqueException, SQLinjectionException {
