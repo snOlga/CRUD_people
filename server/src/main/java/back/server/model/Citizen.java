@@ -143,18 +143,8 @@ public class Citizen extends EntityMetaData {
         this.birthday = birthday;
     }
 
-    // @Autowired
-    // CitizenRepository repo;
-
     public void setPassportID(Long passportID) throws PassportIDUniqueException {
-        try {
-            // repo.findByPassportID(passportID);
-        }
-        catch (Exception e){
-            this.passportID = passportID;
-            return;
-        }
-        throw new PassportIDUniqueException(passportID + "");
+        this.passportID = passportID;
     }
 
     public void setPassportID(String passportIDStr) throws NumberFormatException, PassportIDUniqueException {

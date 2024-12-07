@@ -63,6 +63,10 @@ public class CitizenService {
             return true;
     }
 
+    public Citizen findByPassportID(Long passportID) {
+        return citizenRepo.findByPassportID(passportID);
+    }
+
     private boolean userOwnCitizen(Citizen citizen, String token) {
         String login = jwtProvider.getUsernameFromJWT(token);
         User user = userService.findByLogin(login);
