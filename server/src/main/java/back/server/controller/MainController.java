@@ -10,6 +10,7 @@ import org.springframework.messaging.MessagingException;
 import org.springframework.messaging.simp.SimpMessagingTemplate;
 import org.springframework.web.bind.annotation.*;
 
+import back.server.DTO.CitizenDTO;
 import back.server.model.Citizen;
 import back.server.service.CitizenService;
 import back.server.util.AmountCitizenException;
@@ -25,8 +26,12 @@ public class MainController {
     
     @Autowired
     private CitizenService citizenService;
-    @Autowired
-    private SimpMessagingTemplate messagingTemplate;
+    
+    private final SimpMessagingTemplate messagingTemplate;
+
+    public MainController (SimpMessagingTemplate messagingTemplate) {
+        this.messagingTemplate = messagingTemplate;
+    }
 
     @GetMapping("/api/get_all")
     public List<Citizen> getAll(HttpServletRequest request) throws ColorFormatException {
@@ -37,7 +42,7 @@ public class MainController {
     public Map<String, String> sendToDB(@RequestBody Map<String, String> json) {
         Map<String, String> response = defaultResponse();
         try {
-            Citizen citizen = new Citizen(json);
+            CitizenDTO citizen = new CitizenDTO(json);
             citizenService.save(citizen);
             messagingTemplate.convertAndSend("/topic/citizen", this.getAll(null));
             setResponse(response, true, "");
@@ -59,7 +64,7 @@ public class MainController {
     public Map<String, String> sendMassToDB(@RequestBody List<LinkedHashMap<String,String>> jsonArray) {
         Map<String, String> response = defaultResponse();
         try {
-            Citizen[] citizens = convertJsonToCitizenArray(jsonArray);
+            CitizenDTO[] citizens = convertJsonToCitizenArray(jsonArray);
             citizenService.saveAll(citizens);
             messagingTemplate.convertAndSend("/topic/citizen", this.getAll(null));
             setResponse(response, true, "");
@@ -123,10 +128,10 @@ public class MainController {
         return response;
     }
 
-    private Citizen[] convertJsonToCitizenArray(List<LinkedHashMap<String,String>> json) throws NumberFormatException, ColorFormatException, UnrealHumanHeightException, PassportIDUniqueException, SQLinjectionException {
-        Citizen[] citizens = new Citizen[json.size()];
+    private CitizenDTO[] convertJsonToCitizenArray(List<LinkedHashMap<String,String>> json) throws NumberFormatException, ColorFormatException, UnrealHumanHeightException, PassportIDUniqueException, SQLinjectionException {
+        CitizenDTO[] citizens = new CitizenDTO[json.size()];
         for (int i = 0; i < json.size(); i++) {
-            citizens[i] = new Citizen(json.get(i));
+            citizens[i] = new CitizenDTO(json.get(i));
         }
         return citizens;
     }

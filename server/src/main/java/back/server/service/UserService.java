@@ -57,13 +57,9 @@ public class UserService {
     }
 
     private boolean userExists(String nickname, String login) {
-        try {
-            userRepo.findByLogin(login);
-            userRepo.findByNickname(nickname);
-            return true;
-        } catch (Exception e) {
-            return false;
-        }
+        User mbUser1 = userRepo.findByLogin(login);
+        User mbUser2 = userRepo.findByNickname(nickname);
+        return mbUser1 != null && mbUser2 != null;
     }
 
     private boolean validateUser(String login, String password) {

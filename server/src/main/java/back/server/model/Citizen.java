@@ -3,12 +3,9 @@ package back.server.model;
 import java.util.Date;
 import java.util.Map;
 
-import org.springframework.beans.factory.annotation.Autowired;
-
 import com.fasterxml.jackson.annotation.JsonGetter;
 
 import back.server.enums.Country;
-import back.server.repository.CitizenRepository;
 import back.server.util.ColorFormatException;
 import back.server.util.PassportIDUniqueException;
 import back.server.util.SQLinjectionException;
@@ -110,7 +107,6 @@ public class Citizen extends EntityMetaData {
         setBirthday(LocalDate.parse(json.get(BIRTHDAY)));
         setPassportID(Long.parseLong(json.get(PASSPORT_ID)));
         setNationality(Country.valueOf(json.get(NATIONALITY)));
-        // setOwner("json.get("token")"); // TODO:
     }
 
     public void setName(String name) throws SQLinjectionException {
@@ -158,14 +154,6 @@ public class Citizen extends EntityMetaData {
     public void setOwner(User owner) {
         this.owner = owner;
     }
-
-    // public void setOwner(String token) {
-    //     UserRepository repoUser = new UserRepository();
-    //     JwtProvider jwtProvider = new JwtProvider();
-    //     String login = jwtProvider.getUsernameFromJWT(token);
-    //     User user = repoUser.findByLogin(login);
-    //     setOwner(user);
-    // }
 
     public String getName() {
         return name;

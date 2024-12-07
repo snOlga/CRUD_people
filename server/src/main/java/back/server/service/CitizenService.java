@@ -7,6 +7,7 @@ import java.util.Map;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import back.server.DTO.CitizenDTO;
 import back.server.model.Citizen;
 import back.server.model.User;
 import back.server.repository.CitizenRepository;
@@ -33,12 +34,17 @@ public class CitizenService {
         return citizenRepo.findAll();
     }
 
-    public void save(Citizen citizen) throws AmountCitizenException {
+    public void save(CitizenDTO citizenDTO) throws AmountCitizenException {
+        Citizen citizen = setOwnerToCitizen(citizenDTO);
         nationalityValidator.validateOneCitizen(citizen);
         citizenRepo.save(citizen);
     }
 
-    public void saveAll(Citizen[] citizens) throws AmountCitizenException {
+    public void saveAll(CitizenDTO[] citizensDTO) throws AmountCitizenException {
+        Citizen[] citizens = new Citizen[citizensDTO.length];
+        for (int i = 0; i < citizens.length; i++) {
+            citizens[i] = setOwnerToCitizen(citizensDTO[i]);
+        }
         nationalityValidator.validateArrayOfCitizens(citizens);
         citizenRepo.saveAll(Arrays.asList(citizens));
     }
@@ -72,5 +78,12 @@ public class CitizenService {
         User user = userService.findByLogin(login);
 
         return citizen.getOwnerNickname().equals(user.getNickname());
+    }
+
+    private Citizen setOwnerToCitizen(CitizenDTO citizenDTO) {
+        User user = userService.findByNickname(jwtProvider.getUsernameFromJWT(citizenDTO.getOwnerToken()));
+        Citizen citizen = citizenDTO.getCitizen();
+        citizen.setOwner(user);
+        return citizen;
     }
 }
