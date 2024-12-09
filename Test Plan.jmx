@@ -56,7 +56,7 @@
         <CookieManager guiclass="CookiePanel" testclass="CookieManager" testname="HTTP Cookie Manager" enabled="true">
           <collectionProp name="CookieManager.cookies">
             <elementProp name="Token" elementType="Cookie" testname="Token">
-              <stringProp name="Cookie.value">eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiIxIiwiaWF0IjoxNzMzMjMwMTAxLCJleHAiOjE3MzMzMTY1MDEsImF1dGhvcml0aWVzIjoiUk9MRV9VU0VSIn0.6-RRvEdlpCOztImBXDGFf6YR9owwVWm6ejjOTrx2Bb0</stringProp>
+              <stringProp name="Cookie.value">eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiIxIiwiaWF0IjoxNzMzNzQ0NzEzLCJleHAiOjE3MzM4MzExMTMsImF1dGhvcml0aWVzIjoiUk9MRV9VU0VSIn0.h-BQzsNm-lcrln63pJWhtz8FzyQOZf7mMHcpEEd7Euk</stringProp>
               <stringProp name="Cookie.domain">localhost</stringProp>
               <stringProp name="Cookie.path">/</stringProp>
               <boolProp name="Cookie.secure">false</boolProp>
@@ -132,6 +132,15 @@
       </ThreadGroup>
       <hashTree>
         <HTTPSamplerProxy guiclass="HttpTestSampleGui" testclass="HTTPSamplerProxy" testname="HTTP Request" enabled="true">
+          <elementProp name="HTTPsampler.Files" elementType="HTTPFileArgs">
+            <collectionProp name="HTTPFileArgs.files">
+              <elementProp name="D:\ITMO\3_year\is\CRUD_people\example.json" elementType="HTTPFileArg">
+                <stringProp name="File.paramname">file</stringProp>
+                <stringProp name="File.mimetype">text/plain</stringProp>
+                <stringProp name="File.path">D:\ITMO\3_year\is\CRUD_people\example.json</stringProp>
+              </elementProp>
+            </collectionProp>
+          </elementProp>
           <boolProp name="HTTPSampler.postBodyRaw">true</boolProp>
           <elementProp name="HTTPsampler.Arguments" elementType="Arguments">
             <collectionProp name="Arguments.arguments">
@@ -153,7 +162,7 @@
           <boolProp name="HTTPSampler.follow_redirects">true</boolProp>
           <boolProp name="HTTPSampler.auto_redirects">false</boolProp>
           <boolProp name="HTTPSampler.use_keepalive">true</boolProp>
-          <boolProp name="HTTPSampler.DO_MULTIPART_POST">false</boolProp>
+          <boolProp name="HTTPSampler.DO_MULTIPART_POST">true</boolProp>
           <boolProp name="HTTPSampler.BROWSER_COMPATIBLE_MULTIPART">false</boolProp>
           <boolProp name="HTTPSampler.image_parser">false</boolProp>
           <boolProp name="HTTPSampler.concurrentDwn">false</boolProp>
@@ -165,7 +174,7 @@
         <CookieManager guiclass="CookiePanel" testclass="CookieManager" testname="HTTP Cookie Manager" enabled="true">
           <collectionProp name="CookieManager.cookies">
             <elementProp name="Token" elementType="Cookie" testname="Token">
-              <stringProp name="Cookie.value">eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiIxIiwiaWF0IjoxNzMzMjMwMTAxLCJleHAiOjE3MzMzMTY1MDEsImF1dGhvcml0aWVzIjoiUk9MRV9VU0VSIn0.6-RRvEdlpCOztImBXDGFf6YR9owwVWm6ejjOTrx2Bb0</stringProp>
+              <stringProp name="Cookie.value">eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiIxIiwiaWF0IjoxNzMzNzQ0NzEzLCJleHAiOjE3MzM4MzExMTMsImF1dGhvcml0aWVzIjoiUk9MRV9VU0VSIn0.h-BQzsNm-lcrln63pJWhtz8FzyQOZf7mMHcpEEd7Euk</stringProp>
               <stringProp name="Cookie.domain">localhost</stringProp>
               <stringProp name="Cookie.path">/</stringProp>
               <boolProp name="Cookie.secure">false</boolProp>
@@ -178,7 +187,7 @@
           <boolProp name="CookieManager.controlledByThreadGroup">false</boolProp>
         </CookieManager>
         <hashTree/>
-        <HeaderManager guiclass="HeaderPanel" testclass="HeaderManager" testname="HTTP Header Manager" enabled="true">
+        <HeaderManager guiclass="HeaderPanel" testclass="HeaderManager" testname="HTTP Header Manager" enabled="false">
           <collectionProp name="HeaderManager.headers">
             <elementProp name="" elementType="Header">
               <stringProp name="Header.name">Content-Type</stringProp>
@@ -246,7 +255,7 @@
             <collectionProp name="Arguments.arguments">
               <elementProp name="" elementType="HTTPArgument">
                 <boolProp name="HTTPArgument.always_encode">false</boolProp>
-                <stringProp name="Argument.value">{         &quot;token&quot;:&quot;eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiIxIiwiaWF0IjoxNzMzMzAyMzk1LCJleHAiOjE3MzMzODg3OTUsImF1dGhvcml0aWVzIjoiUk9MRV9VU0VSIn0._0QRLQ2IGh7GwL1w5ZC85vR3j9Tj0o78aOTuej3Bejc&quot;,         &quot;name&quot;: &quot;Anton&quot;,         &quot;gender&quot;: &quot;1&quot;,         &quot;eyeColor&quot;: &quot;#000000&quot;,         &quot;hairColor&quot;: &quot;#000000&quot;,         &quot;height&quot;: &quot;130&quot;,         &quot;birthday&quot;: &quot;2024-10-01&quot;,         &quot;passportID&quot;: &quot;999&quot;,         &quot;nationality&quot;: &quot;SOUTH_KOREA&quot;,         &quot;xCoord&quot;: 59.8661895,         &quot;yCoord&quot;: 30.3950851     }</stringProp>
+                <stringProp name="Argument.value">{         &quot;token&quot;:&quot;eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiIxIiwiaWF0IjoxNzMzNzQ0NzEzLCJleHAiOjE3MzM4MzExMTMsImF1dGhvcml0aWVzIjoiUk9MRV9VU0VSIn0.h-BQzsNm-lcrln63pJWhtz8FzyQOZf7mMHcpEEd7Euk&quot;,         &quot;name&quot;: &quot;Anton&quot;,         &quot;gender&quot;: &quot;1&quot;,         &quot;eyeColor&quot;: &quot;#000000&quot;,         &quot;hairColor&quot;: &quot;#000000&quot;,         &quot;height&quot;: &quot;130&quot;,         &quot;birthday&quot;: &quot;2024-10-01&quot;,         &quot;passportID&quot;: &quot;999&quot;,         &quot;nationality&quot;: &quot;SOUTH_KOREA&quot;,         &quot;xCoord&quot;: 59.8661895,         &quot;yCoord&quot;: 30.3950851     }</stringProp>
                 <stringProp name="Argument.metadata">=</stringProp>
               </elementProp>
             </collectionProp>
@@ -271,7 +280,7 @@
         <CookieManager guiclass="CookiePanel" testclass="CookieManager" testname="HTTP Cookie Manager" enabled="true">
           <collectionProp name="CookieManager.cookies">
             <elementProp name="Token" elementType="Cookie" testname="Token">
-              <stringProp name="Cookie.value">eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiIxIiwiaWF0IjoxNzMzMjMwMTAxLCJleHAiOjE3MzMzMTY1MDEsImF1dGhvcml0aWVzIjoiUk9MRV9VU0VSIn0.6-RRvEdlpCOztImBXDGFf6YR9owwVWm6ejjOTrx2Bb0</stringProp>
+              <stringProp name="Cookie.value">eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiIxIiwiaWF0IjoxNzMzNzQ0NzEzLCJleHAiOjE3MzM4MzExMTMsImF1dGhvcml0aWVzIjoiUk9MRV9VU0VSIn0.h-BQzsNm-lcrln63pJWhtz8FzyQOZf7mMHcpEEd7Euk</stringProp>
               <stringProp name="Cookie.domain">localhost</stringProp>
               <stringProp name="Cookie.path">/</stringProp>
               <boolProp name="Cookie.secure">false</boolProp>
@@ -347,6 +356,15 @@
       </ThreadGroup>
       <hashTree>
         <HTTPSamplerProxy guiclass="HttpTestSampleGui" testclass="HTTPSamplerProxy" testname="HTTP Request" enabled="true">
+          <elementProp name="HTTPsampler.Files" elementType="HTTPFileArgs">
+            <collectionProp name="HTTPFileArgs.files">
+              <elementProp name="D:\ITMO\3_year\is\CRUD_people\example.json" elementType="HTTPFileArg">
+                <stringProp name="File.paramname">file</stringProp>
+                <stringProp name="File.mimetype">plain/text</stringProp>
+                <stringProp name="File.path">D:\ITMO\3_year\is\CRUD_people\example.json</stringProp>
+              </elementProp>
+            </collectionProp>
+          </elementProp>
           <boolProp name="HTTPSampler.postBodyRaw">true</boolProp>
           <elementProp name="HTTPsampler.Arguments" elementType="Arguments">
             <collectionProp name="Arguments.arguments">
@@ -370,7 +388,7 @@
           <boolProp name="HTTPSampler.follow_redirects">true</boolProp>
           <boolProp name="HTTPSampler.auto_redirects">false</boolProp>
           <boolProp name="HTTPSampler.use_keepalive">true</boolProp>
-          <boolProp name="HTTPSampler.DO_MULTIPART_POST">false</boolProp>
+          <boolProp name="HTTPSampler.DO_MULTIPART_POST">true</boolProp>
           <boolProp name="HTTPSampler.BROWSER_COMPATIBLE_MULTIPART">false</boolProp>
           <boolProp name="HTTPSampler.image_parser">false</boolProp>
           <boolProp name="HTTPSampler.concurrentDwn">false</boolProp>
@@ -382,7 +400,7 @@
         <CookieManager guiclass="CookiePanel" testclass="CookieManager" testname="HTTP Cookie Manager" enabled="true">
           <collectionProp name="CookieManager.cookies">
             <elementProp name="Token" elementType="Cookie" testname="Token">
-              <stringProp name="Cookie.value">eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiIxIiwiaWF0IjoxNzMzMjMwMTAxLCJleHAiOjE3MzMzMTY1MDEsImF1dGhvcml0aWVzIjoiUk9MRV9VU0VSIn0.6-RRvEdlpCOztImBXDGFf6YR9owwVWm6ejjOTrx2Bb0</stringProp>
+              <stringProp name="Cookie.value">eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiIxIiwiaWF0IjoxNzMzNzQ0NzEzLCJleHAiOjE3MzM4MzExMTMsImF1dGhvcml0aWVzIjoiUk9MRV9VU0VSIn0.h-BQzsNm-lcrln63pJWhtz8FzyQOZf7mMHcpEEd7Euk</stringProp>
               <stringProp name="Cookie.domain">localhost</stringProp>
               <stringProp name="Cookie.path">/</stringProp>
               <boolProp name="Cookie.secure">false</boolProp>
@@ -395,7 +413,7 @@
           <boolProp name="CookieManager.controlledByThreadGroup">false</boolProp>
         </CookieManager>
         <hashTree/>
-        <HeaderManager guiclass="HeaderPanel" testclass="HeaderManager" testname="HTTP Header Manager" enabled="true">
+        <HeaderManager guiclass="HeaderPanel" testclass="HeaderManager" testname="HTTP Header Manager" enabled="false">
           <collectionProp name="HeaderManager.headers">
             <elementProp name="" elementType="Header">
               <stringProp name="Header.name">Content-Type</stringProp>
@@ -463,7 +481,7 @@
             <collectionProp name="Arguments.arguments">
               <elementProp name="" elementType="HTTPArgument">
                 <boolProp name="HTTPArgument.always_encode">false</boolProp>
-                <stringProp name="Argument.value">{         &quot;token&quot;:&quot;eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiIxIiwiaWF0IjoxNzMzMzAyMzk1LCJleHAiOjE3MzMzODg3OTUsImF1dGhvcml0aWVzIjoiUk9MRV9VU0VSIn0._0QRLQ2IGh7GwL1w5ZC85vR3j9Tj0o78aOTuej3Bejc&quot;,         &quot;id&quot;: &quot;16&quot;     }</stringProp>
+                <stringProp name="Argument.value">{         &quot;token&quot;:&quot;eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiIxIiwiaWF0IjoxNzMzNzQ0NzEzLCJleHAiOjE3MzM4MzExMTMsImF1dGhvcml0aWVzIjoiUk9MRV9VU0VSIn0.h-BQzsNm-lcrln63pJWhtz8FzyQOZf7mMHcpEEd7Euk&quot;,         &quot;id&quot;: &quot;16&quot;     }</stringProp>
                 <stringProp name="Argument.metadata">=</stringProp>
               </elementProp>
             </collectionProp>
@@ -488,7 +506,7 @@
         <CookieManager guiclass="CookiePanel" testclass="CookieManager" testname="HTTP Cookie Manager" enabled="true">
           <collectionProp name="CookieManager.cookies">
             <elementProp name="Token" elementType="Cookie" testname="Token">
-              <stringProp name="Cookie.value">eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiIxIiwiaWF0IjoxNzMzMjMwMTAxLCJleHAiOjE3MzMzMTY1MDEsImF1dGhvcml0aWVzIjoiUk9MRV9VU0VSIn0.6-RRvEdlpCOztImBXDGFf6YR9owwVWm6ejjOTrx2Bb0</stringProp>
+              <stringProp name="Cookie.value">eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiIxIiwiaWF0IjoxNzMzNzQ0NzEzLCJleHAiOjE3MzM4MzExMTMsImF1dGhvcml0aWVzIjoiUk9MRV9VU0VSIn0.h-BQzsNm-lcrln63pJWhtz8FzyQOZf7mMHcpEEd7Euk</stringProp>
               <stringProp name="Cookie.domain">localhost</stringProp>
               <stringProp name="Cookie.path">/</stringProp>
               <boolProp name="Cookie.secure">false</boolProp>
@@ -569,7 +587,7 @@
             <collectionProp name="Arguments.arguments">
               <elementProp name="" elementType="HTTPArgument">
                 <boolProp name="HTTPArgument.always_encode">false</boolProp>
-                <stringProp name="Argument.value">{         &quot;token&quot;:&quot;eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiIxIiwiaWF0IjoxNzMzMzAyMzk1LCJleHAiOjE3MzMzODg3OTUsImF1dGhvcml0aWVzIjoiUk9MRV9VU0VSIn0._0QRLQ2IGh7GwL1w5ZC85vR3j9Tj0o78aOTuej3Bejc&quot;,         &quot;id&quot;: &quot;17&quot;, &quot;name&quot;:&quot;Lesha&quot;, &quot;hairColor&quot;: &quot;#000000&quot;, &quot;height&quot;: &quot;180&quot;, &quot;passportID&quot;:&quot;000000&quot;     }</stringProp>
+                <stringProp name="Argument.value">{         &quot;token&quot;:&quot;eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiIxIiwiaWF0IjoxNzMzNzQ0NzEzLCJleHAiOjE3MzM4MzExMTMsImF1dGhvcml0aWVzIjoiUk9MRV9VU0VSIn0.h-BQzsNm-lcrln63pJWhtz8FzyQOZf7mMHcpEEd7Euk&quot;,         &quot;id&quot;: &quot;17&quot;, &quot;name&quot;:&quot;Lesha&quot;, &quot;hairColor&quot;: &quot;#000000&quot;, &quot;height&quot;: &quot;180&quot;, &quot;passportID&quot;:&quot;000000&quot;     }</stringProp>
                 <stringProp name="Argument.metadata">=</stringProp>
               </elementProp>
             </collectionProp>
@@ -594,7 +612,7 @@
         <CookieManager guiclass="CookiePanel" testclass="CookieManager" testname="HTTP Cookie Manager" enabled="true">
           <collectionProp name="CookieManager.cookies">
             <elementProp name="Token" elementType="Cookie" testname="Token">
-              <stringProp name="Cookie.value">eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiIxIiwiaWF0IjoxNzMzMjMwMTAxLCJleHAiOjE3MzMzMTY1MDEsImF1dGhvcml0aWVzIjoiUk9MRV9VU0VSIn0.6-RRvEdlpCOztImBXDGFf6YR9owwVWm6ejjOTrx2Bb0</stringProp>
+              <stringProp name="Cookie.value">eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiIxIiwiaWF0IjoxNzMzNzQ0NzEzLCJleHAiOjE3MzM4MzExMTMsImF1dGhvcml0aWVzIjoiUk9MRV9VU0VSIn0.h-BQzsNm-lcrln63pJWhtz8FzyQOZf7mMHcpEEd7Euk</stringProp>
               <stringProp name="Cookie.domain">localhost</stringProp>
               <stringProp name="Cookie.path">/</stringProp>
               <boolProp name="Cookie.secure">false</boolProp>
@@ -608,6 +626,124 @@
         </CookieManager>
         <hashTree/>
         <HeaderManager guiclass="HeaderPanel" testclass="HeaderManager" testname="HTTP Header Manager" enabled="true">
+          <collectionProp name="HeaderManager.headers">
+            <elementProp name="" elementType="Header">
+              <stringProp name="Header.name">Content-Type</stringProp>
+              <stringProp name="Header.value">application/json</stringProp>
+            </elementProp>
+          </collectionProp>
+        </HeaderManager>
+        <hashTree/>
+        <ResultCollector guiclass="ViewResultsFullVisualizer" testclass="ResultCollector" testname="View Results Tree" enabled="true">
+          <boolProp name="ResultCollector.error_logging">false</boolProp>
+          <objProp>
+            <name>saveConfig</name>
+            <value class="SampleSaveConfiguration">
+              <time>true</time>
+              <latency>true</latency>
+              <timestamp>true</timestamp>
+              <success>true</success>
+              <label>true</label>
+              <code>true</code>
+              <message>true</message>
+              <threadName>true</threadName>
+              <dataType>true</dataType>
+              <encoding>false</encoding>
+              <assertions>true</assertions>
+              <subresults>true</subresults>
+              <responseData>false</responseData>
+              <samplerData>false</samplerData>
+              <xml>false</xml>
+              <fieldNames>true</fieldNames>
+              <responseHeaders>false</responseHeaders>
+              <requestHeaders>false</requestHeaders>
+              <responseDataOnError>false</responseDataOnError>
+              <saveAssertionResultsFailureMessage>true</saveAssertionResultsFailureMessage>
+              <assertionsResultsToSave>0</assertionsResultsToSave>
+              <bytes>true</bytes>
+              <sentBytes>true</sentBytes>
+              <url>true</url>
+              <threadCounts>true</threadCounts>
+              <idleTime>true</idleTime>
+              <connectTime>true</connectTime>
+            </value>
+          </objProp>
+          <stringProp name="filename"></stringProp>
+        </ResultCollector>
+        <hashTree/>
+      </hashTree>
+      <ThreadGroup guiclass="ThreadGroupGui" testclass="ThreadGroup" testname="delete mass" enabled="true">
+        <stringProp name="ThreadGroup.on_sample_error">continue</stringProp>
+        <elementProp name="ThreadGroup.main_controller" elementType="LoopController" guiclass="LoopControlPanel" testclass="LoopController" testname="Loop Controller" enabled="true">
+          <stringProp name="LoopController.loops">1</stringProp>
+          <boolProp name="LoopController.continue_forever">false</boolProp>
+        </elementProp>
+        <stringProp name="ThreadGroup.num_threads">3</stringProp>
+        <stringProp name="ThreadGroup.ramp_time">30</stringProp>
+        <boolProp name="ThreadGroup.delayedStart">false</boolProp>
+        <boolProp name="ThreadGroup.scheduler">false</boolProp>
+        <stringProp name="ThreadGroup.duration"></stringProp>
+        <stringProp name="ThreadGroup.delay"></stringProp>
+        <boolProp name="ThreadGroup.same_user_on_next_iteration">true</boolProp>
+      </ThreadGroup>
+      <hashTree>
+        <HTTPSamplerProxy guiclass="HttpTestSampleGui" testclass="HTTPSamplerProxy" testname="HTTP Request" enabled="true">
+          <elementProp name="HTTPsampler.Files" elementType="HTTPFileArgs">
+            <collectionProp name="HTTPFileArgs.files">
+              <elementProp name="D:\ITMO\3_year\is\CRUD_people\example.json" elementType="HTTPFileArg">
+                <stringProp name="File.paramname">file</stringProp>
+                <stringProp name="File.mimetype">text/plain</stringProp>
+                <stringProp name="File.path">D:\ITMO\3_year\is\CRUD_people\example.json</stringProp>
+              </elementProp>
+            </collectionProp>
+          </elementProp>
+          <boolProp name="HTTPSampler.postBodyRaw">true</boolProp>
+          <elementProp name="HTTPsampler.Arguments" elementType="Arguments">
+            <collectionProp name="Arguments.arguments">
+              <elementProp name="" elementType="HTTPArgument">
+                <boolProp name="HTTPArgument.always_encode">false</boolProp>
+                <stringProp name="Argument.value">[{         &quot;token&quot;:&quot;eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiIxIiwiaWF0IjoxNzMzMzAyMzk1LCJleHAiOjE3MzMzODg3OTUsImF1dGhvcml0aWVzIjoiUk9MRV9VU0VSIn0._0QRLQ2IGh7GwL1w5ZC85vR3j9Tj0o78aOTuej3Bejc&quot;,         &quot;name&quot;: &quot;Denis&quot;,         &quot;gender&quot;: &quot;1&quot;,         &quot;eyeColor&quot;: &quot;#000000&quot;,         &quot;hairColor&quot;: &quot;#000000&quot;,         &quot;height&quot;: &quot;130&quot;,         &quot;birthday&quot;: &quot;2024-10-01&quot;,         &quot;passportID&quot;: &quot;1003&quot;,         &quot;nationality&quot;: &quot;SOUTH_KOREA&quot;,         &quot;xCoord&quot;: 59.8661895,         &quot;yCoord&quot;: 30.3950851     },&#xd;
+{         &quot;token&quot;:&quot;eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiIxIiwiaWF0IjoxNzMzMzAyMzk1LCJleHAiOjE3MzMzODg3OTUsImF1dGhvcml0aWVzIjoiUk9MRV9VU0VSIn0._0QRLQ2IGh7GwL1w5ZC85vR3j9Tj0o78aOTuej3Bejc&quot;,         &quot;name&quot;: &quot;Denis&quot;,         &quot;gender&quot;: &quot;1&quot;,         &quot;eyeColor&quot;: &quot;#000000&quot;,         &quot;hairColor&quot;: &quot;#000000&quot;,         &quot;height&quot;: &quot;130&quot;,         &quot;birthday&quot;: &quot;2024-10-01&quot;,         &quot;passportID&quot;: &quot;1002&quot;,         &quot;nationality&quot;: &quot;SOUTH_KOREA&quot;,         &quot;xCoord&quot;: 59.8661895,         &quot;yCoord&quot;: 30.3950851     },&#xd;
+{         &quot;token&quot;:&quot;eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiIxIiwiaWF0IjoxNzMzMzAyMzk1LCJleHAiOjE3MzMzODg3OTUsImF1dGhvcml0aWVzIjoiUk9MRV9VU0VSIn0._0QRLQ2IGh7GwL1w5ZC85vR3j9Tj0o78aOTuej3Bejc&quot;,         &quot;name&quot;: &quot;Denis&quot;,         &quot;gender&quot;: &quot;1&quot;,         &quot;eyeColor&quot;: &quot;#000000&quot;,         &quot;hairColor&quot;: &quot;#000000&quot;,         &quot;height&quot;: &quot;130&quot;,         &quot;birthday&quot;: &quot;2024-10-01&quot;,         &quot;passportID&quot;: &quot;1001&quot;,         &quot;nationality&quot;: &quot;SOUTH_KOREA&quot;,         &quot;xCoord&quot;: 59.8661895,         &quot;yCoord&quot;: 30.3950851     },&#xd;
+{         &quot;token&quot;:&quot;eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiIxIiwiaWF0IjoxNzMzMzAyMzk1LCJleHAiOjE3MzMzODg3OTUsImF1dGhvcml0aWVzIjoiUk9MRV9VU0VSIn0._0QRLQ2IGh7GwL1w5ZC85vR3j9Tj0o78aOTuej3Bejc&quot;,         &quot;name&quot;: &quot;Denis&quot;,         &quot;gender&quot;: &quot;1&quot;,         &quot;eyeColor&quot;: &quot;#000000&quot;,         &quot;hairColor&quot;: &quot;#000000&quot;,         &quot;height&quot;: &quot;130&quot;,         &quot;birthday&quot;: &quot;2024-10-01&quot;,         &quot;passportID&quot;: &quot;1004&quot;,         &quot;nationality&quot;: &quot;SOUTH_KOREA&quot;,         &quot;xCoord&quot;: 59.8661895,         &quot;yCoord&quot;: 30.3950851     }]</stringProp>
+                <stringProp name="Argument.metadata">=</stringProp>
+              </elementProp>
+            </collectionProp>
+          </elementProp>
+          <stringProp name="HTTPSampler.domain">localhost</stringProp>
+          <stringProp name="HTTPSampler.port">17617</stringProp>
+          <stringProp name="HTTPSampler.protocol">http</stringProp>
+          <stringProp name="HTTPSampler.path">/api/delete_mass</stringProp>
+          <stringProp name="HTTPSampler.method">POST</stringProp>
+          <boolProp name="HTTPSampler.follow_redirects">true</boolProp>
+          <boolProp name="HTTPSampler.auto_redirects">false</boolProp>
+          <boolProp name="HTTPSampler.use_keepalive">true</boolProp>
+          <boolProp name="HTTPSampler.DO_MULTIPART_POST">true</boolProp>
+          <boolProp name="HTTPSampler.BROWSER_COMPATIBLE_MULTIPART">false</boolProp>
+          <boolProp name="HTTPSampler.image_parser">false</boolProp>
+          <boolProp name="HTTPSampler.concurrentDwn">false</boolProp>
+          <stringProp name="HTTPSampler.concurrentPool">6</stringProp>
+          <boolProp name="HTTPSampler.md5">false</boolProp>
+          <intProp name="HTTPSampler.ipSourceType">0</intProp>
+        </HTTPSamplerProxy>
+        <hashTree/>
+        <CookieManager guiclass="CookiePanel" testclass="CookieManager" testname="HTTP Cookie Manager" enabled="true">
+          <collectionProp name="CookieManager.cookies">
+            <elementProp name="Token" elementType="Cookie" testname="Token">
+              <stringProp name="Cookie.value">eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiIxIiwiaWF0IjoxNzMzNzQ0NzEzLCJleHAiOjE3MzM4MzExMTMsImF1dGhvcml0aWVzIjoiUk9MRV9VU0VSIn0.h-BQzsNm-lcrln63pJWhtz8FzyQOZf7mMHcpEEd7Euk</stringProp>
+              <stringProp name="Cookie.domain">localhost</stringProp>
+              <stringProp name="Cookie.path">/</stringProp>
+              <boolProp name="Cookie.secure">false</boolProp>
+              <longProp name="Cookie.expires">0</longProp>
+              <boolProp name="Cookie.path_specified">true</boolProp>
+              <boolProp name="Cookie.domain_specified">true</boolProp>
+            </elementProp>
+          </collectionProp>
+          <boolProp name="CookieManager.clearEachIteration">false</boolProp>
+          <boolProp name="CookieManager.controlledByThreadGroup">false</boolProp>
+        </CookieManager>
+        <hashTree/>
+        <HeaderManager guiclass="HeaderPanel" testclass="HeaderManager" testname="HTTP Header Manager" enabled="false">
           <collectionProp name="HeaderManager.headers">
             <elementProp name="" elementType="Header">
               <stringProp name="Header.name">Content-Type</stringProp>
