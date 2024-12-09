@@ -38,6 +38,9 @@ public class UserController {
                 json.get("password"));
 
         String token = userService.loginUser(user);
+
+        user = userService.findByLogin(json.get("login"));
+
         setResponse(response, true, token, user.getNickname(), "user");
         return response;
     }

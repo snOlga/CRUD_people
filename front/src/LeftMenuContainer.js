@@ -171,17 +171,17 @@ function LeftMenuContainer({ jsonData, token, setToken }) {
         //window.location.reload()
       })
   }
+
   const [fileData, setFileData] = useState("")
   const [filename, setFilename] = useState("")
+  const [file, setFile] = useState()
 
   function handleImport() {
+    const formData = new FormData();
+    formData.append("file", file);
     fetch('http://localhost:17617/api/send_mass', {
       method: 'POST',
-      headers: {
-        'Accept': 'application/json',
-        'Content-Type': 'application/json',
-      },
-      body: JSON.stringify(JSON.parse(fileData)),
+      body: formData
     })
       .then(response => {
         let jsonResp = response.json()
@@ -209,6 +209,7 @@ function LeftMenuContainer({ jsonData, token, setToken }) {
   function handleFileChange(e) {
     const selectedFile = e.target.files[0]
     setFilename(e.target.files[0].name)
+    setFile(e.target.files[0])
     const reader = new FileReader()
     reader.onload = (event) => {
       setFileData(event.target.result)

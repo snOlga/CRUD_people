@@ -3,12 +3,15 @@ package back.server.controller;
 import java.util.List;
 import java.util.Map;
 import java.util.TreeMap;
-import java.util.LinkedHashMap;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.messaging.MessagingException;
 import org.springframework.messaging.simp.SimpMessagingTemplate;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.multipart.MultipartFile;
+
+import com.google.gson.Gson;
+import com.google.gson.reflect.TypeToken;
 
 import back.server.DTO.CitizenDTO;
 import back.server.model.Citizen;
@@ -19,6 +22,8 @@ import back.server.util.PassportIDUniqueException;
 import back.server.util.SQLinjectionException;
 import back.server.util.UnrealHumanHeightException;
 import jakarta.servlet.http.HttpServletRequest;
+
+import java.lang.reflect.Type;
 
 @RestController
 @CrossOrigin(origins = "*")
@@ -61,9 +66,13 @@ public class MainController {
     }
 
     @PostMapping("/api/send_mass")
-    public Map<String, String> sendMassToDB(@RequestBody List<LinkedHashMap<String,String>> jsonArray) {
+    public Map<String, String> sendMassToDB(@RequestParam("file") MultipartFile file) {
         Map<String, String> response = defaultResponse();
         try {
+            String content = new String(file.getBytes());
+            Gson gson = new Gson();
+            Type listType = new TypeToken<List<Map<String, String>>>() {}.getType();
+            List<Map<String, String>> jsonArray = gson.fromJson(content, listType);
             CitizenDTO[] citizens = convertJsonToCitizenArray(jsonArray);
             citizenService.saveAll(citizens);
             messagingTemplate.convertAndSend("/topic/citizen", this.getAll(null));
@@ -128,7 +137,7 @@ public class MainController {
         return response;
     }
 
-    private CitizenDTO[] convertJsonToCitizenArray(List<LinkedHashMap<String,String>> json) throws NumberFormatException, ColorFormatException, UnrealHumanHeightException, PassportIDUniqueException, SQLinjectionException {
+    private CitizenDTO[] convertJsonToCitizenArray(List<Map<String,String>> json) throws NumberFormatException, ColorFormatException, UnrealHumanHeightException, PassportIDUniqueException, SQLinjectionException {
         CitizenDTO[] citizens = new CitizenDTO[json.size()];
         for (int i = 0; i < json.size(); i++) {
             citizens[i] = new CitizenDTO(json.get(i));
