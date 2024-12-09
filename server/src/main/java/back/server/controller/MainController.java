@@ -126,6 +126,32 @@ public class MainController {
         return response;
     }
 
+    @PostMapping("/api/delete_mass")
+    public Map<String, String> deleteMass(@RequestParam("file") MultipartFile file) {
+        Map<String, String> response = defaultResponse();
+        try {
+            String content = new String(file.getBytes());
+            Gson gson = new Gson();
+            Type listType = new TypeToken<List<Map<String, String>>>() {}.getType();
+            List<Map<String, String>> jsonArray = gson.fromJson(content, listType);
+            CitizenDTO[] citizens = convertJsonToCitizenArray(jsonArray);
+            citizenService.deleteAll(citizens);
+            messagingTemplate.convertAndSend("/topic/citizen", this.getAll(null));
+            setResponse(response, true, "");
+        } catch (NumberFormatException | UnrealHumanHeightException e) {
+            setResponse(response, false, "numbers have wrong format");
+        } catch (ColorFormatException e) {
+            setResponse(response, false, "colors have wrong format");
+        } catch (PassportIDUniqueException e) {
+            setResponse(response, false, "passport ID is not unique");
+        } catch (AmountCitizenException e) {
+            setResponse(response, false, "AmountCitizenException");
+        } catch (Exception e) {
+            setResponse(response, false, "something was wrong");
+        }
+        return response;
+    }
+
     private void setResponse(Map<String, String> response, boolean isSuccessful, String message) {
         response.put("isSuccessful", isSuccessful + "");
         response.put("message", message);

@@ -206,6 +206,36 @@ function LeftMenuContainer({ jsonData, token, setToken }) {
       })
   }
 
+  function handleDelete() {
+    const formData = new FormData();
+    formData.append("file", file);
+    fetch('http://localhost:17617/api/delete_mass', {
+      method: 'POST',
+      body: formData
+    })
+      .then(response => {
+        let jsonResp = response.json()
+        jsonResp.then((data) => {
+          console.log(data.isSuccessful)
+          fetch('http://localhost:17617/history/set_one_history_node', {
+            method: 'POST',
+            headers: {
+              'Accept': 'application/json',
+              'Content-Type': 'application/json',
+            },
+            body: JSON.stringify({
+              filename: filename,
+              isSuccessful: data.isSuccessful,
+              owner: getCookie("CurrentUser")
+            }),
+          })
+            .then(response => {
+              //window.location.reload()
+            })
+        })
+      })
+  }
+
   function handleFileChange(e) {
     const selectedFile = e.target.files[0]
     setFilename(e.target.files[0].name)
@@ -279,11 +309,12 @@ function LeftMenuContainer({ jsonData, token, setToken }) {
         <h1>My little City</h1>
         <br />
 
-        <p>Import them?</p>
+        <p>Import or delete them?</p>
         <input type="file" id="input" multiple onChange={handleFileChange} />
         <br />
         <button onClick={handleImport}>import !</button>
         <br />
+        <button onClick={handleDelete}>delete !</button>
         <button onClick={(e) => showImportHistory(!isImportHistory)}>show import history</button>
         {
           isImportHistory && <ImportHistory history={history} />

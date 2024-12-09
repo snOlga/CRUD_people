@@ -49,6 +49,15 @@ public class CitizenService {
         citizenRepo.saveAll(Arrays.asList(citizens));
     }
 
+    public void deleteAll(CitizenDTO[] citizensDTO) throws AmountCitizenException {
+        Citizen[] citizens = new Citizen[citizensDTO.length];
+        for (int i = 0; i < citizens.length; i++) {
+            citizens[i] = setOwnerToCitizen(citizensDTO[i]);
+            citizens[i] = citizenRepo.findByPassportID(citizens[i].getPassportID());
+        }
+        citizenRepo.deleteAll(Arrays.asList(citizens));
+    }
+
     public boolean updateFromJson(Map<String, String> json) throws NumberFormatException, ColorFormatException,
             UnrealHumanHeightException, PassportIDUniqueException, SQLinjectionException, AmountCitizenException {
         Citizen citizen = (Citizen) citizenRepo.findById(Long.parseLong(json.get("id"))).get();
