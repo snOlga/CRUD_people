@@ -186,7 +186,6 @@ function LeftMenuContainer({ jsonData, token, setToken }) {
       .then(response => {
         let jsonResp = response.json()
         jsonResp.then((data) => {
-          console.log(data.isSuccessful)
           fetch('http://localhost:17617/history/set_one_history_node', {
             method: 'POST',
             headers: {
@@ -194,7 +193,7 @@ function LeftMenuContainer({ jsonData, token, setToken }) {
               'Content-Type': 'application/json',
             },
             body: JSON.stringify({
-              filename: filename,
+              filename: data.filename,
               isSuccessful: data.isSuccessful,
               owner: getCookie("CurrentUser")
             }),
@@ -224,7 +223,7 @@ function LeftMenuContainer({ jsonData, token, setToken }) {
               'Content-Type': 'application/json',
             },
             body: JSON.stringify({
-              filename: filename,
+              filename: data.filename,
               isSuccessful: data.isSuccessful,
               owner: getCookie("CurrentUser")
             }),
