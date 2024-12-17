@@ -19,6 +19,9 @@ import back.server.util.SQLinjectionException;
 import back.server.util.UnrealHumanHeightException;
 import back.server.validator.NationalityAmountValidator;
 
+import org.springframework.transaction.annotation.Propagation;
+import org.springframework.transaction.annotation.Transactional;
+
 @Service
 public class CitizenService {
     @Autowired
@@ -40,6 +43,7 @@ public class CitizenService {
         citizenRepo.save(citizen);
     }
 
+    // @Transactional(propagation = Propagation.NESTED)
     public void saveAll(CitizenDTO[] citizensDTO) throws AmountCitizenException {
         Citizen[] citizens = new Citizen[citizensDTO.length];
         for (int i = 0; i < citizens.length; i++) {
@@ -49,6 +53,7 @@ public class CitizenService {
         citizenRepo.saveAll(Arrays.asList(citizens));
     }
 
+    // @Transactional(propagation = Propagation.NESTED)
     public void deleteAll(CitizenDTO[] citizensDTO) throws AmountCitizenException {
         Citizen[] citizens = new Citizen[citizensDTO.length];
         for (int i = 0; i < citizens.length; i++) {

@@ -50,7 +50,11 @@ function ImportHistory({ history }) {
                     if (getCookie("CurrentUser") == node.owner.nickname) {
                         return (
                             <div>
-                                {node.fileName} - {node.isSuccessful} - <button onClick={(e) => download(node.fileName)}>download</button>
+                                {node.fileName} - {node.isSuccessful} -
+                                {
+                                    node.isSuccessful === "true" &&
+                                    <button onClick={(e) => download(node.fileName)}>download</button>
+                                }
                                 <br />
                             </div>
                         )
